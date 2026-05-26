@@ -274,23 +274,6 @@ export default function Sidebar({ onLogout }) {
           )}
       </nav>
 
-      {/* Abrir Orange - abre en el navegador del asesor */}
-      {ABRIR_ORANGE_PERMS[userRol] && (
-        <div className="p-2 border-t border-[#5d1a7a]">
-          <a
-            href="https://pangea.orange.es/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg transition-all duration-200 text-emerald-400 hover:text-white hover:bg-emerald-600"
-            title="Abrir Orange"
-          >
-            <Globe size={18} className="shrink-0" />
-            {!collapsed && (
-              <span className="text-sm font-medium">Abrir Orange</span>
-            )}
-          </a>
-        </div>
-      )}
       <div className="p-2 border-t border-[#5d1a7a]">
         <button
           onClick={function () { setShowPassModal(true); setPassForm({ current: '', newPass: '', confirm: '' }); setPassError(''); setPassSuccess('') }}
@@ -301,19 +284,7 @@ export default function Sidebar({ onLogout }) {
             <span className="text-sm font-medium">Cambiar contraseña</span>
           )}
         </button>
-      </div><div className="p-2 border-t border-[#5d1a7a]">
-        <button
-          onClick={function () { setShowPassModal(true); setPassForm({ current: '', newPass: '', confirm: '' }); setPassError(''); setPassSuccess('') }}
-          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[#11ddde] hover:text-white hover:bg-[#5d1a7a] transition-all duration-200"
-        >
-          <KeyRound size={20} className="shrink-0" />
-          {!collapsed && (
-            <span className="text-sm font-medium">Cambiar contraseña</span>
-          )}
-        </button>
-      </div>
-
-      <div className="p-2">
+      </div><div className="p-2">
         <button
           onClick={onLogout}
           className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[#11ddde] hover:text-white hover:bg-[#1495e0] transition-all duration-200"
