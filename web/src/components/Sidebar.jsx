@@ -83,7 +83,6 @@ const GROUPS = [
 
 export default function Sidebar({ onLogout }) {
   const [collapsed, setCollapsed] = useState(false);
-  const [abriendoOrange, setAbriendoOrange] = useState(false);
   const [showPassModal, setShowPassModal] = useState(false);
   const [passForm, setPassForm] = useState({ current: '', newPass: '', confirm: '' });
   const [passSaving, setPassSaving] = useState(false);
@@ -275,87 +274,21 @@ export default function Sidebar({ onLogout }) {
           )}
       </nav>
 
-      {/* Abrir Orange - boton para asesores */}
+      {/* Abrir Orange - abre en el navegador del asesor */}
       {ABRIR_ORANGE_PERMS[userRol] && (
         <div className="p-2 border-t border-[#5d1a7a]">
-          <button
-            onClick={async () => {
-              setAbriendoOrange(true)
-              try {
-                // Verificar si el agente esta activo (heartbeat < 30s)
-                const { data: maquinas } = await supabase
-                  .from('maquinas')
-                  .select('ultimo_heartbeat')
-                  .eq('nombre', 'PC-Jeff')
-                  .limit(1)
-
-                const agenteActivo = maquinas && maquinas.length > 0 && maquinas[0].ultimo_heartbeat &&
-                  (Date.now() - new Date(maquinas[0].ultimo_heartbeat).getTime()) < 30000
-
-                if (!agenteActivo) {
-                  alert('El agente no esta corriendo. Ejecuta "python agente.py" en PC-Jeff primero.')
-                  setAbriendoOrange(false)
-                  return
-                }
-
-                // Obtener proxy asignado al usuario (desde usuarios o perfiles)
-                let proxyAsignado = ''
-                try {
-                  // Primero intentar desde usuarios (tabla principal de admin)
-                  const { data: userRow } = await supabase
-                    .from('usuarios')
-                    .select('proxy_asignado')
-                    .eq('email', session.email || '')
-                    .limit(1)
-                    .single()
-                  if (userRow?.proxy_asignado) {
-                    proxyAsignado = userRow.proxy_asignado
-                  }
-                } catch {
-                  // Fallback: leer de perfiles
-                  try {
-                    const { data: perfil } = await supabase
-                      .from('perfiles')
-                      .select('proxy_asignado')
-                      .eq('user_id', session.id || '')
-                      .limit(1)
-                      .single()
-                    if (perfil?.proxy_asignado) {
-                      proxyAsignado = perfil.proxy_asignado
-                    }
-                  } catch {}
-                }
-
-                await supabase.from('comandos_bot').insert({
-                  maquina_destino: 'PC-Jeff',
-                  comando: 'abrir_navegador',
-                  parametros: { asesor_id: myId || '0', proxy_asignado: proxyAsignado },
-                  estado: 'pendiente',
-                })
-                setTimeout(() => setAbriendoOrange(false), 2000)
-              } catch {
-                setAbriendoOrange(false)
-              }
-            }}
-            disabled={abriendoOrange}
-            className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-lg transition-all duration-200 disabled:opacity-50 ${
-              abriendoOrange
-                ? 'bg-emerald-600 text-white'
-                : 'text-emerald-400 hover:text-white hover:bg-emerald-600'
-            }`}
-            title="Abrir Orange con proxy espanol"
+          <a
+            href="https://pangea.orange.es/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg transition-all duration-200 text-emerald-400 hover:text-white hover:bg-emerald-600"
+            title="Abrir Orange en tu navegador"
           >
-            {abriendoOrange ? (
-              <Loader2 size={18} className="animate-spin shrink-0" />
-            ) : (
-              <Globe size={18} className="shrink-0" />
-            )}
+            <Globe size={18} className="shrink-0" />
             {!collapsed && (
-              <span className="text-sm font-medium">
-                {abriendoOrange ? 'Abriendo...' : 'Abrir Orange'}
-              </span>
+              <span className="text-sm font-medium">Abrir Orange</span>
             )}
-          </button>
+          </a>
         </div>
       )}
 
