@@ -44,7 +44,12 @@ export default function Login() {
       } catch {
         localStorage.setItem('oratioo_session', JSON.stringify({ email: data.user.email, id: data.user.id, rol }))
       }
-      navigate('/dashboard', { replace: true })
+      // Redirigir segun rol
+      if (rol === 'asesor') {
+        navigate('/dialer', { replace: true })
+      } else {
+        navigate('/dashboard', { replace: true })
+      }
     } catch (err) {
       setError('Error al iniciar sesion: ' + err.message)
     } finally {

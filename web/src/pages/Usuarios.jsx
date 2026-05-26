@@ -163,6 +163,7 @@ export default function Usuarios() {
   const [supervisoresExpandidos, setSupervisoresExpandidos] = useState({})
   const [searchUser, setSearchUser] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+  const [equipos, setEquipos] = useState([])
   const [proxyModal, setProxyModal] = useState({ open: false, user: null, value: '' })
   const PAGE_SIZE = 10
 
@@ -177,6 +178,9 @@ export default function Usuarios() {
       for (const p of PAISES) exp[p.clave] = true
       setPaisesExpandidos(exp)
       setLoading(false)
+    })
+    supabase.from('equipos').select('*').then(({ data }) => {
+      if (data) setEquipos(data)
     })
   }, [])
 
@@ -346,14 +350,18 @@ export default function Usuarios() {
         if (dupEmail) { setError('El email ya esta registrado'); return }
       } catch (_) { /* ignorar error de consulta */ }
 
+      // Generar usuario desde email (parte antes del @)
+      const usuarioGenerado = form.email.trim().split('@')[0]
+      if (!usuarioGenerado) { setError('Email invalido'); return }
+      
       // Validar duplicado por usuario
       try {
         const { data: dupUser } = await supabase
           .from(TABLA_USUARIOS)
           .select('id')
-          .eq('usuario', form.usuario.trim())
+          .eq('usuario', usuarioGenerado)
           .maybeSingle()
-        if (dupUser) { setError('El usuario ya existe'); return }
+        if (dupUser) { setError('El usuario \"' + usuarioGenerado + '\" ya existe. Usa otro email.'); return }
       } catch (_) { /* ignorar error de consulta */ }
 
       // 1. Crear cuenta en Supabase Auth
@@ -378,7 +386,7 @@ export default function Usuarios() {
       // 2. Insertar en la tabla usuarios (sin id, lo genera Supabase)
       try {
         const { error: insertError } = await supabase.from(TABLA_USUARIOS).insert({
-          usuario: form.usuario.trim(),
+          usuario: usuarioGenerado,
           nombre: form.nombre.trim(),
           email: form.email.trim(),
           rol: form.rol,
@@ -925,7 +933,8 @@ export default function Usuarios() {
               { /* Email */ }
               <div>
                 <label className="block text-xs text-[#7c757c] font-medium mb-1">
-                  Email
+                  {'Email '}
+                  <span className="text-red-400">*</span>
                 </label>
                 <input
                   type="email"
@@ -933,6 +942,23 @@ export default function Usuarios() {
                   onChange={function (e) { setForm({ ...form, email: e.target.value }) }}
                   className="input-field text-sm"
                   placeholder="ej: juan@oratioo.com"
+                />
+              </div>
+
+              { /* Password */ }
+              <div>
+                <label className="block text-xs text-[#7c757c] font-medium mb-1">
+                  {'Contraseña '}
+                  <span className="text-red-400">*</span>
+                </label>
+                <input
+                  type="password"
+                  value={form.password}
+                  onChange={function (e) {
+                    setForm({ ...form, password: e.target.value })
+                  }}
+                  className="input-field text-sm"
+                  placeholder={editingId ? 'Dejar vacío para no cambiar' : 'Mín. 8 caracteres'}
                 />
               </div>
 
@@ -949,18 +975,31 @@ export default function Usuarios() {
                   }}
                   className="input-field text-sm"
                 >
-                  {PAISES
-                    .filter(function (p) {
-                      if (myRol === 'supervisor') return p.clave === session.equipo
-                      return true
-                    })
-                    .map(function (p) {
-                      return (
-                        <option key={p.clave} value={p.clave}>
-                          {p.bandera} {p.label}
-                        </option>
-                      )
-                    })}
+                  {equipos.length > 0
+                    ? equipos
+                        .filter(function (eq) {
+                          if (myRol === 'supervisor') return eq.nombre === session.equipo
+                          return true
+                        })
+                        .map(function (eq) {
+                          return (
+                            <option key={eq.id} value={eq.nombre}>
+                              {eq.pais === 'PE' ? '\ud83c\uddf5\ud83c\uddea' : '\ud83c\uddea\ud83c\uddf8'} {eq.nombre}
+                            </option>
+                          )
+                        })
+                    : PAISES
+                        .filter(function (p) {
+                          if (myRol === 'supervisor') return p.clave === session.equipo
+                          return true
+                        })
+                        .map(function (p) {
+                          return (
+                            <option key={p.clave} value={p.clave}>
+                              {p.bandera} {p.label}
+                            </option>
+                          )
+                        })}
                 </select>
               </div>
               )}

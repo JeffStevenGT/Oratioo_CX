@@ -16,6 +16,8 @@ import {
   ChevronDown,
   Globe,
   Loader2,
+  KeyRound,
+  X,
 } from "lucide-react";
 
 // Grupos del sidebar
@@ -82,6 +84,11 @@ const GROUPS = [
 export default function Sidebar({ onLogout }) {
   const [collapsed, setCollapsed] = useState(false);
   const [abriendoOrange, setAbriendoOrange] = useState(false);
+  const [showPassModal, setShowPassModal] = useState(false);
+  const [passForm, setPassForm] = useState({ current: '', newPass: '', confirm: '' });
+  const [passSaving, setPassSaving] = useState(false);
+  const [passError, setPassError] = useState('');
+  const [passSuccess, setPassSuccess] = useState('');
   const [agendaCount, setAgendaCount] = useState(0);
   const [gruposAbiertos, setGruposAbiertos] = useState(() => {
     const saved = localStorage.getItem("sidebar_grupos");
@@ -96,6 +103,7 @@ export default function Sidebar({ onLogout }) {
 
   // ── Permisos por rol para cada item del sidebar ──────────
   const ITEM_PERMISSIONS = {
+    '/dashboard': { asesor: false, supervisor: true, back_office: true, it: true, jefe_area: true, desarrollador: true },
     '/clientes': { asesor: false, supervisor: true, back_office: true, it: true, jefe_area: true, desarrollador: true },
     '/configurar-bot': { asesor: false, supervisor: false, back_office: false, it: true, jefe_area: true, desarrollador: true },
     '/documentos': { asesor: false, supervisor: true, back_office: true, it: true, jefe_area: true, desarrollador: true },
@@ -351,6 +359,18 @@ export default function Sidebar({ onLogout }) {
 
       <div className="p-2 border-t border-[#5d1a7a]">
         <button
+          onClick={function () { setShowPassModal(true); setPassForm({ current: '', newPass: '', confirm: '' }); setPassError(''); setPassSuccess('') }}
+          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[#11ddde] hover:text-white hover:bg-[#5d1a7a] transition-all duration-200"
+        >
+          <KeyRound size={20} className="shrink-0" />
+          {!collapsed && (
+            <span className="text-sm font-medium">Cambiar contraseña</span>
+          )}
+        </button>
+      </div>
+
+      <div className="p-2">
+        <button
           onClick={onLogout}
           className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[#11ddde] hover:text-white hover:bg-[#1495e0] transition-all duration-200"
         >
@@ -360,6 +380,61 @@ export default function Sidebar({ onLogout }) {
           )}
         </button>
       </div>
+
+      { /* Modal cambiar contraseña */ }
+      {showPassModal && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4" onClick={function () { setShowPassModal(false) }}>
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6" onClick={function (e) { e.stopPropagation() }}>
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-base font-semibold text-[#1a1030]">Cambiar contraseña</h2>
+              <button onClick={function () { setShowPassModal(false) }} className="p-1 rounded hover:bg-[#f0f0f8]"><X size={18} /></button>
+            </div>
+            {passSuccess ? (
+              <div className="bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-3 text-sm text-emerald-700 mb-4">{passSuccess}</div>
+            ) : (
+              <div className="space-y-3">
+                <div>
+                  <label className="block text-xs text-[#7c757c] mb-1">Contraseña actual</label>
+                  <input type="password" value={passForm.current} onChange={function (e) { setPassForm({ ...passForm, current: e.target.value }) }}
+                    className="w-full border border-[#e8dce6] rounded-lg px-3 py-2 text-sm" placeholder="********" />
+                </div>
+                <div>
+                  <label className="block text-xs text-[#7c757c] mb-1">Nueva contraseña</label>
+                  <input type="password" value={passForm.newPass} onChange={function (e) { setPassForm({ ...passForm, newPass: e.target.value }) }}
+                    className="w-full border border-[#e8dce6] rounded-lg px-3 py-2 text-sm" placeholder="Mínimo 8 caracteres" />
+                </div>
+                <div>
+                  <label className="block text-xs text-[#7c757c] mb-1">Confirmar nueva contraseña</label>
+                  <input type="password" value={passForm.confirm} onChange={function (e) { setPassForm({ ...passForm, confirm: e.target.value }) }}
+                    className="w-full border border-[#e8dce6] rounded-lg px-3 py-2 text-sm" placeholder="Repite la contraseña" />
+                </div>
+                {passError && <p className="text-sm text-red-500">{passError}</p>}
+                <button onClick={async function () {
+                  if (!passForm.current || !passForm.newPass) { setPassError('Completa todos los campos'); return }
+                  if (passForm.newPass.length < 8) { setPassError('Mínimo 8 caracteres'); return }
+                  if (passForm.newPass !== passForm.confirm) { setPassError('Las contraseñas no coinciden'); return }
+                  setPassSaving(true); setPassError('');
+                  try {
+                    const sessionData = JSON.parse(localStorage.getItem('oratioo_session') || '{}');
+                    if (sessionData.email) {
+                      const { error: signInError } = await supabase.auth.signInWithPassword({ email: sessionData.email, password: passForm.current });
+                      if (signInError) { setPassError('Contraseña actual incorrecta'); setPassSaving(false); return }
+                    }
+                    const { error: updateError } = await supabase.auth.updateUser({ password: passForm.newPass });
+                    if (updateError) { setPassError(updateError.message); setPassSaving(false); return }
+                    setPassSuccess('Contraseña actualizada correctamente');
+                    setPassForm({ current: '', newPass: '', confirm: '' });
+                  } catch (e) { setPassError('Error de conexión') }
+                  finally { setPassSaving(false) }
+                }} disabled={passSaving}
+                  className="w-full bg-[#0a6ea9] hover:bg-[#085d8f] text-white rounded-lg py-2.5 text-sm font-medium disabled:opacity-50 mt-2">
+                  {passSaving ? <Loader2 size={16} className="animate-spin mx-auto" /> : 'Guardar contraseña'}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </aside>
   );
 }
