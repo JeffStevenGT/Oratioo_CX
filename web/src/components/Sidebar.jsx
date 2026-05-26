@@ -83,7 +83,6 @@ const GROUPS = [
 
 export default function Sidebar({ onLogout }) {
   const [collapsed, setCollapsed] = useState(false);
-  const [abriendoOrange, setAbriendoOrange] = useState(false);
   const [showPassModal, setShowPassModal] = useState(false);
   const [passForm, setPassForm] = useState({ current: '', newPass: '', confirm: '' });
   const [passSaving, setPassSaving] = useState(false);
@@ -275,56 +274,23 @@ export default function Sidebar({ onLogout }) {
           )}
       </nav>
 
-      {/* Abrir Orange - abre en PC-Jeff */}
+      {/* Abrir Orange - abre en el navegador del asesor */}
       {ABRIR_ORANGE_PERMS[userRol] && (
         <div className="p-2 border-t border-[#5d1a7a]">
-          <button
-            onClick={async function () {
-              setAbriendoOrange(true)
-              try {
-                let proxyAsignado = ''
-                try {
-                  const { data } = await supabase
-                    .from('usuarios')
-                    .select('proxy_asignado')
-                    .eq('email', session.email || '')
-                    .limit(1)
-                    .single()
-                  if (data?.proxy_asignado) proxyAsignado = data.proxy_asignado
-                } catch {}
-                await supabase.from('comandos_bot').insert({
-                  maquina_destino: 'PC-Jeff',
-                  comando: 'abrir_navegador',
-                  parametros: { asesor_id: myId || '0', proxy_asignado: proxyAsignado },
-                  estado: 'pendiente',
-                })
-                setTimeout(function () { setAbriendoOrange(false) }, 2000)
-              } catch {
-                setAbriendoOrange(false)
-              }
-            }}
-            disabled={abriendoOrange}
-            className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-lg transition-all duration-200 disabled:opacity-50 ${
-              abriendoOrange
-                ? 'bg-emerald-600 text-white'
-                : 'text-emerald-400 hover:text-white hover:bg-emerald-600'
-            }`}
-            title="Abrir Orange en PC-Jeff"
+          <a
+            href="https://pangea.orange.es/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg transition-all duration-200 text-emerald-400 hover:text-white hover:bg-emerald-600"
+            title="Abrir Orange"
           >
-            {abriendoOrange ? (
-              <Loader2 size={18} className="animate-spin shrink-0" />
-            ) : (
-              <Globe size={18} className="shrink-0" />
-            )}
+            <Globe size={18} className="shrink-0" />
             {!collapsed && (
-              <span className="text-sm font-medium">
-                {abriendoOrange ? 'Abriendo...' : 'Abrir Orange'}
-              </span>
+              <span className="text-sm font-medium">Abrir Orange</span>
             )}
-          </button>
+          </a>
         </div>
       )}
-
       <div className="p-2 border-t border-[#5d1a7a]">
         <button
           onClick={function () { setShowPassModal(true); setPassForm({ current: '', newPass: '', confirm: '' }); setPassError(''); setPassSuccess('') }}
