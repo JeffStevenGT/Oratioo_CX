@@ -166,50 +166,40 @@ def tomar_siguiente_dni() -> dict | None:
 
 def guardar_resultado(dni: str, datos: dict, estado: str = "completado"):
     """Guarda/actualiza resultado en Supabase (UPSERT).
-    Preserva pipeline (asignacion) de datos anteriores.
-    Cada linea del cliente se guarda como un registro SEPARADO."""
-    linea_num = datos.get("linea_principal", "")
-    
+    Preserva pipeline (asignacion) de datos anteriores."""
     # Leer datos existentes para preservar pipeline
     pipeline_prev = None
-    id_existente = None
-    
-    # Buscar por DNI + numero de linea (para no sobrescribir)
-    if linea_num:
-        existentes = _api("GET", f"/lineas?select=atributos_dinamicos,id&dni=eq.{dni}&linea=eq.{linea_num}&limit=1")
-        if not existentes or len(existentes) == 0:
-            # Fallback: buscar solo por DNI si no se encontro por linea
-            existentes = _api("GET", f"/lineas?select=atributos_dinamicos,id&dni=eq.{dni}&limit=1&order=id.desc")
-        if existentes and len(existentes) > 0:
-            prev_ad = existentes[0].get("atributos_dinamicos", {}) or {}
-            if isinstance(prev_ad, str):
-                import json as _json
-                try: prev_ad = _json.loads(prev_ad)
-                except: prev_ad = {}
-            pipeline_prev = prev_ad.get("pipeline")
-            id_existente = existentes[0]["id"]
+    existentes = _api("GET", f"/lineas?select=atributos_dinamicos,id&dni=eq.{dni}&limit=1&order=id.desc")
+    if existentes:
+        prev_ad = existentes[0].get("atributos_dinamicos", {}) or {}
+        if isinstance(prev_ad, str):
+            import json as _json
+            try: prev_ad = _json.loads(prev_ad)
+            except: prev_ad = {}
+        pipeline_prev = prev_ad.get("pipeline")
 
     ad = datos.get("atributos_dinamicos", {})
     ad["estado"] = estado
     ad["fecha_procesado"] = time.strftime("%Y-%m-%d")
     ad["worker_id"] = WORKER_ID
     ad["maquina"] = MAQUINA
+    # Preservar pipeline (asignacion) si existia
     if pipeline_prev is not None:
         ad["pipeline"] = pipeline_prev
 
     fila = {
         "dni": dni,
         "nombre": datos.get("nombre", "N/A"),
-        "linea": linea_num or datos.get("linea_principal", "N/A"),
+        "linea": datos.get("linea_principal", "N/A"),
         "paquete": datos.get("paquete", "N/A"),
         "atributos_dinamicos": ad,
     }
 
-    if id_existente:
-        _api("PATCH", f"/lineas?id=eq.{id_existente}", fila)
+    if existentes:
+        _api("PATCH", f"/lineas?id=eq.{existentes[0]['id']}", fila)
     else:
         _api("POST", "/lineas", fila)
-    log(f"[SAVE] {dni} (linea: {linea_num}) -> {estado}")
+    log(f"[SAVE] {dni} -> {estado}")
 
 
 # ── Procesar un DNI ──────────────────────────────
@@ -267,10 +257,6 @@ def procesar_dni(page, dni: str) -> bool:
             }
 
             guardar_resultado(dni, datos, estado=estado)
-            # Loggear deteccion de Renove
-            renove_variante = dinamicos.get("renove_mixto_variante", "N/A")
-            tiene_rm = dinamicos.get("tiene_renove_mixto", False)
-            log(f"[RENOVE] Linea {fila.get('Linea', '?')}: variante={renove_variante}, tiene_rm={tiene_rm}")
 
         log(f"[OK]  {dni}: {len(filas)} líneas")
         return True
@@ -304,27 +290,13 @@ def main():
         page = context.new_page()
 
         try:
-            # Login (con reintentos si hay maximo de sesiones)
-            for intento_login in range(5):
-                try:
-                    page.goto(ORANGE_URL, timeout=90000)
-                    manejar_cookies_flexible(page)
-                    realizar_login(page)
-                    seleccionar_marca_orange(page)
-                    abrir_nuevo_acto_comercial(page)
-                    log("[LOCK] Login exitoso")
-                    break
-                except LoginError as e:
-                    if "Maximo de sesiones" in str(e):
-                        espera = random.randint(15, 30)
-                        log(f"[LOCK] Sesiones llenas, esperando {espera}s (intento {intento_login+1}/5)...")
-                        time.sleep(espera)
-                        # Recrear pagina (por si acaso)
-                        try: page.close()
-                        except: pass
-                        page = context.new_page()
-                    else:
-                        raise
+            # Login
+            page.goto(ORANGE_URL, timeout=90000)
+            manejar_cookies_flexible(page)
+            realizar_login(page)
+            seleccionar_marca_orange(page)
+            abrir_nuevo_acto_comercial(page)
+            log("[LOCK] Login exitoso")
 
             # Loop de procesamiento
             while True:
@@ -337,50 +309,15 @@ def main():
                 # Tomar siguiente DNI
                 fila = tomar_siguiente_dni()
                 if not fila:
-                    log("[PAUSE] No hay mas DNIs pendientes. Esperando 15s...")
-                    # Mantener sesion viva: navegar a pagina interna y volver
-                    try:
-                        page.evaluate("1+1")
-                    except Exception:
-                        log("[RECON] Pagina cerrada durante espera. Reconectando...")
-                        try:
-                            browser.close()
-                        except Exception:
-                            pass
-                        browser, context = crear_contexto_espana(p, proxy_config=PROXY_CONFIG)
-                        page = context.new_page()
-                        page.goto(ORANGE_URL, timeout=90000)
-                        manejar_cookies_flexible(page)
-                        realizar_login(page)
-                        seleccionar_marca_orange(page)
-                        abrir_nuevo_acto_comercial(page)
-                        log("[RECON] Reconexion exitosa")
-                    time.sleep(15)
+                    log("[PAUSE]  No hay mas DNIs pendientes. Esperando 30s...")
+                    time.sleep(30)
                     continue
 
                 dni = fila["dni"]
                 reportar_actividad(dni)
 
                 # Pausa aleatoria
-                page.wait_for_timeout(random.randint(800, 1500))
-
-                # Verificar que la pagina sigue viva antes de procesar
-                try:
-                    page.evaluate("1+1")
-                except Exception:
-                    log("[RECON] Pagina cerrada, reconectando antes de procesar...")
-                    try:
-                        browser.close()
-                    except Exception:
-                        pass
-                    browser, context = crear_contexto_espana(p, proxy_config=PROXY_CONFIG)
-                    page = context.new_page()
-                    page.goto(ORANGE_URL, timeout=90000)
-                    manejar_cookies_flexible(page)
-                    realizar_login(page)
-                    seleccionar_marca_orange(page)
-                    abrir_nuevo_acto_comercial(page)
-                    log("[RECON] Reconexion exitosa")
+                page.wait_for_timeout(random.randint(2000, 4000))
 
                 # Procesar
                 exito = procesar_dni(page, dni)

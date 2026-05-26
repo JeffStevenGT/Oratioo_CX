@@ -35,7 +35,7 @@ def _escribir_como_humano(page: Page, selector: str, texto: str):
     campo.click()
     campo.fill("")
     for letra in texto:
-        page.keyboard.type(letra, delay=random.randint(20, 50))
+        page.keyboard.type(letra, delay=random.randint(50, 150))
     # CRÍTICO: Tab para que Angular registre el cambio
     page.keyboard.press("Tab")
     page.wait_for_timeout(random.randint(300, 800))
@@ -65,23 +65,14 @@ def manejar_cookies_flexible(page: Page):
 
 
 def manejar_maximo_sesiones(page: Page):
-    """Maneja el modal de 'máximo número de sesiones'.
-    Si aparece, lanza LoginError para que el worker reintente mas tarde."""
-    import time
+    """Maneja el modal de 'máximo número de sesiones'."""
     try:
         if page.get_by_text(
             "ya ha alcanzado el número máximo permitido de sesiones"
         ).is_visible(timeout=5000):
-            print("  [Login] ERROR: Maximo de sesiones alcanzado. Esperando 30s para reintentar...")
-            # Cerrar modal
-            try:
-                page.locator("button.close[title='Cerrar ventana modal']").first.click(force=True)
-            except:
-                page.locator("button, input[type='submit']").first.click()
-            page.wait_for_timeout(2000)
-            raise LoginError("Maximo de sesiones alcanzado")
-    except LoginError:
-        raise
+            page.locator("button, input[type='submit']").first.click()
+            page.wait_for_load_state("networkidle")
+            print("  [Login] Sesión máxima cerrada")
     except Exception:
         pass
 
@@ -126,7 +117,7 @@ def seleccionar_marca_orange(page: Page):
     try:
         selector = "a.orange-box"
         page.wait_for_selector(selector, state="visible", timeout=20000)
-        page.wait_for_timeout(800)
+        page.wait_for_timeout(2000)
         page.click(selector)
         page.wait_for_selector("#orange-container", timeout=30000)
         print("  [Login] [OK] Marca Orange seleccionada")
@@ -139,13 +130,13 @@ def abrir_nuevo_acto_comercial(page: Page):
     print("  [Login] Preparando entorno (nuevo acto comercial)...")
     try:
         page.locator("button:has-text('Nuevo acto comercial')").first.click()
-        page.wait_for_timeout(500)
+        page.wait_for_timeout(1000)
 
         page.locator("li:has-text('Tarifas')").first.click()
 
         btn_crear = page.locator("button:has-text('Crear')").last
         btn_crear.wait_for(state="visible", timeout=20000)
-        page.wait_for_timeout(800)
+        page.wait_for_timeout(1500)
         btn_crear.click()
 
         # Esperar que aparezca el botón de cambiar cliente
@@ -257,20 +248,8 @@ def extraer_datos_cliente(page: Page, numero: str, buscar_por_dni: bool = True):
                     continue
 
             print("  [Extracción] Cargando ficha de cliente...")
-            page.wait_for_timeout(2000)
+            page.wait_for_timeout(6000)
             page.wait_for_selector(".mod-barclient__container-data", timeout=50000)
-
-            # ── DETECTAR CIMA GLOBAL (barra superior) ──
-            cima_global = False
-            try:
-                cima_btn = page.locator(".mod-barclient__container-lines-cima-btn")
-                if cima_btn.count() > 0:
-                    texto_cima = cima_btn.first.inner_text()
-                    cima_global = "isCima" in texto_cima or "CIMA" in texto_cima.upper()
-                    if cima_global:
-                        print("  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)")
-            except Exception:
-                pass
 
             # ── 2. DATOS CABECERA ─────────────────────
             nombre = _extraer_texto(page, ".tooltip-text.name strong")
@@ -315,7 +294,7 @@ def extraer_datos_cliente(page: Page, numero: str, buscar_por_dni: bool = True):
 
                         if btn_tab.count() > 0:
                             btn_tab.click(force=True)
-                            page.wait_for_timeout(800)
+                            page.wait_for_timeout(2000)
 
                             tarjetas = bloque.locator(".card-tariff-info-text")
                             alertas = bloque.locator(".message-relevant .title")
@@ -338,82 +317,31 @@ def extraer_datos_cliente(page: Page, numero: str, buscar_por_dni: bool = True):
                     try:
                         heading = bloque.locator(".client-tariff-heading")
                         labels = heading.locator("span.label")
-                        etiquetas_raw = [labels.nth(k).inner_text().strip() for k in range(labels.count())]
+                        etiquetas = [labels.nth(k).inner_text().strip() for k in range(labels.count())]
                         texto_completo = heading.first.inner_text()
                     except Exception:
-                        etiquetas_raw = []
+                        etiquetas = []
                         texto_completo = ""
-                    # Buscar CIMA en etiquetas Y en todo el heading (fallback)
-                    es_cima = "CIMA" in etiquetas_raw or "CIMA" in texto_completo
-                    tiene_tv = "TV" in etiquetas_raw or "TV" in texto_completo
-                    es_principal = "Principal" in etiquetas_raw
+                    es_cima = "CIMA" in etiquetas
+                    tiene_tv = "TV" in etiquetas
+                    es_principal = "Principal" in etiquetas
                     # Extraer fecha activo desde
                     match_fecha = re.search(r'Activo desde\s+(\d{2}/\d{2}/\d{4})', texto_completo)
                     activo_desde = match_fecha.group(1) if match_fecha else "N/A"
 
-                    # ── Detectar Renove: extraer TODO el texto del area de campañas ──
-                    tiene_rm = False
+                    # ── Detectar Renove Mixto con variantes ──
+                    renove_texto = campanas.get("Renove", "")
+                    tiene_rm = bool(re.search(r'Renove\s+mixto', renove_texto, re.IGNORECASE))
                     variante_renove = "N/A"
-                    texto_capturado = ""
-                    try:
-                        # Extraer todo el texto (incluso hidden) del bloque de campanas
-                        seccion = bloque.locator(".client-tariff-container-55")
-                        if seccion.count() > 0:
-                            texto_capturado = seccion.first.text_content() or ""
-                        else:
-                            texto_capturado = bloque.text_content() or ""
-                        print(f"  [Renove] Texto capturado de la linea {num_linea}: [{texto_capturado[:300]}]")
-                        
-                        # Buscar "Renove" en todo el texto
-                        tiene_renove_general = "Renove" in texto_capturado
-                        tiene_rm = bool(re.search(r'Renove\s+mixto', texto_capturado, re.IGNORECASE))
-                        print(f"  [Renove] tiene_renove_general={tiene_renove_general}, tiene_rm={tiene_rm}")
-                        
-                        if tiene_rm:
-                            if re.search(r'm[aá]ximo\s+descuento', texto_capturado, re.IGNORECASE):
-                                variante_renove = "Renove mixto al mejor precio con máximo descuento"
-                            elif re.search(r'con\s+descuento', texto_capturado, re.IGNORECASE):
-                                variante_renove = "Renove mixto al mejor precio con descuento"
-                            elif re.search(r'mejor\s+precio', texto_capturado, re.IGNORECASE):
-                                variante_renove = "Renove mixto al mejor precio"
-                            else:
-                                variante_renove = "Renove mixto"
-                        elif tiene_renove_general:
-                            texto_up = texto_capturado.upper()
-                            if "MULTIDISPOSITIVO" in texto_up:
-                                variante_renove = "Renove Multidispositivo"
-                            elif "ILIMITADO" in texto_up:
-                                variante_renove = "Renove Ilimitado"
-                            else:
-                                m = re.search(r'Renove[^\n]*', texto_capturado, re.IGNORECASE)
-                                variante_renove = m.group(0).strip() if m else "Renove (encontrado)"
-                        print(f"  [Renove] variante_asignada=\"{variante_renove}\"")
-                    except Exception as e:
-                        print(f"  [Renove] Error: {e}")
-
-                    
-                    # Clasificar variante
                     if tiene_rm:
-                        if re.search(r'm[aá]ximo\s+descuento', texto_para_buscar, re.IGNORECASE):
+                        if re.search(r'm[aá]ximo\s+descuento', renove_texto, re.IGNORECASE):
                             variante_renove = "Renove mixto al mejor precio con máximo descuento"
-                        elif re.search(r'con\s+descuento', texto_para_buscar, re.IGNORECASE):
+                        elif re.search(r'con\s+descuento', renove_texto, re.IGNORECASE):
                             variante_renove = "Renove mixto al mejor precio con descuento"
-                        elif re.search(r'mejor\s+precio', texto_para_buscar, re.IGNORECASE):
+                        elif re.search(r'mejor\s+precio', renove_texto, re.IGNORECASE):
                             variante_renove = "Renove mixto al mejor precio"
                         else:
                             variante_renove = "Renove mixto"
-                    elif tiene_renove_general:
-                        # Renove no mixto (Multidispositivo, etc.)
-                        texto_completo_renove = " ".join(renove_cards_textos)
-                        if "MULTIDISPOSITIVO" in texto_completo_renove.upper():
-                            variante_renove = "Renove Multidispositivo"
-                        elif "ILIMITADO" in texto_completo_renove.upper() or "Ilimitado" in texto_completo_renove:
-                            variante_renove = "Renove Ilimitado"
-                        else:
-                            variante_renove = "Renove (otro)"
-                        
-                    # Usar cima_global como fallback SI es True
-                    es_cima = es_cima or cima_global
 
                     lineas_finales.append({
                         "DNI": dni,
@@ -428,7 +356,7 @@ def extraer_datos_cliente(page: Page, numero: str, buscar_por_dni: bool = True):
                         "variante_renove": variante_renove,
                         "tiene_tv": tiene_tv,
                         "es_principal": es_principal,
-                        "etiquetas": etiquetas_raw,
+                        "etiquetas": etiquetas,
                         "activo_desde": activo_desde,
                         "Destacadas": campanas.get("Destacadas", "N/A"),
                         "Renove": campanas.get("Renove", "N/A"),
@@ -443,7 +371,7 @@ def extraer_datos_cliente(page: Page, numero: str, buscar_por_dni: bool = True):
                         and not btn_siguiente.is_disabled()):
                     print("  [Extracción] -> Siguiente página de líneas...")
                     btn_siguiente.click(force=True)
-                    page.wait_for_timeout(2000)
+                    page.wait_for_timeout(4000)
                     pagina_actual += 1
                 else:
                     hay_mas_paginas = False

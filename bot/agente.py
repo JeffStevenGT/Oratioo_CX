@@ -159,12 +159,12 @@ def iniciar_coordinador(cmd):
 
     print(f"[Agente] Iniciando coordinator para {MAQUINA_NOMBRE}...")
     try:
-        # Usar DEVNULL para evitar que el buffer de pipe se llene y congele el proceso
         proceso_coordinador = subprocess.Popen(
             [sys.executable, COORDINATOR],
             env=env,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
         )
         marcar_como(cmd["id"], "completado", f"PID: {proceso_coordinador.pid}")
         print(f"[Agente] Coordinator iniciado (PID: {proceso_coordinador.pid})")
@@ -173,7 +173,66 @@ def iniciar_coordinador(cmd):
         marcar_como(cmd["id"], "error", str(e))
 
 
+def _abrir_navegador_asesor(cmd):
+    """Abre un navegador para que el asesor consulte Orange manualmente."""
+    import random
 
+    asesor_id = cmd.get("parametros", {}).get("asesor_id", "0")
+    proxy_asignado = cmd.get("parametros", {}).get("proxy_asignado", "")
+
+    nav_script = BOT_DIR / "navegador_asesor.py"
+    args = [sys.executable, str(nav_script), "--asesor-id", str(asesor_id)]
+
+    if proxy_asignado:
+        # Proxy asignado desde la web (formato: http://ip:puerto:user:pass)
+        partes = proxy_asignado.replace("http://", "").split(":")
+        if len(partes) >= 2:
+            proxy_server = f"http://{partes[0]}:{partes[1]}"
+            proxy_user = partes[2] if len(partes) > 2 else ""
+            proxy_pass = partes[3] if len(partes) > 3 else ""
+            args += ["--proxy-server", proxy_server,
+                     "--proxy-user", proxy_user,
+                     "--proxy-pass", proxy_pass]
+            print(f"[Agente] Proxy asignado (web): {proxy_server}")
+    else:
+        # Proxy aleatorio de proxies.txt
+        proxies = []
+        proxies_file = BOT_DIR / "proxies.txt"
+        if proxies_file.exists():
+            with open(proxies_file, "r", encoding="utf-8") as f:
+                for linea in f:
+                    linea = linea.strip()
+                    if not linea or linea.startswith("#"):
+                        continue
+                    partes = linea.split(":")
+                    if len(partes) == 4:
+                        proxies.append({
+                            "server": f"http://{partes[0]}:{partes[1]}",
+                            "user": partes[2],
+                            "pass": partes[3],
+                        })
+
+        proxy = random.choice(proxies) if proxies else None
+        if proxy:
+            args += ["--proxy-server", proxy["server"],
+                     "--proxy-user", proxy["user"],
+                     "--proxy-pass", proxy["pass"]]
+            print(f"[Agente] Proxy aleatorio: {proxy['server']}")
+        else:
+            print("[Agente] Sin proxy disponible")
+
+    try:
+        proc = subprocess.Popen(
+            args,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+        )
+        marcar_como(cmd["id"], "completado", f"Navegador PID: {proc.pid}")
+        print(f"[Agente] Navegador abierto (PID: {proc.pid})")
+    except Exception as e:
+        print(f"[Agente] Error abriendo navegador: {e}")
+        marcar_como(cmd["id"], "error", str(e))
 
 
 def detener_coordinador(cmd):
@@ -232,6 +291,10 @@ def main():
                     iniciar_coordinador(cmd)
                 elif accion == "detener":
                     detener_coordinador(cmd)
+                elif accion == "abrir_navegador":
+                    # Abrir navegador manual para asesor - sin coordinator
+                    print(f"[Agente] Abriendo navegador para asesor...")
+                    _abrir_navegador_asesor(cmd)
                 else:
                     # Comandos que maneja el coordinator (pausar, reanudar, etc.)
                     print(f"[Agente] Comando '{accion}' delegado al coordinator")
@@ -245,8 +308,9 @@ def main():
                             proceso_coordinador = subprocess.Popen(
                                 [sys.executable, COORDINATOR],
                                 env=env,
-                                stdout=subprocess.DEVNULL,
-                                stderr=subprocess.DEVNULL,
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE,
+                                text=True,
                             )
                             print(f"[Agente] Coordinator auto-lanzado (PID: {proceso_coordinador.pid})")
                         except Exception as e:
