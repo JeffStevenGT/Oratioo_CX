@@ -65,14 +65,23 @@ def manejar_cookies_flexible(page: Page):
 
 
 def manejar_maximo_sesiones(page: Page):
-    """Maneja el modal de 'máximo número de sesiones'."""
+    """Maneja el modal de 'máximo número de sesiones'.
+    Si aparece, lanza LoginError para que el worker reintente mas tarde."""
+    import time
     try:
         if page.get_by_text(
             "ya ha alcanzado el número máximo permitido de sesiones"
         ).is_visible(timeout=5000):
-            page.locator("button, input[type='submit']").first.click()
-            page.wait_for_load_state("networkidle")
-            print("  [Login] Sesión máxima cerrada")
+            print("  [Login] ERROR: Maximo de sesiones alcanzado. Esperando 30s para reintentar...")
+            # Cerrar modal
+            try:
+                page.locator("button.close[title='Cerrar ventana modal']").first.click(force=True)
+            except:
+                page.locator("button, input[type='submit']").first.click()
+            page.wait_for_timeout(2000)
+            raise LoginError("Maximo de sesiones alcanzado")
+    except LoginError:
+        raise
     except Exception:
         pass
 
@@ -342,31 +351,44 @@ def extraer_datos_cliente(page: Page, numero: str, buscar_por_dni: bool = True):
                     match_fecha = re.search(r'Activo desde\s+(\d{2}/\d{2}/\d{4})', texto_completo)
                     activo_desde = match_fecha.group(1) if match_fecha else "N/A"
 
-                    # ── Detectar Renove: escanear etiquetas de tarjetas visibles ──
-                    renove_texto = campanas.get("Renove", "")
-                    # Escanear TODAS las tarjetas de campaña buscando label "Renove"
+                    # ── Detectar Renove: extraer TODO el texto del area de campañas ──
                     tiene_rm = False
                     variante_renove = "N/A"
-                    renove_cards_textos = []
                     try:
-                        cards = bloque.locator(".card-tariff-minimal")
-                        for c in range(cards.count()):
-                            card = cards.nth(c)
-                            label = card.locator(".card-tariff-label strong")
-                            if label.count() > 0:
-                                label_texto = label.first.inner_text().strip()
-                                if "Renove" in label_texto:
-                                    info = card.locator(".card-tariff-info-text")
-                                    texto_card = info.first.inner_text().strip() if info.count() > 0 else ""
-                                    renove_cards_textos.append(texto_card)
-                    except Exception:
-                        pass
+                        # Extraer todo el texto de la seccion derecha (campanas/ofertas)
+                        seccion_derecha = bloque.locator(".client-tariff-container-55")
+                        if seccion_derecha.count() > 0:
+                            texto_completo_campanas = seccion_derecha.first.inner_text()
+                        else:
+                            texto_completo_campanas = bloque.inner_text()
+                        
+                        # Buscar "Renove" en todo el texto visible
+                        tiene_renove_general = "Renove" in texto_completo_campanas
+                        tiene_rm = bool(re.search(r'Renove\s+mixto', texto_completo_campanas, re.IGNORECASE))
+                        
+                        # Clasificar variante
+                        if tiene_rm:
+                            if re.search(r'm[aá]ximo\s+descuento', texto_completo_campanas, re.IGNORECASE):
+                                variante_renove = "Renove mixto al mejor precio con máximo descuento"
+                            elif re.search(r'con\s+descuento', texto_completo_campanas, re.IGNORECASE):
+                                variante_renove = "Renove mixto al mejor precio con descuento"
+                            elif re.search(r'mejor\s+precio', texto_completo_campanas, re.IGNORECASE):
+                                variante_renove = "Renove mixto al mejor precio"
+                            else:
+                                variante_renove = "Renove mixto"
+                        elif tiene_renove_general:
+                            texto_up = texto_completo_campanas.upper()
+                            if "MULTIDISPOSITIVO" in texto_up:
+                                variante_renove = "Renove Multidispositivo"
+                            elif "ILIMITADO" in texto_up:
+                                variante_renove = "Renove Ilimitado"
+                            else:
+                                # Ultimo recurso: buscar cualquier texto con "Renove"
+                                match_renove = re.search(r'Renove[^\n]*', texto_completo_campanas, re.IGNORECASE)
+                                variante_renove = match_renove.group(0).strip() if match_renove else "Renove (encontrado)"
+                    except Exception as e:
+                        print(f"  [Extracción] Error detectando Renove: {e}")
 
-                    # Combinar texto de pestana + tarjetas escaneadas + heading
-                    texto_para_buscar = renove_texto + " " + " ".join(renove_cards_textos) + " " + texto_completo + (" global_cima" if cima_global else "")
-                    tiene_rm = bool(re.search(r'Renove\s+mixto', texto_para_buscar, re.IGNORECASE))
-                    # Si no es mixto pero hay tarjetas Renove, marcar como Renove (no mixto)
-                    tiene_renove_general = len(renove_cards_textos) > 0 or bool(re.search(r'Renove', texto_para_buscar, re.IGNORECASE))
                     
                     # Clasificar variante
                     if tiene_rm:

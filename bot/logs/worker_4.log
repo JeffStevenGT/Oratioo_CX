@@ -1,0 +1,532 @@
+[W4|11:35:16] [INI]  Worker iniciado (PID: 20992)
+[W4|11:35:16] [SIN]  Proxy: http://64.137.89.222:6295
+  [Login] Iniciando sesión...
+[W4|11:35:37] [ERR]  Error crítico: Fallo en login: Page.wait_for_selector: Target page, context or browser has been closed
+Call log:
+  - waiting for locator(".brands") to be visible
+
+[W4|11:35:37] Resumen -> Procesados: [OK] 0 | [ERR] 0
+[W4|11:40:21] [INI]  Worker iniciado (PID: 7944)
+[W4|11:40:21] [SIN]  Proxy: http://64.137.89.108:6181
+  [Login] Iniciando sesión...
+  [Login] [OK] Login exitoso
+  [Login] Seleccionando marca Orange...
+  [Login] [OK] Marca Orange seleccionada
+  [Login] Preparando entorno (nuevo acto comercial)...
+  [Login] [OK] Entorno listo
+[W4|11:41:07] [LOCK] Login exitoso
+  [Extracción] Buscando: 24399483W (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 24399483W NO ES CLIENTE
+  [Login] Preparando entorno (nuevo acto comercial)...
+[W4|11:41:53] [SAVE] 24399483W -> no_cliente
+[W4|11:41:53] [OK]  24399483W: 1 líneas
+  [Extracción] Buscando: 73387621A (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: JOSE JAVIER CORCOLES CASTELL | DNI: 73387621A | Paquete: Love Empresa Activa
+  [Extracción] Dirección: CALLE DE SANT ROC, Nº 80, 12589, CALIG, CASTELLON
+  [Extracción] Página 1 de líneas...
+    -> Línea: 877072127
+    -> Línea: 615014713
+    -> Línea: 695553569
+[W4|11:42:13] [SAVE] 73387621A -> completado
+[W4|11:42:14] [SAVE] 73387621A -> completado
+[W4|11:42:14] [SAVE] 73387621A -> completado
+[W4|11:42:14] [OK]  73387621A: 3 líneas
+  [Extracción] Buscando: 27505660Y (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: antonia sobrino almansa | DNI: 27505660Y | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: AVENIDA CALLE DE LA ESTACION, Nº 25, BA 04005, ALMERIA, ALMERIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 950267936
+    -> Línea: 663588655
+    -> Línea: 670745091
+    -> Línea: 654097231
+[W4|11:42:42] [SAVE] 27505660Y -> completado
+[W4|11:42:43] [SAVE] 27505660Y -> completado
+[W4|11:42:43] [SAVE] 27505660Y -> completado
+[W4|11:42:44] [SAVE] 27505660Y -> completado
+[W4|11:42:44] [OK]  27505660Y: 4 líneas
+  [Extracción] Buscando: 27031889N (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: MATILDE ESTEBAN RUIZ | DNI: 27031889N | Paquete: Love Empresa Activa
+  [Extracción] Dirección: CALLE ZAGAL, Nº 39, 001 - 1ª, 04008, ALMERÍA, ALMERIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 950265695
+    -> Línea: 626650998
+    -> Línea: 627334293
+[W4|11:43:04] [SAVE] 27031889N -> completado
+[W4|11:43:05] [SAVE] 27031889N -> completado
+[W4|11:43:06] [SAVE] 27031889N -> completado
+[W4|11:43:06] [OK]  27031889N: 3 líneas
+  [Extracción] Buscando: 52261249M (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: CONCEPCION TOVAR TOVAR | DNI: 52261249M | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: PLAZA SANTIAGO, Nº 12, BA 41950, CASTILLEJA DE LA CUESTA, SEVILLA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 954162349
+    -> Línea: 661712130
+    -> Línea: 661712131
+    -> Línea: 625054467
+    -> Línea: 954166019
+[W4|11:43:18] [SAVE] 52261249M -> completado
+[W4|11:43:18] [SAVE] 52261249M -> completado
+[W4|11:43:19] [SAVE] 52261249M -> completado
+[W4|11:43:20] [SAVE] 52261249M -> completado
+[W4|11:43:21] [SAVE] 52261249M -> completado
+[W4|11:43:21] [OK]  52261249M: 5 líneas
+  [Extracción] Buscando: 28472067E (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: JOSE ANTONIO BERNAL AGUILERA | DNI: 28472067E | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE CRISTO DEL DESAMPARO Y ABANDONO, Nº 151, 000 - B, 41006, SEVILLA, SEVILLA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 954632094
+    -> Línea: 688920168
+    -> Línea: 615435684
+    -> Línea: 676819545
+    -> Línea: 675561319
+[W4|11:43:50] [SAVE] 28472067E -> completado
+[W4|11:43:51] [SAVE] 28472067E -> completado
+[W4|11:43:52] [SAVE] 28472067E -> completado
+[W4|11:43:53] [SAVE] 28472067E -> completado
+[W4|11:43:53] [SAVE] 28472067E -> completado
+[W4|11:43:53] [OK]  28472067E: 5 líneas
+  [Extracción] Buscando: 25992484T (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: francisca gonzalez vallejo | DNI: 25992484T | Paquete: Love Empresa Activa
+  [Extracción] Dirección: CALLE CALLE ALTA, Nº 80, 23660, ALCAUDETE, JAEN
+  [Extracción] Página 1 de líneas...
+    -> Línea: 953708386
+    -> Línea: 695165703
+    -> Línea: 695165705
+[W4|11:44:11] [SAVE] 25992484T -> completado
+[W4|11:44:11] [SAVE] 25992484T -> completado
+[W4|11:44:12] [SAVE] 25992484T -> completado
+[W4|11:44:12] [OK]  25992484T: 3 líneas
+  [Extracción] Buscando: 25088556H (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: SALVADOR ALVARADO LUQUE | DNI: 25088556H | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE CALERITO, Nº 4, 001 - G, 29003, MÁLAGA, MALAGA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 951152256
+    -> Línea: 605267207
+    -> Línea: 605904004
+[W4|11:44:32] [SAVE] 25088556H -> completado
+[W4|11:44:33] [SAVE] 25088556H -> completado
+[W4|11:44:34] [SAVE] 25088556H -> completado
+[W4|11:44:34] [OK]  25088556H: 3 líneas
+  [Extracción] Buscando: 29483048S (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: GEMA ISABEL GUTIERREZ TOSCANO GUTIERREZ TOSCANO | DNI: 29483048S | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: CALLE PESCADORES, Nº 15, 003 - DCHA, 21410, ISLA CRISTINA, HUELVA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 959730937
+    -> Línea: 635443174
+    -> Línea: 656850091
+    -> Línea: 635319481
+[W4|11:45:01] [SAVE] 29483048S -> completado
+[W4|11:45:02] [SAVE] 29483048S -> completado
+[W4|11:45:03] [SAVE] 29483048S -> completado
+[W4|11:45:03] [SAVE] 29483048S -> completado
+[W4|11:45:03] [OK]  29483048S: 4 líneas
+  [Extracción] Buscando: 52520034V (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: Jose Galeote Marmol | DNI: 52520034V | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: CALLE SAN PABLO, Nº 1, 18300, LOJA, GRANADA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 958321178
+    -> Línea: 670592580
+    -> Línea: 685180853
+    -> Línea: 654823513
+[W4|11:45:24] [SAVE] 52520034V -> completado
+[W4|11:45:25] [SAVE] 52520034V -> completado
+[W4|11:45:26] [SAVE] 52520034V -> completado
+[W4|11:45:26] [SAVE] 52520034V -> completado
+[W4|11:45:26] [OK]  52520034V: 4 líneas
+  [Extracción] Buscando: 29801172A (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: Dario Garcia Pastor | DNI: 29801172A | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: AVENIDA JULIO CARO BAROJA, Nº 8, 002 - D, 21002, HUELVA, HUELVA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 959083931
+    -> Línea: 722298302
+    -> Línea: 627472815
+    -> Línea: 633546255
+    -> Línea: 681304502
+[W4|11:45:52] [SAVE] 29801172A -> completado
+[W4|11:45:52] [SAVE] 29801172A -> completado
+[W4|11:45:53] [SAVE] 29801172A -> completado
+[W4|11:45:54] [SAVE] 29801172A -> completado
+[W4|11:45:55] [SAVE] 29801172A -> completado
+[W4|11:45:55] [OK]  29801172A: 5 líneas
+  [Extracción] Buscando: 13101452P (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 13101452P NO ES CLIENTE
+  [Login] Preparando entorno (nuevo acto comercial)...
+[W4|11:46:42] [SAVE] 13101452P -> no_cliente
+[W4|11:46:42] [OK]  13101452P: 1 líneas
+  [Extracción] Buscando: 52871798L (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: ISRAEL EXPOSITO RODRIGUEZ | DNI: 52871798L | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE GENERAL SERRANO, Nº 32, 18650, DURCAL, GRANADA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 858993035
+    -> Línea: 657581203
+    -> Línea: 617577700
+    -> Línea: 641236894
+    -> Línea: 652272100
+    -> Línea: 722413953
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 625056452
+[W4|11:47:24] [SAVE] 52871798L -> completado
+[W4|11:47:25] [SAVE] 52871798L -> completado
+[W4|11:47:26] [SAVE] 52871798L -> completado
+[W4|11:47:26] [SAVE] 52871798L -> completado
+[W4|11:47:27] [SAVE] 52871798L -> completado
+[W4|11:47:28] [SAVE] 52871798L -> completado
+[W4|11:47:29] [SAVE] 52871798L -> completado
+[W4|11:47:29] [OK]  52871798L: 7 líneas
+  [Extracción] Buscando: 44504683M (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: MARTA DESE ALONSO | DNI: 44504683M | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: PLAZA AYUNTAMIENTO, Nº 8, - 12, 46002, VALENCIA, VALENCIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 960080363
+    -> Línea: 600655301
+    -> Línea: 692233262
+[W4|11:47:48] [SAVE] 44504683M -> completado
+[W4|11:47:49] [SAVE] 44504683M -> completado
+[W4|11:47:50] [SAVE] 44504683M -> completado
+[W4|11:47:50] [OK]  44504683M: 3 líneas
+  [Extracción] Buscando: 28995448S (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 28995448S NO ES CLIENTE
+  [Login] Preparando entorno (nuevo acto comercial)...
+[W4|11:48:36] [SAVE] 28995448S -> no_cliente
+[W4|11:48:36] [OK]  28995448S: 1 líneas
+  [Extracción] Buscando: 53707177S (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: DANIEL JOSE ACIEN ALVAREZ | DNI: 53707177S | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE JACINTO BENAVENTE, Nº 23, 04700, EL EJIDO, ALMERIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 950377142
+    -> Línea: 622950081
+    -> Línea: 647806064
+    -> Línea: 649911281
+    -> Línea: 615198002
+[W4|11:49:18] [SAVE] 53707177S -> completado
+[W4|11:49:19] [SAVE] 53707177S -> completado
+[W4|11:49:19] [SAVE] 53707177S -> completado
+[W4|11:49:20] [SAVE] 53707177S -> completado
+[W4|11:49:21] [SAVE] 53707177S -> completado
+[W4|11:49:21] [OK]  53707177S: 5 líneas
+  [Extracción] Buscando: 27031889N (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: MATILDE ESTEBAN RUIZ | DNI: 27031889N | Paquete: Love Empresa Activa
+  [Extracción] Dirección: CALLE ZAGAL, Nº 39, 001 - 1ª, 04008, ALMERÍA, ALMERIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 950265695
+    -> Línea: 626650998
+    -> Línea: 627334293
+[W4|11:49:40] [SAVE] 27031889N -> completado
+[W4|11:49:41] [SAVE] 27031889N -> completado
+[W4|11:49:42] [SAVE] 27031889N -> completado
+[W4|11:49:42] [OK]  27031889N: 3 líneas
+  [Extracción] Buscando: 52261249M (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: CONCEPCION TOVAR TOVAR | DNI: 52261249M | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: PLAZA SANTIAGO, Nº 12, BA 41950, CASTILLEJA DE LA CUESTA, SEVILLA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 954162349
+    -> Línea: 661712130
+    -> Línea: 661712131
+    -> Línea: 625054467
+    -> Línea: 954166019
+[W4|11:49:53] [SAVE] 52261249M -> completado
+[W4|11:49:54] [SAVE] 52261249M -> completado
+[W4|11:49:55] [SAVE] 52261249M -> completado
+[W4|11:49:55] [SAVE] 52261249M -> completado
+[W4|11:49:56] [SAVE] 52261249M -> completado
+[W4|11:49:56] [OK]  52261249M: 5 líneas
+  [Extracción] Buscando: 45652380W (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: BELEN MARIA PEREZ RAMIREZ | DNI: 45652380W | Paquete: Love Empresa Activa
+  [Extracción] Dirección: CALLE ADA, Nº 10, 003 - A, 41007, SEVILLA, SEVILLA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 955104489
+    -> Línea: 658850732
+    -> Línea: 615137068
+    -> Línea: 691170220
+[W4|11:50:17] [SAVE] 45652380W -> completado
+[W4|11:50:17] [SAVE] 45652380W -> completado
+[W4|11:50:18] [SAVE] 45652380W -> completado
+[W4|11:50:19] [SAVE] 45652380W -> completado
+[W4|11:50:19] [OK]  45652380W: 4 líneas
+  [Extracción] Buscando: 25992484T (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: francisca gonzalez vallejo | DNI: 25992484T | Paquete: Love Empresa Activa
+  [Extracción] Dirección: CALLE CALLE ALTA, Nº 80, 23660, ALCAUDETE, JAEN
+  [Extracción] Página 1 de líneas...
+    -> Línea: 953708386
+    -> Línea: 695165703
+    -> Línea: 695165705
+[W4|11:50:39] [SAVE] 25992484T -> completado
+[W4|11:50:39] [SAVE] 25992484T -> completado
+[W4|11:50:40] [SAVE] 25992484T -> completado
+[W4|11:50:40] [OK]  25992484T: 3 líneas
+  [Extracción] Buscando: 25088556H (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: SALVADOR ALVARADO LUQUE | DNI: 25088556H | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE CALERITO, Nº 4, 001 - G, 29003, MÁLAGA, MALAGA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 951152256
+    -> Línea: 605267207
+    -> Línea: 605904004
+[W4|11:51:00] [SAVE] 25088556H -> completado
+[W4|11:51:01] [SAVE] 25088556H -> completado
+[W4|11:51:01] [SAVE] 25088556H -> completado
+[W4|11:51:01] [OK]  25088556H: 3 líneas
+  [Extracción] Buscando: 29479389J (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 29479389J NO ES CLIENTE
+  [Login] Preparando entorno (nuevo acto comercial)...
+[W4|11:51:48] [SAVE] 29479389J -> no_cliente
+[W4|11:51:48] [OK]  29479389J: 1 líneas
+  [Extracción] Buscando: 29801172A (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: Dario Garcia Pastor | DNI: 29801172A | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: AVENIDA JULIO CARO BAROJA, Nº 8, 002 - D, 21002, HUELVA, HUELVA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 959083931
+    -> Línea: 722298302
+    -> Línea: 627472815
+    -> Línea: 633546255
+    -> Línea: 681304502
+[W4|11:52:14] [SAVE] 29801172A -> completado
+[W4|11:52:14] [SAVE] 29801172A -> completado
+[W4|11:52:15] [SAVE] 29801172A -> completado
+[W4|11:52:16] [SAVE] 29801172A -> completado
+[W4|11:52:17] [SAVE] 29801172A -> completado
+[W4|11:52:17] [OK]  29801172A: 5 líneas
+  [Extracción] Buscando: 29473847Z (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: LUIS CUETO  CASADO | DNI: 29473847Z | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: CALLE PESCADORES, Nº 28, 21410, ISLA-CRISTINA, HUELVA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 959330658
+    -> Línea: 667504212
+[W4|11:52:33] [SAVE] 29473847Z -> completado
+[W4|11:52:33] [SAVE] 29473847Z -> completado
+[W4|11:52:33] [OK]  29473847Z: 2 líneas
+  [Extracción] Buscando: 13101452P (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 13101452P NO ES CLIENTE
+  [Login] Preparando entorno (nuevo acto comercial)...
+[W4|11:53:20] [SAVE] 13101452P -> no_cliente
+[W4|11:53:20] [OK]  13101452P: 1 líneas
+  [Extracción] Buscando: 29060296A (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: JUAN ANTONIO LOZANO  FERNANDEZ | DNI: 29060296A | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE MAR MENOR, Nº 1, BA - B, 30500, MOLINA DE SEGURA, MURCIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 968615238
+    -> Línea: 635594520
+    -> Línea: 638982445
+    -> Línea: 656548509
+[W4|11:53:47] [SAVE] 29060296A -> completado
+[W4|11:53:48] [SAVE] 29060296A -> completado
+[W4|11:53:49] [SAVE] 29060296A -> completado
+[W4|11:53:49] [SAVE] 29060296A -> completado
+[W4|11:53:49] [OK]  29060296A: 4 líneas
+  [Extracción] Buscando: 52871798L (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: ISRAEL EXPOSITO RODRIGUEZ | DNI: 52871798L | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE GENERAL SERRANO, Nº 32, 18650, DURCAL, GRANADA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 858993035
+    -> Línea: 657581203
+    -> Línea: 617577700
+    -> Línea: 641236894
+    -> Línea: 652272100
+    -> Línea: 722413953
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 625056452
+[W4|11:54:24] [SAVE] 52871798L -> completado
+[W4|11:54:25] [SAVE] 52871798L -> completado
+[W4|11:54:26] [SAVE] 52871798L -> completado
+[W4|11:54:26] [SAVE] 52871798L -> completado
+[W4|11:54:27] [SAVE] 52871798L -> completado
+[W4|11:54:28] [SAVE] 52871798L -> completado
+[W4|11:54:29] [SAVE] 52871798L -> completado
+[W4|11:54:29] [OK]  52871798L: 7 líneas
+  [Extracción] Buscando: 24399483W (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 24399483W NO ES CLIENTE
+  [Login] Preparando entorno (nuevo acto comercial)...
+[W4|11:55:15] [SAVE] 24399483W -> no_cliente
+[W4|11:55:15] [OK]  24399483W: 1 líneas
+  [Extracción] Buscando: 73387621A (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: JOSE JAVIER CORCOLES CASTELL | DNI: 73387621A | Paquete: Love Empresa Activa
+  [Extracción] Dirección: CALLE DE SANT ROC, Nº 80, 12589, CALIG, CASTELLON
+  [Extracción] Página 1 de líneas...
+    -> Línea: 877072127
+    -> Línea: 615014713
+    -> Línea: 695553569
+[W4|11:55:35] [SAVE] 73387621A -> completado
+[W4|11:55:36] [SAVE] 73387621A -> completado
+[W4|11:55:36] [SAVE] 73387621A -> completado
+[W4|11:55:36] [OK]  73387621A: 3 líneas
+  [Extracción] Buscando: 27505660Y (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: antonia sobrino almansa | DNI: 27505660Y | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: AVENIDA CALLE DE LA ESTACION, Nº 25, BA 04005, ALMERIA, ALMERIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 950267936
+    -> Línea: 663588655
+    -> Línea: 670745091
+    -> Línea: 654097231
+[W4|11:56:01] [SAVE] 27505660Y -> completado
+[W4|11:56:02] [SAVE] 27505660Y -> completado
+[W4|11:56:02] [SAVE] 27505660Y -> completado
+[W4|11:56:03] [SAVE] 27505660Y -> completado
+[W4|11:56:03] [OK]  27505660Y: 4 líneas
+  [Extracción] Buscando: 27031889N (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: MATILDE ESTEBAN RUIZ | DNI: 27031889N | Paquete: Love Empresa Activa
+  [Extracción] Dirección: CALLE ZAGAL, Nº 39, 001 - 1ª, 04008, ALMERÍA, ALMERIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 950265695
+    -> Línea: 626650998
+    -> Línea: 627334293
+[W4|11:56:14] [SAVE] 27031889N -> completado
+[W4|11:56:15] [SAVE] 27031889N -> completado
+[W4|11:56:16] [SAVE] 27031889N -> completado
+[W4|11:56:16] [OK]  27031889N: 3 líneas
+  [Extracción] Buscando: 52261249M (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: CONCEPCION TOVAR TOVAR | DNI: 52261249M | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: PLAZA SANTIAGO, Nº 12, BA 41950, CASTILLEJA DE LA CUESTA, SEVILLA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 954162349
+    -> Línea: 661712130
+    -> Línea: 661712131
+    -> Línea: 625054467
+    -> Línea: 954166019
+[W4|11:56:44] [SAVE] 52261249M -> completado
+[W4|11:56:44] [SAVE] 52261249M -> completado
+[W4|11:56:45] [SAVE] 52261249M -> completado
+[W4|11:56:46] [SAVE] 52261249M -> completado
+[W4|11:56:47] [SAVE] 52261249M -> completado
+[W4|11:56:47] [OK]  52261249M: 5 líneas
+  [Extracción] Buscando: 28478516P (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 28478516P NO ES CLIENTE
+  [Login] Preparando entorno (nuevo acto comercial)...
+[W4|11:57:34] [SAVE] 28478516P -> no_cliente
+[W4|11:57:34] [OK]  28478516P: 1 líneas
+  [Extracción] Buscando: 29479389J (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 29479389J NO ES CLIENTE
+  [Login] Preparando entorno (nuevo acto comercial)...
+[W4|11:58:20] [SAVE] 29479389J -> no_cliente
+[W4|11:58:20] [OK]  29479389J: 1 líneas
+  [Extracción] Buscando: 75552284K (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: MARIA PILAR TERRIZA DIAZ | DNI: 75552284K | Paquete: Love Empresa Smart
+  [Extracción] Dirección: AVENIDA CONSTITUCIÓN, Nº 23, 21710, BOLLULLOS PAR DEL CONDADO, HUELVA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 959410878
+    -> Línea: 652950916
+[W4|11:58:36] [SAVE] 75552284K -> completado
+[W4|11:58:36] [SAVE] 75552284K -> completado
+[W4|11:58:36] [OK]  75552284K: 2 líneas
+  [Extracción] Buscando: 73988489L (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: JUAN BAUTISTA MARTINEZ FERRER | DNI: 73988489L | Paquete: Love Empresa Activa
+  [Extracción] Dirección: CALLE GRAN CAPITÁN, Nº 11, 003 - DCHA, 18002, GRANADA, GRANADA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 958274379
+    -> Línea: 658803654
+    -> Línea: 654768042
+[W4|11:58:56] [SAVE] 73988489L -> completado
+[W4|11:58:56] [SAVE] 73988489L -> completado
+[W4|11:58:57] [SAVE] 73988489L -> completado
+[W4|11:58:57] [OK]  73988489L: 3 líneas
+  [Extracción] Buscando: 33266886P (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: PATRICIA TOURIÑO LADO | DNI: 33266886P | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: CALLE RUA NOVA, Nº 43, BA 15702, SANTIAGO DE COMPOSTELA, A CORUNA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 981585303
+    -> Línea: 673097092
+    -> Línea: 665546779
+[W4|11:59:17] [SAVE] 33266886P -> completado
+[W4|11:59:18] [SAVE] 33266886P -> completado
+[W4|11:59:19] [SAVE] 33266886P -> completado
+[W4|11:59:19] [OK]  33266886P: 3 líneas
+[W4|11:59:20] [PAUSE] No hay mas DNIs pendientes. Esperando 15s...
+[W4|11:59:35] [PAUSE] No hay mas DNIs pendientes. Esperando 15s...
+[W4|11:59:51] [PAUSE] No hay mas DNIs pendientes. Esperando 15s...
+[W4|12:00:07] [PAUSE] No hay mas DNIs pendientes. Esperando 15s...
+[W4|12:00:18] ?  Detenido por se?al

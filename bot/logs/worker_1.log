@@ -630,4 +630,547 @@ UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f4ca' in posit
 [W1|07:18:10] [SAVE] 53710553X -> completado
 [W1|07:18:11] [SAVE] 53710553X -> completado
 [W1|07:18:11] [OK]  53710553X: 2 líneas
-  [Extracción] Buscando: 27031889N (Intento 1)
+  [Extracción] Buscando: 27031889N (Intento 1)[W1|11:24:32] [INI]  Worker iniciado (PID: 18384)
+[W1|11:24:32] [SIN]  Proxy: http://46.203.198.169:6613
+  [Login] Iniciando sesión...
+[W1|11:25:18] [ERR]  Error crítico: Fallo en login: Page.wait_for_selector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator(".brands") to be visible
+
+[W1|11:25:18] Resumen -> Procesados: [OK] 0 | [ERR] 0
+[W1|11:30:25] [INI]  Worker iniciado (PID: 4248)
+[W1|11:30:25] [SIN]  Proxy: http://92.113.83.159:6104
+  [Login] Iniciando sesión...
+[W1|11:31:13] [ERR]  Error crítico: Fallo en login: Page.wait_for_selector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator(".brands") to be visible
+
+[W1|11:31:14] Resumen -> Procesados: [OK] 0 | [ERR] 0
+[W1|11:35:16] [INI]  Worker iniciado (PID: 25164)
+[W1|11:35:16] [SIN]  Proxy: http://92.113.83.19:5964
+  [Login] Iniciando sesión...
+[W1|11:35:39] [ERR]  Error crítico: Fallo en login: Page.wait_for_selector: Target page, context or browser has been closed
+Call log:
+  - waiting for locator(".brands") to be visible
+
+[W1|11:35:39] Resumen -> Procesados: [OK] 0 | [ERR] 0
+[W1|11:40:21] [INI]  Worker iniciado (PID: 18560)
+[W1|11:40:21] [SIN]  Proxy: http://92.113.83.19:5964
+  [Login] Iniciando sesión...
+  [Login] [OK] Login exitoso
+  [Login] Seleccionando marca Orange...
+  [Login] [OK] Marca Orange seleccionada
+  [Login] Preparando entorno (nuevo acto comercial)...
+  [Login] [OK] Entorno listo
+[W1|11:41:08] [LOCK] Login exitoso
+  [Extracción] Buscando: 44504683M (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: MARTA DESE ALONSO | DNI: 44504683M | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: PLAZA AYUNTAMIENTO, Nº 8, - 12, 46002, VALENCIA, VALENCIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 960080363
+    -> Línea: 600655301
+    -> Línea: 692233262
+[W1|11:41:32] [SAVE] 44504683M -> completado
+[W1|11:41:32] [SAVE] 44504683M -> completado
+[W1|11:41:33] [SAVE] 44504683M -> completado
+[W1|11:41:33] [OK]  44504683M: 3 líneas
+  [Extracción] Buscando: 28995448S (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 28995448S NO ES CLIENTE
+  [Login] Preparando entorno (nuevo acto comercial)...
+[W1|11:42:20] [SAVE] 28995448S -> no_cliente
+[W1|11:42:20] [OK]  28995448S: 1 líneas
+  [Extracción] Buscando: 34846227P (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: GUILLERMO JUAN EXPOSITO PEREZ | DNI: 34846227P | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE EUCLIDES, Nº 13, 04230, HUERCAL DE ALMERIA, ALMERIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 950080381
+    -> Línea: 629582732
+    -> Línea: 606951233
+    -> Línea: 665841248
+    -> Línea: 651836497
+    -> Línea: 695693984
+[W1|11:42:53] [SAVE] 34846227P -> completado
+[W1|11:42:54] [SAVE] 34846227P -> completado
+[W1|11:42:55] [SAVE] 34846227P -> completado
+[W1|11:42:55] [SAVE] 34846227P -> completado
+[W1|11:42:56] [SAVE] 34846227P -> completado
+[W1|11:42:57] [SAVE] 34846227P -> completado
+[W1|11:42:57] [OK]  34846227P: 6 líneas
+  [Extracción] Buscando: 28920356H (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: MARIA DEL CARMEN PEREZ JIMENEZ | DNI: 28920356H | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE VIRGEN DE LA ESTRELLA, Nº 4, - LO, 41011, SEVILLA, SEVILLA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 955729699
+    -> Línea: 635071733
+    -> Línea: 605831836
+    -> Línea: 685134727
+    -> Línea: 635678472
+    -> Línea: 692980397
+[W1|11:43:32] [SAVE] 28920356H -> completado
+[W1|11:43:33] [SAVE] 28920356H -> completado
+[W1|11:43:33] [SAVE] 28920356H -> completado
+[W1|11:43:34] [SAVE] 28920356H -> completado
+[W1|11:43:35] [SAVE] 28920356H -> completado
+[W1|11:43:36] [SAVE] 28920356H -> completado
+[W1|11:43:36] [OK]  28920356H: 6 líneas
+  [Extracción] Buscando: 74916802Y (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: MARIA TERESA SOTO GARCIA | DNI: 74916802Y | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: CALLE MERECILLAS, Nº 13, BA 29200, ANTEQUERA, MALAGA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 951334078
+    -> Línea: 653224341
+    -> Línea: 652576413
+    -> Línea: 653224342
+    -> Línea: 658632539
+    -> Línea: 675980217
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 952841335
+    -> Línea: 951540666
+[W1|11:44:13] [SAVE] 74916802Y -> completado
+[W1|11:44:14] [SAVE] 74916802Y -> completado
+[W1|11:44:14] [SAVE] 74916802Y -> completado
+[W1|11:44:15] [SAVE] 74916802Y -> completado
+[W1|11:44:16] [SAVE] 74916802Y -> completado
+[W1|11:44:17] [SAVE] 74916802Y -> completado
+[W1|11:44:18] [SAVE] 74916802Y -> completado
+[W1|11:44:18] [SAVE] 74916802Y -> completado
+[W1|11:44:18] [OK]  74916802Y: 8 líneas
+  [Extracción] Buscando: 74626641J (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: EMILIO CORRAL VICO | DNI: 74626641J | Paquete: 4G
+  [Extracción] Dirección: CALLE CEREZO, Nº 1, PTL-1, 18800, BAZA, GRANADA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 675203904
+    -> Línea: 695187141
+[W1|11:44:39] [SAVE] 74626641J -> completado
+[W1|11:44:40] [SAVE] 74626641J -> completado
+[W1|11:44:40] [OK]  74626641J: 2 líneas
+  [Extracción] Buscando: 29479389J (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 29479389J NO ES CLIENTE
+  [Login] Preparando entorno (nuevo acto comercial)...
+[W1|11:45:26] [SAVE] 29479389J -> no_cliente
+[W1|11:45:26] [OK]  29479389J: 1 líneas
+  [Extracción] Buscando: 29606747C (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: JUAN JOSE ROMERO RODRIGUEZ | DNI: 29606747C | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: AVENIDA ARBOLEDA, Nº 144, 21440, LEPE, HUELVA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 959738880
+    -> Línea: 666600289
+    -> Línea: 654834810
+    -> Línea: 658693721
+    -> Línea: 689965456
+    -> Línea: 697661534
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 695341268
+[W1|11:46:02] [SAVE] 29606747C -> completado
+[W1|11:46:03] [SAVE] 29606747C -> completado
+[W1|11:46:04] [SAVE] 29606747C -> completado
+[W1|11:46:04] [SAVE] 29606747C -> completado
+[W1|11:46:05] [SAVE] 29606747C -> completado
+[W1|11:46:06] [SAVE] 29606747C -> completado
+[W1|11:46:07] [SAVE] 29606747C -> completado
+[W1|11:46:07] [OK]  29606747C: 7 líneas
+  [Extracción] Buscando: 50694743Y (Intento 1)
+  [Extracción] [WARN] Error recuperable: Page.wait_for_selector: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator("input[ng-model='locatorCtrl.inputDocument']") to be visible
+
+  [Extracción] [RETRY] Recuperando sesión (3 intentos con F5)...
+  [Login] Preparando entorno (nuevo acto comercial)...
+  [Extracción] F5 #1 falló: Fallo al armar entorno: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button:has-text('Nuevo acto comercial')").first
+
+  [Login] Preparando entorno (nuevo acto comercial)...
+  [Extracción] F5 #2 falló: Fallo al armar entorno: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button:has-text('Nuevo acto comercial')").first
+
+  [Login] Preparando entorno (nuevo acto comercial)...
+  [Extracción] F5 #3 falló: Fallo al armar entorno: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button:has-text('Nuevo acto comercial')").first
+
+  [Extracción] [FAIL] No se pudo recuperar tras 3 F5
+  [Extracción] Buscando: 50694743Y (Intento 2)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: MARIA JOSE VAZQUEZ LOPEZ | DNI: 50694743Y | Paquete: Go Empresa Flex
+  [Extracción] Dirección: CALLE LUIS DE SALAZAR, Nº 12, 4º - D, 28002, MADRID, MADRID
+  [Extracción] Página 1 de líneas...
+    -> Línea: 603243290
+    -> Línea: 625203307
+    -> Línea: 656385603
+[W1|11:49:01] [SAVE] 50694743Y -> completado
+[W1|11:49:01] [SAVE] 50694743Y -> completado
+[W1|11:49:02] [SAVE] 50694743Y -> completado
+[W1|11:49:02] [OK]  50694743Y: 3 líneas
+  [Extracción] Buscando: 08907904G (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: ARACELI VILLEGAS LOPEZ | DNI: 08907904G | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE FRAGATA, Nº 31, BA - BAJO, 04711, ALMERIMAR, ALMERIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 950562277
+    -> Línea: 600648227
+    -> Línea: 635058330
+    -> Línea: 653786483
+    -> Línea: 663313781
+    -> Línea: 665807661
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 658197892
+    -> Línea: 625039669
+[W1|11:49:42] [SAVE] 08907904G -> completado
+[W1|11:49:42] [SAVE] 08907904G -> completado
+[W1|11:49:43] [SAVE] 08907904G -> completado
+[W1|11:49:44] [SAVE] 08907904G -> completado
+[W1|11:49:45] [SAVE] 08907904G -> completado
+[W1|11:49:46] [SAVE] 08907904G -> completado
+[W1|11:49:46] [SAVE] 08907904G -> completado
+[W1|11:49:47] [SAVE] 08907904G -> completado
+[W1|11:49:47] [OK]  08907904G: 8 líneas
+  [Extracción] Buscando: 28472067E (Intento 1)
+  [Extracción] [WARN] Error recuperable: Page.wait_for_selector: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator("input[ng-model='locatorCtrl.inputDocument']") to be visible
+
+  [Extracción] [RETRY] Recuperando sesión (3 intentos con F5)...
+  [Login] Preparando entorno (nuevo acto comercial)...
+  [Extracción] F5 #1 falló: Fallo al armar entorno: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button:has-text('Nuevo acto comercial')").first
+
+  [Login] Preparando entorno (nuevo acto comercial)...
+  [Extracción] F5 #2 falló: Fallo al armar entorno: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button:has-text('Nuevo acto comercial')").first
+
+  [Login] Preparando entorno (nuevo acto comercial)...
+  [Extracción] F5 #3 falló: Fallo al armar entorno: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button:has-text('Nuevo acto comercial')").first
+
+  [Extracción] [FAIL] No se pudo recuperar tras 3 F5
+  [Extracción] Buscando: 28472067E (Intento 2)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: JOSE ANTONIO BERNAL AGUILERA | DNI: 28472067E | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE CRISTO DEL DESAMPARO Y ABANDONO, Nº 151, 000 - B, 41006, SEVILLA, SEVILLA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 954632094
+    -> Línea: 688920168
+    -> Línea: 615435684
+    -> Línea: 676819545
+    -> Línea: 675561319
+[W1|11:52:38] [SAVE] 28472067E -> completado
+[W1|11:52:38] [SAVE] 28472067E -> completado
+[W1|11:52:39] [SAVE] 28472067E -> completado
+[W1|11:52:40] [SAVE] 28472067E -> completado
+[W1|11:52:41] [SAVE] 28472067E -> completado
+[W1|11:52:41] [OK]  28472067E: 5 líneas
+  [Extracción] Buscando: 73988489L (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: JUAN BAUTISTA MARTINEZ FERRER | DNI: 73988489L | Paquete: Love Empresa Activa
+  [Extracción] Dirección: CALLE GRAN CAPITÁN, Nº 11, 003 - DCHA, 18002, GRANADA, GRANADA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 958274379
+    -> Línea: 658803654
+    -> Línea: 654768042
+[W1|11:53:04] [SAVE] 73988489L -> completado
+[W1|11:53:04] [SAVE] 73988489L -> completado
+[W1|11:53:05] [SAVE] 73988489L -> completado
+[W1|11:53:05] [OK]  73988489L: 3 líneas
+  [Extracción] Buscando: 50694743Y (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: MARIA JOSE VAZQUEZ LOPEZ | DNI: 50694743Y | Paquete: Go Empresa Flex
+  [Extracción] Dirección: CALLE LUIS DE SALAZAR, Nº 12, 4º - D, 28002, MADRID, MADRID
+  [Extracción] Página 1 de líneas...
+    -> Línea: 603243290
+    -> Línea: 625203307
+    -> Línea: 656385603
+[W1|11:53:30] [SAVE] 50694743Y -> completado
+[W1|11:53:31] [SAVE] 50694743Y -> completado
+[W1|11:53:32] [SAVE] 50694743Y -> completado
+[W1|11:53:32] [OK]  50694743Y: 3 líneas
+  [Extracción] Buscando: 33266886P (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: PATRICIA TOURIÑO LADO | DNI: 33266886P | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: CALLE RUA NOVA, Nº 43, BA 15702, SANTIAGO DE COMPOSTELA, A CORUNA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 981585303
+    -> Línea: 673097092
+    -> Línea: 665546779
+[W1|11:53:52] [SAVE] 33266886P -> completado
+[W1|11:53:53] [SAVE] 33266886P -> completado
+[W1|11:53:54] [SAVE] 33266886P -> completado
+[W1|11:53:54] [OK]  33266886P: 3 líneas
+  [Extracción] Buscando: 24183630G (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: GUILLERMO IBAÑEZ ALBARRACIN | DNI: 24183630G | Paquete: Love Empresa Activa
+  [Extracción] Dirección: PLAZA DE EUROPA, Nº 3, BA - D, 18014, GRANADA, GRANADA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 958964149
+    -> Línea: 675675987
+    -> Línea: 618385147
+    -> Línea: 675919696
+[W1|11:54:28] [SAVE] 24183630G -> completado
+[W1|11:54:29] [SAVE] 24183630G -> completado
+[W1|11:54:30] [SAVE] 24183630G -> completado
+[W1|11:54:31] [SAVE] 24183630G -> completado
+[W1|11:54:31] [OK]  24183630G: 4 líneas
+  [Extracción] Buscando: 44504683M (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: MARTA DESE ALONSO | DNI: 44504683M | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: PLAZA AYUNTAMIENTO, Nº 8, - 12, 46002, VALENCIA, VALENCIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 960080363
+    -> Línea: 600655301
+    -> Línea: 692233262
+[W1|11:54:51] [SAVE] 44504683M -> completado
+[W1|11:54:52] [SAVE] 44504683M -> completado
+[W1|11:54:53] [SAVE] 44504683M -> completado
+[W1|11:54:53] [OK]  44504683M: 3 líneas
+  [Extracción] Buscando: 28995448S (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 28995448S NO ES CLIENTE
+  [Login] Preparando entorno (nuevo acto comercial)...
+[W1|11:55:39] [SAVE] 28995448S -> no_cliente
+[W1|11:55:39] [OK]  28995448S: 1 líneas
+  [Extracción] Buscando: 34846227P (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: GUILLERMO JUAN EXPOSITO PEREZ | DNI: 34846227P | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE EUCLIDES, Nº 13, 04230, HUERCAL DE ALMERIA, ALMERIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 950080381
+    -> Línea: 629582732
+    -> Línea: 606951233
+    -> Línea: 665841248
+    -> Línea: 651836497
+    -> Línea: 695693984
+[W1|11:56:08] [SAVE] 34846227P -> completado
+[W1|11:56:09] [SAVE] 34846227P -> completado
+[W1|11:56:10] [SAVE] 34846227P -> completado
+[W1|11:56:11] [SAVE] 34846227P -> completado
+[W1|11:56:11] [SAVE] 34846227P -> completado
+[W1|11:56:12] [SAVE] 34846227P -> completado
+[W1|11:56:12] [OK]  34846227P: 6 líneas
+  [Extracción] Buscando: 28920356H (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: MARIA DEL CARMEN PEREZ JIMENEZ | DNI: 28920356H | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE VIRGEN DE LA ESTRELLA, Nº 4, - LO, 41011, SEVILLA, SEVILLA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 955729699
+    -> Línea: 635071733
+    -> Línea: 605831836
+    -> Línea: 685134727
+    -> Línea: 635678472
+    -> Línea: 692980397
+[W1|11:56:42] [SAVE] 28920356H -> completado
+[W1|11:56:42] [SAVE] 28920356H -> completado
+[W1|11:56:43] [SAVE] 28920356H -> completado
+[W1|11:56:44] [SAVE] 28920356H -> completado
+[W1|11:56:45] [SAVE] 28920356H -> completado
+[W1|11:56:46] [SAVE] 28920356H -> completado
+[W1|11:56:46] [OK]  28920356H: 6 líneas[W1|12:12:10] [INI]  Worker iniciado (PID: 26244)
+[W1|12:12:10] [SIN]  Proxy: http://92.113.83.36:5981
+  [Login] Iniciando sesión...
+  [Login] [OK] Login exitoso
+  [Login] Seleccionando marca Orange...
+  [Login] [OK] Marca Orange seleccionada
+  [Login] Preparando entorno (nuevo acto comercial)...
+  [Login] [OK] Entorno listo
+[W1|12:12:49] [LOCK] Login exitoso
+  [Extracción] Buscando: 52871798L (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: ISRAEL EXPOSITO RODRIGUEZ | DNI: 52871798L | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE GENERAL SERRANO, Nº 32, 18650, DURCAL, GRANADA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 858993035
+    -> Línea: 657581203
+    -> Línea: 617577700
+    -> Línea: 641236894
+    -> Línea: 652272100
+    -> Línea: 722413953
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 625056452
+[W1|12:13:21] [SAVE] 52871798L (linea: 858993035) -> completado
+[W1|12:13:22] [SAVE] 52871798L (linea: 657581203) -> completado
+[W1|12:13:23] [SAVE] 52871798L (linea: 617577700) -> completado
+[W1|12:13:24] [SAVE] 52871798L (linea: 641236894) -> completado
+[W1|12:13:26] [SAVE] 52871798L (linea: 652272100) -> completado
+[W1|12:13:27] [SAVE] 52871798L (linea: 722413953) -> completado
+[W1|12:13:28] [SAVE] 52871798L (linea: 625056452) -> completado
+[W1|12:13:28] [OK]  52871798L: 7 líneas
+  [Extracción] Buscando: 24183630G (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: GUILLERMO IBAÑEZ ALBARRACIN | DNI: 24183630G | Paquete: Love Empresa Activa
+  [Extracción] Dirección: PLAZA DE EUROPA, Nº 3, BA - D, 18014, GRANADA, GRANADA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 958964149
+    -> Línea: 675675987
+    -> Línea: 618385147
+    -> Línea: 675919696
+[W1|12:13:50] [SAVE] 24183630G (linea: 958964149) -> completado
+[W1|12:13:51] [SAVE] 24183630G (linea: 675675987) -> completado
+[W1|12:13:52] [SAVE] 24183630G (linea: 618385147) -> completado
+[W1|12:13:53] [SAVE] 24183630G (linea: 675919696) -> completado
+[W1|12:13:53] [OK]  24183630G: 4 líneas
+  [Extracción] Buscando: 19837586V (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 19837586V NO ES CLIENTE
+  [Login] Preparando entorno (nuevo acto comercial)...
+[W1|12:14:40] [SAVE] 19837586V (linea: 19837586V) -> no_cliente
+[W1|12:14:40] [OK]  19837586V: 1 líneas
+  [Extracción] Buscando: 24399483W (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 24399483W NO ES CLIENTE
+  [Login] Preparando entorno (nuevo acto comercial)...
+[W1|12:15:27] [SAVE] 24399483W (linea: 24399483W) -> no_cliente
+[W1|12:15:27] [OK]  24399483W: 1 líneas
+  [Extracción] Buscando: 44504683M (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: MARTA DESE ALONSO | DNI: 44504683M | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: PLAZA AYUNTAMIENTO, Nº 8, - 12, 46002, VALENCIA, VALENCIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 960080363
+    -> Línea: 600655301
+    -> Línea: 692233262
+[W1|12:15:47] [SAVE] 44504683M (linea: 960080363) -> completado
+[W1|12:15:48] [SAVE] 44504683M (linea: 600655301) -> completado
+[W1|12:15:49] [SAVE] 44504683M (linea: 692233262) -> completado
+[W1|12:15:49] [OK]  44504683M: 3 líneas
+  [Extracción] Buscando: 53230039N (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: Jorge Galvañ Molina | DNI: 53230039N | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: CALLE SAN GREGORIO, Nº 31, 03009, ALICANTE/ALACANT, ALICANTE
+  [Extracción] Página 1 de líneas...
+    -> Línea: 965186669
+    -> Línea: 650596020
+    -> Línea: 677532041
+    -> Línea: 695870284
+[W1|12:16:16] [SAVE] 53230039N (linea: 965186669) -> completado
+[W1|12:16:17] [SAVE] 53230039N (linea: 650596020) -> completado
+[W1|12:16:18] [SAVE] 53230039N (linea: 677532041) -> completado
+[W1|12:16:20] [SAVE] 53230039N (linea: 695870284) -> completado
+[W1|12:16:20] [OK]  53230039N: 4 líneas
+  [Extracción] Buscando: 28995448S (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 28995448S NO ES CLIENTE
+  [Login] Preparando entorno (nuevo acto comercial)...
+[W1|12:17:06] [SAVE] 28995448S (linea: 28995448S) -> no_cliente
+[W1|12:17:06] [OK]  28995448S: 1 líneas
+  [Extracción] Buscando: 29002136X (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: MARIA DE LOS ANGELES RIQUELME RIQUELME | DNI: 29002136X | Paquete: Go Empresa Flex
+  [Extracción] Dirección: TRAVESIA MAYOR, Nº 3, BA 03316, PARROQUIA DE LA MATANZA, ALICANTE
+  [Extracción] Página 1 de líneas...
+    -> Línea: 699205123
+    -> Línea: 652996171
+[W1|12:17:23] [SAVE] 29002136X (linea: 699205123) -> completado
+[W1|12:17:24] [SAVE] 29002136X (linea: 652996171) -> completado
+[W1|12:17:24] [OK]  29002136X: 2 líneas
+  [Extracción] Buscando: 20153961G (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: JOSE ANTONIO MUÑOZ SEDEÑO | DNI: 20153961G | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE DEL MIG, Nº 2, 46131, BONREPOS I MIRAMBELL, VALENCIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 961855147
+    -> Línea: 666279471
+    -> Línea: 605857039
+    -> Línea: 659195767
+    -> Línea: 664054786
+    -> Línea: 670365192
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 654457369
+    -> Línea: 961851531
+    -> Línea: 960723772
+    -> Línea: 960721977
+[W1|12:17:57] [SAVE] 20153961G (linea: 961855147) -> completado
+[W1|12:17:58] [SAVE] 20153961G (linea: 666279471) -> completado
+[W1|12:17:59] [SAVE] 20153961G (linea: 605857039) -> completado
+[W1|12:18:00] [SAVE] 20153961G (linea: 659195767) -> completado
+[W1|12:18:01] [SAVE] 20153961G (linea: 664054786) -> completado
+[W1|12:18:03] [SAVE] 20153961G (linea: 670365192) -> completado
+[W1|12:18:04] [SAVE] 20153961G (linea: 654457369) -> completado
+[W1|12:18:05] [SAVE] 20153961G (linea: 961851531) -> completado
+[W1|12:18:06] [SAVE] 20153961G (linea: 960723772) -> completado
+[W1|12:18:07] [SAVE] 20153961G (linea: 960721977) -> completado
+[W1|12:18:07] [OK]  20153961G: 10 líneas
+  [Extracción] Buscando: 73387621A (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: JOSE JAVIER CORCOLES CASTELL | DNI: 73387621A | Paquete: Love Empresa Activa
+  [Extracción] Dirección: CALLE DE SANT ROC, Nº 80, 12589, CALIG, CASTELLON
+  [Extracción] Página 1 de líneas...
+    -> Línea: 877072127
+    -> Línea: 615014713
+    -> Línea: 695553569
+[W1|12:18:29] [SAVE] 73387621A (linea: 877072127) -> completado
+[W1|12:18:30] [SAVE] 73387621A (linea: 615014713) -> completado
+[W1|12:18:31] [SAVE] 73387621A (linea: 695553569) -> completado
+[W1|12:18:31] [OK]  73387621A: 3 líneas
+  [Extracción] Buscando: 53707177S (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: DANIEL JOSE ACIEN ALVAREZ | DNI: 53707177S | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE JACINTO BENAVENTE, Nº 23, 04700, EL EJIDO, ALMERIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 950377142
+    -> Línea: 622950081
+    -> Línea: 647806064
+    -> Línea: 649911281

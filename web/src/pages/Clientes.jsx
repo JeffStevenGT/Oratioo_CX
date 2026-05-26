@@ -87,78 +87,125 @@ export default function Clientes() {
 
   // ── Filtrado + búsqueda ────────────────────────────────────────
 
+  // Agrupar por DNI: si un cliente tiene CIMA en UNA linea y Renove en OTRA, mostrar
   const filtered = useMemo(() => {
-    let result = [...clientes]
-
-    // Excluir no_cliente
-    // Solo mostrar leads procesados por el bot (estado = completado)
-    result = result.filter((c) => {
+    // 1. Agrupar por DNI
+    const grupos = {}
+    for (const c of clientes) {
       const ad = c.atributos_dinamicos || {}
-      return ad.estado === 'completado'
-    })
-
-    // ── Aplicar TODOS los filtros activos (AND) ──
-    // CIMA
-    if (cimaFilter === 'SI') {
-      result = result.filter((c) => (c.atributos_dinamicos || {}).cima === 'SI')
-    } else if (cimaFilter === 'NO') {
-      result = result.filter((c) => (c.atributos_dinamicos || {}).cima !== 'SI')
+      if (ad.estado !== 'completado') continue
+      const dni = c.dni
+      if (!grupos[dni]) {
+        grupos[dni] = {
+          dni: dni,
+          nombre: c.nombre || ad.datos_basicos?.nombre || '',
+          created_at: c.created_at,
+          _lineas: [],
+          _cima: false,
+          _renove_mixto: false,
+          _variantes: new Set(),
+        }
+      }
+      const g = grupos[dni]
+      g._lineas.push(c)
+      if (ad.cima === 'SI') g._cima = true
+      if (ad.tiene_renove_mixto) g._renove_mixto = true
+      if (ad.renove_mixto_variante && ad.renove_mixto_variante !== 'N/A') {
+        g._variantes.add(ad.renove_mixto_variante)
+      }
+      // Usar datos de la primera linea para mostrar
+      if (g._lineas.length === 1) {
+        g.linea = c.linea
+        g.paquete = c.paquete
+        g.atributos_dinamicos = {
+          cima: ad.cima,
+          tiene_renove_mixto: ad.tiene_renove_mixto,
+          renove_mixto_variante: ad.renove_mixto_variante || 'N/A',
+          datos_basicos: ad.datos_basicos,
+          linea: ad.linea,
+          pestanas: ad.pestanas,
+          pipeline: ad.pipeline,
+          estado: 'completado',
+        }
+      }
     }
 
-    // Renove Mixto
+    let result = Object.values(grupos)
+
+    // Actualizar atributos_dinamicos con datos agregados (CIMA y Renove)
+    for (const g of result) {
+      const variantesArr = Array.from(g._variantes)
+      g.atributos_dinamicos = g.atributos_dinamicos || {}
+      g.atributos_dinamicos.cima = g._cima ? 'SI' : 'NO'
+      g.atributos_dinamicos.tiene_renove_mixto = g._renove_mixto
+      g.atributos_dinamicos.renove_mixto_variante = variantesArr.length > 0 ? variantesArr.join(', ') : 'N/A'
+      g.atributos_dinamicos.estado = 'completado'
+    }
+
+    // ── Aplicar TODOS los filtros activos (AND) ──
+    // CIMA (si ALGUNA linea tiene CIMA)
+    if (cimaFilter === 'SI') {
+      result = result.filter((g) => g._cima)
+    } else if (cimaFilter === 'NO') {
+      result = result.filter((g) => !g._cima)
+    }
+
+    // Renove Mixto (si ALGUNA linea tiene Renove Mixto)
     if (renoveFilter === 'SI') {
-      result = result.filter((c) => !!(c.atributos_dinamicos || {}).tiene_renove_mixto)
+      result = result.filter((g) => g._renove_mixto)
     } else if (renoveFilter === 'NO') {
-      result = result.filter((c) => !(c.atributos_dinamicos || {}).tiene_renove_mixto)
+      result = result.filter((g) => !g._renove_mixto)
     }
 
     // Variantes de Renove (AND entre variantes seleccionadas)
     for (const vk of variantesActivas) {
       const vData = VARIANTES_VALIOSAS.find(x => x.key === vk)
       if (vData) {
-        result = result.filter((c) => (c.atributos_dinamicos || {}).renove_mixto_variante === vData.bd)
+        result = result.filter((g) => g._variantes.has(vData.bd))
       }
     }
 
     // Tags (AND entre tags seleccionados)
     for (const tk of tagsActivas) {
-      result = result.filter((c) => {
-        const ad = c.atributos_dinamicos || {}
-        const pestanas = ad.pestanas || {}
-        const todosDatos = JSON.stringify(ad).toLowerCase()
-        switch (tk) {
-          case 'multidispositivo':
-            return Object.values(pestanas).join(' ').toLowerCase().includes('multidispositivo') || todosDatos.includes('multidispositivo')
-          case 'pago_unico':
-            return Object.values(pestanas).join(' ').toLowerCase().includes('pago único') || todosDatos.includes('pago único')
-          default:
-            return true
-        }
+      result = result.filter((g) => {
+        return g._lineas.some((c) => {
+          const ad = c.atributos_dinamicos || {}
+          const pestanas = ad.pestanas || {}
+          const todosDatos = JSON.stringify(ad).toLowerCase()
+          switch (tk) {
+            case 'multidispositivo':
+              return Object.values(pestanas).join(' ').toLowerCase().includes('multidispositivo') || todosDatos.includes('multidispositivo')
+            case 'pago_unico':
+              return Object.values(pestanas).join(' ').toLowerCase().includes('pago único') || todosDatos.includes('pago único')
+            default:
+              return true
+          }
+        })
       })
     }
 
     // ── Rango de fechas ──
     if (dateFrom) {
-      result = result.filter((c) => {
-        if (!c.created_at) return false
-        return c.created_at >= `${dateFrom}T00:00:00Z`
+      result = result.filter((g) => {
+        if (!g.created_at) return false
+        return g.created_at >= `${dateFrom}T00:00:00Z`
       })
     }
     if (dateTo) {
-      result = result.filter((c) => {
-        if (!c.created_at) return false
-        return c.created_at <= `${dateTo}T23:59:59Z`
+      result = result.filter((g) => {
+        if (!g.created_at) return false
+        return g.created_at <= `${dateTo}T23:59:59Z`
       })
     }
 
     // ── Búsqueda ──
     if (search.trim()) {
       const q = search.trim().toLowerCase()
-      result = result.filter((c) => {
-        const dni = (c.dni || '').toLowerCase()
-        const nombre = (c.atributos_dinamicos?.datos_basicos?.nombre || '').toLowerCase()
-        const linea = (c.linea || c.atributos_dinamicos?.linea?.linea_principal || '').toLowerCase()
-        return dni.includes(q) || nombre.includes(q) || linea.includes(q)
+      result = result.filter((g) => {
+        const dni = (g.dni || '').toLowerCase()
+        const nombre = (g.nombre || '').toLowerCase()
+        const lineasCoinciden = g._lineas.some(l => (l.linea || '').toLowerCase().includes(q))
+        return dni.includes(q) || nombre.includes(q) || lineasCoinciden
       })
     }
 
@@ -166,16 +213,14 @@ export default function Clientes() {
     if (sortConfig.key) {
       result.sort((a, b) => {
         let aVal, bVal
-        const attrA = a.atributos_dinamicos || {}
-        const attrB = b.atributos_dinamicos || {}
         switch (sortConfig.key) {
           case 'dni': aVal = a.dni || ''; bVal = b.dni || ''; break
-          case 'nombre': aVal = attrA.datos_basicos?.nombre || ''; bVal = attrB.datos_basicos?.nombre || ''; break
-          case 'cima': aVal = attrA.cima || ''; bVal = attrB.cima || ''; break
-          case 'linea': aVal = a.linea || ''; bVal = b.linea || ''; break
-          case 'paquete': aVal = a.paquete || ''; bVal = b.paquete || ''; break
-          case 'renove': aVal = attrA.tipo_renove || ''; bVal = attrB.tipo_renove || ''; break
-          case 'estado': aVal = attrA.estado || ''; bVal = attrB.estado || ''; break
+          case 'nombre': aVal = a.nombre || ''; bVal = b.nombre || ''; break
+          case 'cima': aVal = a._cima ? 'SI' : 'NO'; bVal = b._cima ? 'SI' : 'NO'; break
+          case 'linea': aVal = a._lineas[0]?.linea || ''; bVal = b._lineas[0]?.linea || ''; break
+          case 'paquete': aVal = a._lineas[0]?.paquete || ''; bVal = b._lineas[0]?.paquete || ''; break
+          case 'renove': aVal = a._renove_mixto ? 'SI' : 'NO'; bVal = b._renove_mixto ? 'SI' : 'NO'; break
+          case 'estado': aVal = 'completado'; bVal = 'completado'; break
           case 'fecha': aVal = a.created_at || ''; bVal = b.created_at || ''; break
           default: return 0
         }
@@ -208,6 +253,8 @@ export default function Clientes() {
     const ad = c.atributos_dinamicos || {}
     return ad.estado !== "no_cliente"
   })
+  // Contar DNIs unicos para el total
+  const dnisUnicos = new Set(totalReales.map(c => c.dni).filter(Boolean))
 
   const toggleCimaFilter = () => {
     if (cimaFilter === 'SI') setCimaFilter(null)
@@ -294,8 +341,8 @@ export default function Clientes() {
           <h1 className="text-xl font-bold text-oratioo-dark flex items-center gap-2"><Users size={22} className="text-oratioo-purple" /> Clientes</h1>
           <p className="text-sm text-oratioo-gray mt-1">
             {(cimaFilter || renoveFilter || variantesActivas.length > 0 || tagsActivas.length > 0 || dateFrom || dateTo)
-              ? `${filtered.length} de ${totalReales.length} clientes (filtros activos)`
-              : `${filtered.length} clientes encontrados (de ${totalReales.length} reales)`}
+              ? `${filtered.length} de ${dnisUnicos.size} clientes (filtros activos)`
+              : `${filtered.length} clientes encontrados (de ${dnisUnicos.size} reales)`}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -452,12 +499,12 @@ export default function Clientes() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan={9} className="text-center py-12">
+                <tr><td colSpan={8} className="text-center py-12">
                   <Loader2 size={24} className="animate-spin text-oratioo-purple mx-auto mb-2" />
                   <p className="text-oratioo-gray text-sm">Cargando clientes...</p>
                 </td></tr>
               ) : filtered.length === 0 ? (
-                <tr><td colSpan={9} className="text-center py-12">
+                <tr><td colSpan={8} className="text-center py-12">
                   <Users size={32} className="text-oratioo-gray mx-auto mb-2" />
                   <p className="text-oratioo-gray text-sm">No se encontraron clientes</p>
                   <p className="text-oratioo-gray text-xs mt-1">Intenta ajustar los filtros</p>

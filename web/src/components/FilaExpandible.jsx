@@ -102,16 +102,6 @@ export default function FilaExpandible({ cliente, abierto, onToggle }) {
             <span className="text-[#0a6ea9] font-medium text-xs">{attr.renove_mixto_variante}</span>
           ) : <span className="text-[#7c757c]">—</span>}
         </td>
-        <td className="table-cell" onClick={e => e.stopPropagation()}>
-          {canEdit ? (
-            <select value={estado} onChange={e => { const val = e.target.value; setEstado(val); guardarPipeline(val) }}
-              className={`rounded-full px-2 py-1 text-xs border-0 cursor-pointer ${estadoCfg.color}`}>
-              {PIPELINE_ESTADOS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
-            </select>
-          ) : (
-            <span className={`rounded-full px-2 py-1 text-xs font-normal ${estadoCfg.color}`}>{estadoCfg.label}</span>
-          )}
-        </td>
         <td className="table-cell text-[#7c757c] text-xs">
           {cliente.created_at ? new Date(cliente.created_at).toLocaleDateString('es') : '—'}
         </td>
@@ -143,41 +133,7 @@ export default function FilaExpandible({ cliente, abierto, onToggle }) {
                     </div>
                   </div>
 
-                  {/* Pipeline CRM */}
-                  {canEdit && (
-                    <div className="card !bg-white/60">
-                      <h4 className="text-sm font-semibold text-[#1a1030] mb-3 flex items-center gap-2">
-                        <UserPlus size={14} className="text-[#0a6ea9]" /> Gestión Comercial
-                      </h4>
-                      <div className="space-y-3">
-                        <div>
-                          <label className="text-xs text-[#7c757c] mb-1 block">Estado</label>
-                          <select value={estado} onChange={e => setEstado(e.target.value)}
-                            className={`w-full border border-[#e8dce6] rounded-lg px-3 py-2 text-sm ${estadoCfg.color}`}>
-                            {PIPELINE_ESTADOS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
-                          </select>
-                        </div>
-                        <div>
-                          <label className="text-xs text-[#7c757c] mb-1 block">Asesor asignado</label>
-                          <select value={asesorId} onChange={e => setAsesorId(e.target.value)}
-                            className="w-full border border-[#e8dce6] rounded-lg px-3 py-2 text-sm">
-                            <option value="">Sin asignar</option>
-                            {asesores.map(a => <option key={a.id} value={a.id}>{a.nombre}</option>)}
-                          </select>
-                        </div>
-                        <div>
-                          <label className="text-xs text-[#7c757c] mb-1 block">Notas</label>
-                          <textarea value={notas} onChange={e => setNotas(e.target.value)}
-                            rows={2} className="w-full border border-[#e8dce6] rounded-lg px-3 py-2 text-sm resize-none"
-                            placeholder="Notas de la llamada..." />
-                        </div>
-                        <button onClick={guardarPipeline} disabled={saving}
-                          className="bg-[#0a6ea9] hover:bg-[#085d8f] text-white text-xs px-4 py-2 rounded-lg flex items-center gap-1.5 transition-all">
-                          <Save size={12} /> {saving ? 'Guardando...' : 'Guardar'}
-                        </button>
-                      </div>
-                    </div>
-                  )}
+
                 </div>
 
                 <div className="space-y-3">
