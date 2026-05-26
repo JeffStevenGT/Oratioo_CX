@@ -292,7 +292,6 @@ export default function Sidebar({ onLogout }) {
                     .single()
                   if (data?.proxy_asignado) proxyAsignado = data.proxy_asignado
                 } catch {}
-
                 await supabase.from('comandos_bot').insert({
                   maquina_destino: 'PC-Jeff',
                   comando: 'abrir_navegador',
