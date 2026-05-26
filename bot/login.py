@@ -354,40 +354,42 @@ def extraer_datos_cliente(page: Page, numero: str, buscar_por_dni: bool = True):
                     # ── Detectar Renove: extraer TODO el texto del area de campañas ──
                     tiene_rm = False
                     variante_renove = "N/A"
+                    texto_capturado = ""
                     try:
-                        # Extraer todo el texto de la seccion derecha (campanas/ofertas)
-                        seccion_derecha = bloque.locator(".client-tariff-container-55")
-                        if seccion_derecha.count() > 0:
-                            texto_completo_campanas = seccion_derecha.first.inner_text()
+                        # Extraer todo el texto (incluso hidden) del bloque de campanas
+                        seccion = bloque.locator(".client-tariff-container-55")
+                        if seccion.count() > 0:
+                            texto_capturado = seccion.first.text_content() or ""
                         else:
-                            texto_completo_campanas = bloque.inner_text()
+                            texto_capturado = bloque.text_content() or ""
+                        print(f"  [Renove] Texto capturado de la linea {num_linea}: [{texto_capturado[:300]}]")
                         
-                        # Buscar "Renove" en todo el texto visible
-                        tiene_renove_general = "Renove" in texto_completo_campanas
-                        tiene_rm = bool(re.search(r'Renove\s+mixto', texto_completo_campanas, re.IGNORECASE))
+                        # Buscar "Renove" en todo el texto
+                        tiene_renove_general = "Renove" in texto_capturado
+                        tiene_rm = bool(re.search(r'Renove\s+mixto', texto_capturado, re.IGNORECASE))
+                        print(f"  [Renove] tiene_renove_general={tiene_renove_general}, tiene_rm={tiene_rm}")
                         
-                        # Clasificar variante
                         if tiene_rm:
-                            if re.search(r'm[aá]ximo\s+descuento', texto_completo_campanas, re.IGNORECASE):
+                            if re.search(r'm[aá]ximo\s+descuento', texto_capturado, re.IGNORECASE):
                                 variante_renove = "Renove mixto al mejor precio con máximo descuento"
-                            elif re.search(r'con\s+descuento', texto_completo_campanas, re.IGNORECASE):
+                            elif re.search(r'con\s+descuento', texto_capturado, re.IGNORECASE):
                                 variante_renove = "Renove mixto al mejor precio con descuento"
-                            elif re.search(r'mejor\s+precio', texto_completo_campanas, re.IGNORECASE):
+                            elif re.search(r'mejor\s+precio', texto_capturado, re.IGNORECASE):
                                 variante_renove = "Renove mixto al mejor precio"
                             else:
                                 variante_renove = "Renove mixto"
                         elif tiene_renove_general:
-                            texto_up = texto_completo_campanas.upper()
+                            texto_up = texto_capturado.upper()
                             if "MULTIDISPOSITIVO" in texto_up:
                                 variante_renove = "Renove Multidispositivo"
                             elif "ILIMITADO" in texto_up:
                                 variante_renove = "Renove Ilimitado"
                             else:
-                                # Ultimo recurso: buscar cualquier texto con "Renove"
-                                match_renove = re.search(r'Renove[^\n]*', texto_completo_campanas, re.IGNORECASE)
-                                variante_renove = match_renove.group(0).strip() if match_renove else "Renove (encontrado)"
+                                m = re.search(r'Renove[^\n]*', texto_capturado, re.IGNORECASE)
+                                variante_renove = m.group(0).strip() if m else "Renove (encontrado)"
+                        print(f"  [Renove] variante_asignada=\"{variante_renove}\"")
                     except Exception as e:
-                        print(f"  [Extracción] Error detectando Renove: {e}")
+                        print(f"  [Renove] Error: {e}")
 
                     
                     # Clasificar variante

@@ -267,6 +267,10 @@ def procesar_dni(page, dni: str) -> bool:
             }
 
             guardar_resultado(dni, datos, estado=estado)
+            # Loggear deteccion de Renove
+            renove_variante = dinamicos.get("renove_mixto_variante", "N/A")
+            tiene_rm = dinamicos.get("tiene_renove_mixto", False)
+            log(f"[RENOVE] Linea {fila.get('Linea', '?')}: variante={renove_variante}, tiene_rm={tiene_rm}")
 
         log(f"[OK]  {dni}: {len(filas)} líneas")
         return True

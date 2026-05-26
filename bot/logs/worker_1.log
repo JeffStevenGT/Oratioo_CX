@@ -1173,4 +1173,155 @@ Call log:
     -> Línea: 950377142
     -> Línea: 622950081
     -> Línea: 647806064
-    -> Línea: 649911281
+    -> Línea: 649911281[W1|12:32:04] [INI]  Worker iniciado (PID: 22144)
+[W1|12:32:04] [SIN]  Proxy: http://64.137.89.222:6295
+  [Login] Iniciando sesión...
+  [Login] [OK] Login exitoso
+  [Login] Seleccionando marca Orange...
+  [Login] [OK] Marca Orange seleccionada
+  [Login] Preparando entorno (nuevo acto comercial)...
+  [Login] [OK] Entorno listo
+[W1|12:32:41] [LOCK] Login exitoso
+  [Extracción] Buscando: 52871798L (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: ISRAEL EXPOSITO RODRIGUEZ | DNI: 52871798L | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE GENERAL SERRANO, Nº 32, 18650, DURCAL, GRANADA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 858993035
+      [Renove] Buscando tarjetas para linea 858993035...
+      [Renove] Total tarjetas encontradas: 0
+      [Renove] Texto para buscar: "Pestaña oculta  Principal
+TV
+CIMA
+Activo desde 17/02/2023 global_cima"
+      [Renove] tiene_rm=False, tiene_renove_general=False, variante="N/A"
+    -> Línea: 657581203
+      [Renove] Buscando tarjetas para linea 657581203...
+      [Renove] Total tarjetas encontradas: 0
+      [Renove] Texto para buscar: "RENOVE MULTIDISPOSITIVO  Principal
+Activo desde 20/02/2023 global_cima"
+      [Renove] tiene_rm=False, tiene_renove_general=True, variante="N/A"
+    -> Línea: 617577700
+      [Renove] Buscando tarjetas para linea 617577700...
+      [Renove] Total tarjetas encontradas: 0
+      [Renove] Texto para buscar: "RENOVE MULTIDISPOSITIVO  Incluido en Pack
+Activo desde 20/02/2023 global_cima"
+      [Renove] tiene_rm=False, tiene_renove_general=True, variante="N/A"
+    -> Línea: 641236894
+      [Renove] Buscando tarjetas para linea 641236894...
+      [Renove] Total tarjetas encontradas: 0
+      [Renove] Texto para buscar: "RENOVE MULTIDISPOSITIVO  Incluido en Pack
+Activo desde 20/02/2023 global_cima"
+      [Renove] tiene_rm=False, tiene_renove_general=True, variante="N/A"
+    -> Línea: 652272100
+      [Renove] Buscando tarjetas para linea 652272100...
+      [Renove] Total tarjetas encontradas: 0
+      [Renove] Texto para buscar: "Pestaña oculta  Incluido en Pack
+Activo desde 20/02/2023 global_cima"
+      [Renove] tiene_rm=False, tiene_renove_general=False, variante="N/A"
+    -> Línea: 722413953
+      [Renove] Buscando tarjetas para linea 722413953...
+      [Renove] Total tarjetas encontradas: 0
+      [Renove] Texto para buscar: "RENOVE MULTIDISPOSITIVO  Incluido en Pack
+Activo desde 20/02/2023 global_cima"
+      [Renove] tiene_rm=False, tiene_renove_general=True, variante="N/A"
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 625056452
+      [Renove] Buscando tarjetas para linea 625056452...
+      [Renove] Total tarjetas encontradas: 0
+      [Renove] Texto para buscar: "No existen campañas de esta categoría para esta línea  Activo desde 19/02/2026 global_cima"
+      [Renove] tiene_rm=False, tiene_renove_general=False, variante="N/A"
+[W1|12:33:17] [SAVE] 52871798L (linea: 858993035) -> completado
+[W1|12:33:18] [SAVE] 52871798L (linea: 657581203) -> completado
+[W1|12:33:20] [SAVE] 52871798L (linea: 617577700) -> completado
+[W1|12:33:21] [SAVE] 52871798L (linea: 641236894) -> completado
+[W1|12:33:22] [SAVE] 52871798L (linea: 652272100) -> completado
+[W1|12:33:23] [SAVE] 52871798L (linea: 722413953) -> completado
+[W1|12:33:24] [SAVE] 52871798L (linea: 625056452) -> completado
+[W1|12:33:24] [OK]  52871798L: 7 líneas
+  [Extracción] Buscando: 24183630G (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: GUILLERMO IBAÑEZ ALBARRACIN | DNI: 24183630G | Paquete: Love Empresa Activa
+  [Extracción] Dirección: PLAZA DE EUROPA, Nº 3, BA - D, 18014, GRANADA, GRANADA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 958964149
+      [Renove] Buscando tarjetas para linea 958964149...
+      [Renove] Total tarjetas encontradas: 0
+      [Renove] Texto para buscar: "Pestaña oculta  Principal
+TV
+CIMA
+Activo desde 26/10/2020 global_cima"
+      [Renove] tiene_rm=False, tiene_renove_general=False, variante="N/A"
+    -> Línea: 675675987
+      [Renove] Buscando tarjetas para linea 675675987...
+      [Renove] Total tarjetas encontradas: 0
+      [Renove] Texto para buscar: "Pestaña oculta  Principal
+Activo desde 27/12/2004 global_cima"
+      [Renove] tiene_rm=False, tiene_renove_general=False, variante="N/A"
+    -> Línea: 618385147
+      [Renove] Buscando tarjetas para linea 618385147...
+      [Renove] Total tarjetas encontradas: 0
+      [Renove] Texto para buscar: "RENOVE MIXTO  Activo desde 08/02/2021 global_cima"
+      [Renove] tiene_rm=True, tiene_renove_general=True, variante="N/A"
+    -> Línea: 675919696
+      [Renove] Buscando tarjetas para linea 675919696...
+      [Renove] Total tarjetas encontradas: 0
+      [Renove] Texto para buscar: "No existen campañas de esta categoría para esta línea  Activo desde 17/12/2025 global_cima"
+      [Renove] tiene_rm=False, tiene_renove_general=False, variante="N/A"
+[W1|12:33:46] [SAVE] 24183630G (linea: 958964149) -> completado
+[W1|12:33:47] [SAVE] 24183630G (linea: 675675987) -> completado
+[W1|12:33:48] [SAVE] 24183630G (linea: 618385147) -> completado
+[W1|12:33:49] [SAVE] 24183630G (linea: 675919696) -> completado
+[W1|12:33:49] [OK]  24183630G: 4 líneas
+  [Extracción] Buscando: 19837586V (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 19837586V NO ES CLIENTE
+  [Login] Preparando entorno (nuevo acto comercial)...
+[W1|12:34:36] [SAVE] 19837586V (linea: 19837586V) -> no_cliente
+[W1|12:34:36] [OK]  19837586V: 1 líneas
+  [Extracción] Buscando: 24399483W (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 24399483W NO ES CLIENTE
+  [Login] Preparando entorno (nuevo acto comercial)...
+[W1|12:35:22] [SAVE] 24399483W (linea: 24399483W) -> no_cliente
+[W1|12:35:22] [OK]  24399483W: 1 líneas
+  [Extracción] Buscando: 44504683M (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
+  [Extracción] Cliente: MARTA DESE ALONSO | DNI: 44504683M | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: PLAZA AYUNTAMIENTO, Nº 8, - 12, 46002, VALENCIA, VALENCIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 960080363
+      [Renove] Buscando tarjetas para linea 960080363...
+      [Renove] Total tarjetas encontradas: 0
+      [Renove] Texto para buscar: "Pestaña oculta  Principal
+TV
+CIMA
+Activo desde 11/01/2016 global_cima"
+      [Renove] tiene_rm=False, tiene_renove_general=False, variante="N/A"
+    -> Línea: 600655301
+      [Renove] Buscando tarjetas para linea 600655301...
+      [Renove] Total tarjetas encontradas: 1
+      [Renove] Tarjeta #0: sin .card-tariff-label strong. HTML: <div class="card-tariff-info"><!----><!----><span class="card-tariff-info-text"> Ofrece Seguro Movil </span><div class="icon-delete"><!----></div></div><ocs-modal id="custom-modal-1" _nghost-ng-c54667
+      [Renove] Texto para buscar: "RENOVE MULTIDISPOSITIVO  Principal
+Activo desde 27/09/2010 global_cima"
+      [Renove] tiene_rm=False, tiene_renove_general=True, variante="N/A"
+    -> Línea: 692233262
+      [Renove] Buscando tarjetas para linea 692233262...
+      [Renove] Total tarjetas encontradas: 0
+      [Renove] Texto para buscar: "No existen campañas de esta categoría para esta línea  Activo desde 09/03/2026 global_cima"
+      [Renove] tiene_rm=False, tiene_renove_general=False, variante="N/A"
+[W1|12:35:43] [SAVE] 44504683M (linea: 960080363) -> completado
+[W1|12:35:44] [SAVE] 44504683M (linea: 600655301) -> completado
+[W1|12:35:46] [SAVE] 44504683M (linea: 692233262) -> completado
+[W1|12:35:46] [OK]  44504683M: 3 líneas
+  [Extracción] Buscando: 53230039N (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] [CIMA] Cliente CIMA detectado (barra superior)
