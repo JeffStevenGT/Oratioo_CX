@@ -56,18 +56,30 @@ export default function Clientes() {
   const fetchClientes = async () => {
     setLoading(true)
     try {
-      const { data, error } = await supabase
-        .from(TABLA_CLIENTES)
-        .select('*')
-        .order('created_at', { ascending: false })
+      let todosLosDatos = []
+      const PAGE_SIZE = 1000
+      let desde = 0
+      let hayMas = true
 
-      if (error) throw error
+      while (hayMas) {
+        const { data, error } = await supabase
+          .from(TABLA_CLIENTES)
+          .select('*')
+          .order('created_at', { ascending: false })
+          .range(desde, desde + PAGE_SIZE - 1)
 
-      let clientes = data || []
+        if (error) throw error
 
+        if (data && data.length > 0) {
+          todosLosDatos = [...todosLosDatos, ...data]
+          desde += PAGE_SIZE
+          if (data.length < PAGE_SIZE) hayMas = false
+        } else {
+          hayMas = false
+        }
+      }
 
-
-      setClientes(clientes)
+      setClientes(todosLosDatos)
     } catch (err) {
       console.error('Error fetching clientes:', err)
     } finally {
@@ -92,7 +104,7 @@ export default function Clientes() {
     const grupos = {}
     for (const c of clientes) {
       const ad = c.atributos_dinamicos || {}
-      if (ad.estado !== 'completado') continue
+      if (ad.estado !== 'completado' && ad.estado !== 'no_cliente') continue
       const dni = c.dni
       if (!grupos[dni]) {
         grupos[dni] = {
@@ -160,6 +172,11 @@ export default function Clientes() {
       }
       g.atributos_dinamicos.renove_mixto_variante = mejorVariante
       g.atributos_dinamicos.estado = 'completado'
+      // Asegurar nombre visible ("NO ES CLIENTE" para no_cliente)
+      if (!g.atributos_dinamicos.datos_basicos?.nombre && g.nombre) {
+        g.atributos_dinamicos.datos_basicos = g.atributos_dinamicos.datos_basicos || {}
+        g.atributos_dinamicos.datos_basicos.nombre = g.nombre
+      }
     }
 
     // ── Aplicar TODOS los filtros activos (AND) ──
@@ -286,12 +303,8 @@ export default function Clientes() {
     </th>
   )
 
-  const totalReales = clientes.filter((c) => {
-    const ad = c.atributos_dinamicos || {}
-    return ad.estado !== "no_cliente"
-  })
-  // Contar DNIs unicos para el total
-  const dnisUnicos = new Set(totalReales.map(c => c.dni).filter(Boolean))
+  // Contar DNIs unicos para el total (incluye completados + no_cliente)
+  const dnisUnicos = new Set(clientes.map(c => c.dni).filter(Boolean))
 
   const toggleCimaFilter = () => {
     if (cimaFilter === 'SI') setCimaFilter(null)

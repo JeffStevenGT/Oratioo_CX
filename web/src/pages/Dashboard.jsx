@@ -6,7 +6,7 @@ import StatCard from '../components/StatCard'
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(true)
-  const [stats, setStats] = useState({ total: 0, cima: 0, renoveMixto: 0, cimaRenove: 0, tasaExtraccion: 0, maxDescuento: 0, conDescuento: 0, mejorPrecio: 0, renoveBasico: 0, multidispositivo: 0, otros: 0 })
+  const [stats, setStats] = useState({ total: 0, cima: 0, renoveMixto: 0, cimaRenove: 0, tasaExtraccion: 0, maxDescuento: 0, conDescuento: 0, mejorPrecio: 0, renoveBasico: 0, multidispositivo: 0, otros: 0, noCliente: 0 })
   const [chartData, setChartData] = useState([])
   const [periodo, setPeriodo] = useState('all')
 
@@ -24,10 +24,27 @@ export default function Dashboard() {
     const p = periodoActual || periodo
     setLoading(true)
     try {
-      const { data } = await supabase.from(TABLA_CLIENTES).select('dni, created_at, atributos_dinamicos')
-      let clientes = (data || []).filter(c => c.atributos_dinamicos?.estado === 'completado')
-
+      let todosLosDatos = []
+      const PAGE_SIZE = 1000
+      let desde = 0
+      let hayMas = true
+      while (hayMas) {
+        const { data } = await supabase.from(TABLA_CLIENTES).select('dni, created_at, atributos_dinamicos').range(desde, desde + PAGE_SIZE - 1)
+        if (data && data.length > 0) {
+          todosLosDatos = [...todosLosDatos, ...data]
+          desde += PAGE_SIZE
+          if (data.length < PAGE_SIZE) hayMas = false
+        } else { hayMas = false }
+      }
       const fechaCorte = getDateFilter(p)
+
+      // Separar completados vs no_cliente
+      const completados = todosLosDatos.filter(c => c.atributos_dinamicos?.estado === 'completado')
+      const noClientes = todosLosDatos.filter(c => c.atributos_dinamicos?.estado === 'no_cliente')
+      const todosProcesados = todosLosDatos
+
+      // Aplicar filtro de fecha solo a completados (stats de bot)
+      let clientes = completados
       if (fechaCorte) {
         clientes = clientes.filter(c => {
           const f = c.atributos_dinamicos?.pipeline?.ultimo_cambio || c.created_at
@@ -35,8 +52,9 @@ export default function Dashboard() {
         })
       }
 
-      const total = clientes.length
-      const cima = clientes.filter(c => c.atributos_dinamicos?.cima === 'SI').length
+      const total = completados.length + noClientes.length
+      const noCliente = noClientes.length
+      const cima = completados.filter(c => c.atributos_dinamicos?.cima === 'SI').length
 
       const VARIANTES_MIXTO = [
         'Renove mixto al mejor precio con máximo descuento',
@@ -44,36 +62,36 @@ export default function Dashboard() {
         'Renove mixto al mejor precio',
         'Renove mixto',
       ]
-      const renoveMixto = clientes.filter(c => {
+      const renoveMixto = completados.filter(c => {
         const v = c.atributos_dinamicos?.renove_mixto_variante
         return v && VARIANTES_MIXTO.includes(v)
       }).length
 
-      const maxDescuento = clientes.filter(c => c.atributos_dinamicos?.renove_mixto_variante === 'Renove mixto al mejor precio con máximo descuento').length
-      const conDescuento = clientes.filter(c => c.atributos_dinamicos?.renove_mixto_variante === 'Renove mixto al mejor precio con descuento').length
-      const mejorPrecio = clientes.filter(c => c.atributos_dinamicos?.renove_mixto_variante === 'Renove mixto al mejor precio').length
-      const renoveBasico = clientes.filter(c => c.atributos_dinamicos?.renove_mixto_variante === 'Renove mixto').length
-      const multidispositivo = clientes.filter(c => c.atributos_dinamicos?.renove_mixto_variante === 'Renove Multidispositivo').length
-      const otros = clientes.filter(c => {
+      const maxDescuento = completados.filter(c => c.atributos_dinamicos?.renove_mixto_variante === 'Renove mixto al mejor precio con máximo descuento').length
+      const conDescuento = completados.filter(c => c.atributos_dinamicos?.renove_mixto_variante === 'Renove mixto al mejor precio con descuento').length
+      const mejorPrecio = completados.filter(c => c.atributos_dinamicos?.renove_mixto_variante === 'Renove mixto al mejor precio').length
+      const renoveBasico = completados.filter(c => c.atributos_dinamicos?.renove_mixto_variante === 'Renove mixto').length
+      const multidispositivo = completados.filter(c => c.atributos_dinamicos?.renove_mixto_variante === 'Renove Multidispositivo').length
+      const otros = completados.filter(c => {
         const v = c.atributos_dinamicos?.renove_mixto_variante
         return v && v !== 'N/A' && !VARIANTES_MIXTO.includes(v) && v !== 'Renove Multidispositivo'
       }).length
 
-      const cimaRenove = clientes.filter(c => c.atributos_dinamicos?.cima === 'SI' && (
+      const cimaRenove = completados.filter(c => c.atributos_dinamicos?.cima === 'SI' && (
         c.atributos_dinamicos?.renove_mixto_variante && VARIANTES_MIXTO.includes(c.atributos_dinamicos?.renove_mixto_variante)
       )).length
       const tasaExtraccion = total > 0 ? Math.round((cimaRenove / total) * 100) : 0
 
-      setStats({ total, cima, renoveMixto, cimaRenove, tasaExtraccion, maxDescuento, conDescuento, mejorPrecio, renoveBasico, multidispositivo, otros })
+      setStats({ total, cima, renoveMixto, cimaRenove, tasaExtraccion, maxDescuento, conDescuento, mejorPrecio, renoveBasico, multidispositivo, otros, noCliente })
 
-      // Chart: últimos 7 días
+      // Chart: últimos 7 días (todos los procesados)
       const last7 = []
       for (let i = 6; i >= 0; i--) {
         const d = new Date()
         d.setDate(d.getDate() - i)
         const dateStr = d.toISOString().split('T')[0]
         const dayLabel = d.toLocaleDateString('es', { weekday: 'short', day: 'numeric' })
-        const count = clientes.filter(c => c.created_at && c.created_at.split('T')[0] === dateStr).length
+        const count = todosProcesados.filter(c => c.created_at && c.created_at.split('T')[0] === dateStr).length
         last7.push({ day: dayLabel, Procesados: count })
       }
       setChartData(last7)
@@ -135,10 +153,11 @@ export default function Dashboard() {
         <div className="h-3 w-3 rounded-full bg-[#0a6ea9]"></div>
         <span className="text-[10px] text-[#7c757c] uppercase tracking-wider font-semibold">Datos del Bot</span>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         <StatCard title="Total Leads" value={stats.total.toLocaleString()} subtitle="Leads procesados" icon={Users} color="indigo" />
         <StatCard title="Clientes CIMA" value={stats.cima.toLocaleString()} subtitle={`${stats.total > 0 ? Math.round((stats.cima / stats.total) * 100) : 0}% del total`} icon={UserCheck} color="violet" />
         <StatCard title="Renove Mixto" value={stats.renoveMixto.toLocaleString()} subtitle="4 variantes valiosas" icon={RefreshCw} color="emerald" />
+        <StatCard title="No Cliente" value={stats.noCliente.toLocaleString()} subtitle={`${stats.total > 0 ? Math.round((stats.noCliente / stats.total) * 100) : 0}% del total`} icon={Users} color="gray" />
         <StatCard title="Tasa CIMA+Renove" value={`${stats.tasaExtraccion}%`} subtitle={`${stats.cimaRenove} de ${stats.total} leads`} icon={TrendingUp} color="amber" />
       </div>
 

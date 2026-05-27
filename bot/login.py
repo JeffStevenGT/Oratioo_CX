@@ -277,6 +277,7 @@ def extraer_datos_cliente(page: Page, numero: str, buscar_por_dni: bool = True,
 
             # ── 3. BUCLE DE LÍNEAS CON PAGINACIÓN ─────
             lineas_finales = []
+            lineas_vistas = set()  # Anti-loop paginacion
             hay_mas_paginas = True
             pagina_actual = 1
 
@@ -292,6 +293,12 @@ def extraer_datos_cliente(page: Page, numero: str, buscar_por_dni: bool = True,
                     num_linea = bloque.locator(
                         ".line-section .color-primary strong"
                     ).inner_text().strip()
+                    # 🔄 Anti-loop: si ya vimos esta línea, Orange está repitiendo páginas
+                    if num_linea in lineas_vistas:
+                        print(f"    🛑 Línea {num_linea} repetida — loop de paginación. Saliendo.")
+                        hay_mas_paginas = False
+                        break
+                    lineas_vistas.add(num_linea)
                     print(f"    -> Línea: {num_linea}")
 
                     # ── Extraer etiquetas reales del heading (CIMA, TV, Principal, etc.) ──
@@ -427,10 +434,15 @@ def extraer_datos_cliente(page: Page, numero: str, buscar_por_dni: bool = True,
                 btn_siguiente = page.locator("button.ocs-pagination-next")
                 if (btn_siguiente.count() > 0
                         and not btn_siguiente.is_disabled()):
-                    print("  [Extracción] -> Siguiente página de líneas...")
-                    btn_siguiente.click(force=True, timeout=30000)
-                    page.wait_for_timeout(2000)
-                    pagina_actual += 1
+                    # Verificar si la PRIMERA línea de esta página ya se procesó (loop)
+                    if pagina_actual > 1 and lineas_finales and num_linea in lineas_vistas:
+                        print(f"  [Extracción] ⛔ Loop detectado en página {pagina_actual}. Saliendo de paginación.")
+                        hay_mas_paginas = False
+                    else:
+                        print("  [Extracción] -> Siguiente página de líneas...")
+                        btn_siguiente.click(force=True, timeout=30000)
+                        page.wait_for_timeout(2000)
+                        pagina_actual += 1
                 else:
                     hay_mas_paginas = False
 
