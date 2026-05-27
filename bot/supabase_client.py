@@ -62,7 +62,8 @@ def guardar_resultado(dni: str, datos: dict, estado: str = "completado"):
     - Si el DNI ya existe en la BD, lo actualiza (PATCH por id)
     - Si no existe, lo inserta (POST)
 
-    El estado va dentro de atributos_dinamicos (JSONB).
+    ⚠️ Hace MERGE completo de atributos_dinamicos para NO perder
+    pipeline, documento_id, datos_basicos, etc. de cargas anteriores.
 
     Posibles estados:
       - completado  -> procesado exitosamente
@@ -70,10 +71,29 @@ def guardar_resultado(dni: str, datos: dict, estado: str = "completado"):
       - error       -> fallo técnico
     """
     ahora = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-    ad = datos.get("atributos_dinamicos", {})
-    ad["estado"] = estado
-    ad["fecha_procesado"] = time.strftime("%Y-%m-%d")
-    ad["fecha_hora"] = ahora
+
+    # ── UPSERT: buscar si el DNI ya existe ──
+    existentes = _api("GET", f"/lineas?select=id,atributos_dinamicos&dni=eq.{dni}&limit=1&order=id.desc")
+
+    # Merge de atributos_dinamicos previos
+    ad_prev = {}
+    if existentes and len(existentes) > 0:
+        prev_ad = existentes[0].get("atributos_dinamicos", {}) or {}
+        if isinstance(prev_ad, str):
+            import json as _json
+            try: prev_ad = _json.loads(prev_ad)
+            except: prev_ad = {}
+        for k, v in prev_ad.items():
+            if k not in ["estado", "fecha_procesado", "fecha_hora", "worker_id", "maquina"]:
+                ad_prev[k] = v
+
+    ad_nuevo = datos.get("atributos_dinamicos", {})
+    # Merge: datos nuevos sobre datos previos
+    for k, v in ad_nuevo.items():
+        ad_prev[k] = v
+    ad_prev["estado"] = estado
+    ad_prev["fecha_procesado"] = time.strftime("%Y-%m-%d")
+    ad_prev["fecha_hora"] = ahora
 
     fila = {
         "dni": dni,
@@ -83,18 +103,13 @@ def guardar_resultado(dni: str, datos: dict, estado: str = "completado"):
         "seg_fijo": datos.get("seg_fijo", "N/A"),
         "seg_movil": datos.get("seg_movil", "N/A"),
         "paquete": datos.get("paquete", "N/A"),
-        "atributos_dinamicos": ad,
+        "atributos_dinamicos": ad_prev,
     }
 
-    # ── UPSERT: buscar si el DNI ya existe ──
-    existentes = _api("GET", f"/lineas?select=id&dni=eq.{dni}&limit=1&order=id.desc")
-
     if existentes and len(existentes) > 0:
-        # Ya existe → ACTUALIZAR (PATCH por id)
         id_existente = existentes[0]["id"]
         _api("PATCH", f"/lineas?id=eq.{id_existente}", fila)
     else:
-        # No existe → INSERTAR (POST)
         _api("POST", "/lineas", fila)
 
     icono = "✅" if estado == "completado" else "❌" if estado == "no_cliente" else "⚠"

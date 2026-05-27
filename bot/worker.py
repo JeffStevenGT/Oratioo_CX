@@ -54,10 +54,10 @@ if os.getenv("PROXY_SERVER"):
 def log(msg: str):
     t = time.strftime("%H:%M:%S")
     try:
-        print(f"[W{WORKER_ID}|{t}] {msg}")
+        print(f"[W{WORKER_ID}|{t}] {msg}", flush=True)
     except UnicodeEncodeError:
         # Fallback para Windows con cp1252
-        print(f"[W{WORKER_ID}|{t}] {msg.encode('ascii', 'replace').decode()}")
+        print(f"[W{WORKER_ID}|{t}] {msg.encode('ascii', 'replace').decode()}", flush=True)
 
 
 # ── Supabase helpers ──────────────────────────────
@@ -154,45 +154,76 @@ def esta_pausado() -> bool:
 
 
 def tomar_siguiente_dni() -> dict | None:
-    """Toma el próximo DNI pendiente de la cola."""
-    rows = _api("GET", "/lineas?select=id,dni&atributos_dinamicos->>estado=eq.pendiente&limit=1&order=created_at.asc")
+    """Toma el próximo DNI pendiente de la cola.
+    
+    IMPORTANTE: Hace merge con los atributos_dinamicos existentes
+    para NO destruir pipeline, documento_id, etc.
+    """
+    rows = _api("GET", "/lineas?select=id,dni,atributos_dinamicos&atributos_dinamicos->>estado=eq.pendiente&limit=1&order=created_at.asc")
     if not rows:
         return None
     fila = rows[0]
+    
+    # Leer atributos_dinamicos existentes para mergear
+    ad_existentes = fila.get("atributos_dinamicos", {})
+    if isinstance(ad_existentes, str):
+        import json as _json
+        try: ad_existentes = _json.loads(ad_existentes)
+        except: ad_existentes = {}
+    
+    # Merge: preservar pipeline, documento_id, datos_basicos, etc.
+    ad_existentes["estado"] = "en_progreso"
+    ad_existentes["worker_id"] = WORKER_ID
+    ad_existentes["maquina"] = MAQUINA
+    
     _api("PATCH", f"/lineas?id=eq.{fila['id']}&atributos_dinamicos->>estado=eq.pendiente",
-         {"atributos_dinamicos": {"estado": "en_progreso", "worker_id": WORKER_ID, "maquina": MAQUINA}})
+         {"atributos_dinamicos": ad_existentes})
     return fila
 
 
 def guardar_resultado(dni: str, datos: dict, estado: str = "completado"):
     """Guarda/actualiza resultado en Supabase (UPSERT).
-    Preserva pipeline (asignacion) de datos anteriores."""
-    # Leer datos existentes para preservar pipeline
-    pipeline_prev = None
+    Hace MERGE completo de atributos_dinamicos para NO perder
+    pipeline, documento_id, datos_basicos, etc."""
+    # Leer datos existentes para mergear completo
     existentes = _api("GET", f"/lineas?select=atributos_dinamicos,id&dni=eq.{dni}&limit=1&order=id.desc")
+    ad_prev = {}
     if existentes:
         prev_ad = existentes[0].get("atributos_dinamicos", {}) or {}
         if isinstance(prev_ad, str):
             import json as _json
             try: prev_ad = _json.loads(prev_ad)
             except: prev_ad = {}
-        pipeline_prev = prev_ad.get("pipeline")
+        # Merge profundo: preservar pipeline, documento_id, datos_basicos, etc.
+        for k, v in prev_ad.items():
+            if k not in ["estado", "fecha_procesado", "worker_id", "maquina"]:
+                ad_prev[k] = v
 
     ad = datos.get("atributos_dinamicos", {})
-    ad["estado"] = estado
-    ad["fecha_procesado"] = time.strftime("%Y-%m-%d")
-    ad["worker_id"] = WORKER_ID
-    ad["maquina"] = MAQUINA
-    # Preservar pipeline (asignacion) si existia
-    if pipeline_prev is not None:
-        ad["pipeline"] = pipeline_prev
+    # Merge: datos nuevos sobre datos previos
+    # ⚠️ Preservar renove_mixto_variante si ya existe uno mejor (no pisar con N/A)
+    for k, v in ad.items():
+        if k == "renove_mixto_variante" and k in ad_prev:
+            # Solo actualizar si el nuevo valor NO es N/A (no pisar datos válidos)
+            if v not in (None, "N/A", ""):
+                ad_prev[k] = v
+        elif k == "tiene_renove_mixto" and k in ad_prev:
+            # True se preserva (si alguna línea tiene Renove, el cliente lo tiene)
+            if v:
+                ad_prev[k] = True
+        else:
+            ad_prev[k] = v
+    ad_prev["estado"] = estado
+    ad_prev["fecha_procesado"] = time.strftime("%Y-%m-%d")
+    ad_prev["worker_id"] = WORKER_ID
+    ad_prev["maquina"] = MAQUINA
 
     fila = {
         "dni": dni,
         "nombre": datos.get("nombre", "N/A"),
         "linea": datos.get("linea_principal", "N/A"),
         "paquete": datos.get("paquete", "N/A"),
-        "atributos_dinamicos": ad,
+        "atributos_dinamicos": ad_prev,
     }
 
     if existentes:
@@ -204,13 +235,19 @@ def guardar_resultado(dni: str, datos: dict, estado: str = "completado"):
 
 # ── Procesar un DNI ──────────────────────────────
 
-def procesar_dni(page, dni: str) -> bool:
-    """Procesa un solo DNI. Retorna True si fue exitoso."""
+def procesar_dni(page, dni: str, modal_ya_abierto: bool = False) -> tuple:
+    """Procesa un solo DNI.
+    Retorna (exito: bool, modal_sigue_abierto: bool).
+    """
     try:
-        filas = extraer_datos_cliente(page, dni, buscar_por_dni=True)
+        filas = extraer_datos_cliente(page, dni, buscar_por_dni=True,
+                                       modal_ya_abierto=modal_ya_abierto)
         if not filas:
             log(f"[WARN]  {dni}: sin resultados")
-            return False
+            return False, False
+
+        # Verificar si el modal sigue abierto ("no es cliente")
+        modal_abierto = filas[0].get("_modal_abierto", False) if filas else False
 
         # Guardar cada fila (línea del cliente)
         for fila in filas:
@@ -259,18 +296,41 @@ def procesar_dni(page, dni: str) -> bool:
             guardar_resultado(dni, datos, estado=estado)
 
         log(f"[OK]  {dni}: {len(filas)} líneas")
-        return True
+        return True, False
 
     except Exception as e:
         log(f"[ERR]  {dni}: {e}")
-        # Guardar como error
-        guardar_resultado(dni, {
-            "nombre": "ERROR",
-            "linea_principal": dni,
-            "paquete": "N/A",
-            "atributos_dinamicos": {"error": str(e)},
-        }, estado="error")
-        return False
+        # ── Reintentar automáticamente (hasta 3 veces) ──
+        import json as _json
+        reintentos = 0
+        try:
+            existentes = _api("GET", f"/lineas?select=atributos_dinamicos,id&dni=eq.{dni}&limit=1&order=id.desc")
+            if existentes:
+                prev = existentes[0].get("atributos_dinamicos", {}) or {}
+                if isinstance(prev, str):
+                    try: prev = _json.loads(prev)
+                    except: prev = {}
+                reintentos = int(prev.get("reintentos", 0))
+        except Exception:
+            pass
+        reintentos += 1
+        if reintentos < 3:
+            log(f"[RETRY] {dni} reintento {reintentos}/3")
+            guardar_resultado(dni, {
+                "nombre": "ERROR",
+                "linea_principal": dni,
+                "paquete": "N/A",
+                "atributos_dinamicos": {"error": str(e), "reintentos": reintentos},
+            }, estado="pendiente")  # "pendiente" para que vuelva a la cola
+        else:
+            log(f"[FAIL] {dni} error definitivo tras {reintentos} reintentos")
+            guardar_resultado(dni, {
+                "nombre": "ERROR",
+                "linea_principal": dni,
+                "paquete": "N/A",
+                "atributos_dinamicos": {"error": str(e), "reintentos": reintentos},
+            }, estado="error")
+        return False, False
 
 
 # ── Main ──────────────────────────────────────────
@@ -284,6 +344,8 @@ def main():
 
     procesados = 0
     errores = 0
+    modal_abierto = False  # Para "no es cliente" — mantener modal abierto
+    detener = False  # Bandera para salir del loop
 
     with sync_playwright() as p:
         browser, context = crear_contexto_espana(p, proxy_config=PROXY_CONFIG)
@@ -298,52 +360,89 @@ def main():
             abrir_nuevo_acto_comercial(page)
             log("[LOCK] Login exitoso")
 
-            # Loop de procesamiento
-            while True:
-                # Verificar si el worker fue pausado desde la web
-                if esta_pausado():
-                    log("[PAUSE] Worker pausado via web. Esperando 10s...")
-                    time.sleep(10)
-                    continue
+            # Loop de procesamiento (con auto-recuperación en errores graves)
+            while not detener:
+                dni = "???"  # Para que exista si falla antes de asignar
+                try:  # 🔄 Inner try: cualquier error aquí reloguea en vez de cerrar
+                    # Verificar si el worker fue pausado desde la web
+                    if esta_pausado():
+                        log("[PAUSE] Worker pausado via web. Esperando 10s...")
+                        time.sleep(10)
+                        continue
 
-                # Tomar siguiente DNI
-                fila = tomar_siguiente_dni()
-                if not fila:
-                    log("[PAUSE]  No hay mas DNIs pendientes. Esperando 30s...")
-                    time.sleep(30)
-                    continue
+                    # Tomar siguiente DNI
+                    fila = tomar_siguiente_dni()
+                    if not fila:
+                        log("[DONE] No hay mas DNIs pendientes. Worker finalizado.")
+                        break
 
-                dni = fila["dni"]
-                reportar_actividad(dni)
+                    dni = fila["dni"]
+                    reportar_actividad(dni)
 
-                # Pausa aleatoria
-                page.wait_for_timeout(random.randint(2000, 4000))
+                    # Pausa aleatoria (reducida)
+                    page.wait_for_timeout(random.randint(1000, 2000))
 
-                # Procesar
-                exito = procesar_dni(page, dni)
-                if exito:
-                    procesados += 1
-                else:
-                    errores += 1
+                    # Procesar
+                    exito, modal_sigue = procesar_dni(page, dni, modal_ya_abierto=modal_abierto)
+                    if exito:
+                        procesados += 1
+                        modal_abierto = modal_sigue
+                    else:
+                        errores += 1
+                        modal_abierto = False
+                        # 🔄 Recrear página tras fallo
+                        try:
+                            log(f"[RECOVERY] DNI {dni} falló. Recreando página...")
+                            page.close()
+                            page = context.new_page()
+                            page.goto(ORANGE_URL, timeout=30000)
+                            manejar_cookies_flexible(page)
+                            realizar_login(page)
+                            seleccionar_marca_orange(page)
+                            abrir_nuevo_acto_comercial(page)
+                            log("[RECOVERY] Página recreada correctamente")
+                            modal_abierto = False
+                        except Exception as recovery_err:
+                            log(f"[RECOVERY] Error al recrear página: {recovery_err}")
 
-                # Verificar sesión cada 10 DNIs
-                if (procesados + errores) % 10 == 0:
-                    if not verificar_sesion_valida(page):
-                        log("[RETRY] Sesión expirada, relogueando...")
-                        page.goto(ORANGE_URL, timeout=60000)
+                    # Verificar sesión cada 3 DNIs
+                    if (procesados + errores) % 3 == 0:
+                        if not verificar_sesion_valida(page):
+                            log("[RETRY] Sesión expirada, relogueando...")
+                            page.goto(ORANGE_URL, timeout=30000)
+                            realizar_login(page)
+                            seleccionar_marca_orange(page)
+                            abrir_nuevo_acto_comercial(page)
+
+                    # Verificar límite
+                    if MAX_DNIS > 0 and (procesados + errores) >= MAX_DNIS:
+                        log(f"🏁 Límite alcanzado ({MAX_DNIS} DNIs)")
+                        break
+
+                except Exception as e:  # 🔄 CUALQUIER error: reloguear, no cerrar
+                    log(f"[ERR] Error grave en DNI {dni}: {e}")
+                    log("[RECOVERY] Relogueando automáticamente...")
+                    try:
+                        page.close()
+                    except:
+                        pass
+                    try:
+                        page = context.new_page()
+                        page.goto(ORANGE_URL, timeout=30000)
+                        manejar_cookies_flexible(page)
                         realizar_login(page)
                         seleccionar_marca_orange(page)
                         abrir_nuevo_acto_comercial(page)
-
-                # Verificar límite
-                if MAX_DNIS > 0 and (procesados + errores) >= MAX_DNIS:
-                    log(f"🏁 Límite alcanzado ({MAX_DNIS} DNIs)")
-                    break
+                        modal_abierto = False
+                        log("[RECOVERY] Relogueo exitoso, continuando...")
+                    except Exception as login_err:
+                        log(f"[CRIT] No se pudo reloguear: {login_err}. Esperando 30s...")
+                        time.sleep(30)
+                    continue
 
         except KeyboardInterrupt:
             log("⏹  Detenido por señal")
-        except Exception as e:
-            log(f"[ERR]  Error crítico: {e}")
+            detener = True
         finally:
             browser.close()
 

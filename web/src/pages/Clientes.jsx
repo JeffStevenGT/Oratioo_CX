@@ -22,12 +22,11 @@ const VARIANTES_VALIOSAS = [
   { key: 'maximo', label: 'Máx descuento', bd: 'Renove mixto al mejor precio con máximo descuento', color: 'emerald' },
   { key: 'con_descuento', label: 'Con descuento', bd: 'Renove mixto al mejor precio con descuento', color: 'blue' },
   { key: 'mejor_precio', label: 'Mejor precio', bd: 'Renove mixto al mejor precio', color: 'amber' },
-  { key: 'basico', label: 'Básico', bd: 'Renove mixto', color: 'gray' },
 ]
 
 const VARIANTES_MENORES = [
   { key: 'multidispositivo', label: 'Multidispositivo', color: 'slate' },
-  { key: 'pago_unico', label: 'Pago único', color: 'slate' },
+  { key: 'otros', label: 'Otros', color: 'slate' },
 ]
 
 export default function Clientes() {
@@ -35,8 +34,8 @@ export default function Clientes() {
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [sortConfig, setSortConfig] = useState({ key: null, dir: 'asc' })
-  const [cimaFilter, setCimaFilter] = useState('SI') // null | 'SI' | 'NO'
-  const [renoveFilter, setRenoveFilter] = useState('SI') // null | 'SI' | 'NO'
+  const [cimaFilter, setCimaFilter] = useState(null) // null | 'SI' | 'NO'
+  const [renoveFilter, setRenoveFilter] = useState(null) // null | 'SI' | 'NO'
   const [variantesActivas, setVariantesActivas] = useState([])
   const [tagsActivas, setTagsActivas] = useState([])
   const [dateFrom, setDateFrom] = useState('')
@@ -138,7 +137,28 @@ export default function Clientes() {
       g.atributos_dinamicos = g.atributos_dinamicos || {}
       g.atributos_dinamicos.cima = g._cima ? 'SI' : 'NO'
       g.atributos_dinamicos.tiene_renove_mixto = g._renove_mixto
-      g.atributos_dinamicos.renove_mixto_variante = variantesArr.length > 0 ? variantesArr.join(', ') : 'N/A'
+      // Solo mostrar la variante de MAYOR valor (prioridad ordenada)
+      const PRIORIDAD_RENOVE = [
+        'Renove mixto al mejor precio con máximo descuento',  // más valioso
+        'Renove mixto al mejor precio con descuento',
+        'Renove mixto al mejor precio',
+        'Renove mixto',
+        'Renove Multidispositivo',
+      ]
+      let mejorVariante = 'N/A'
+      if (variantesArr.length > 0) {
+        for (const p of PRIORIDAD_RENOVE) {
+          if (variantesArr.some(v => v === p)) {
+            mejorVariante = p
+            break
+          }
+        }
+        if (mejorVariante === 'N/A') {
+          // Si ninguna coincide con la lista, mostrar la primera encontrada
+          mejorVariante = variantesArr[0]
+        }
+      }
+      g.atributos_dinamicos.renove_mixto_variante = mejorVariante
       g.atributos_dinamicos.estado = 'completado'
     }
 
@@ -150,38 +170,55 @@ export default function Clientes() {
       result = result.filter((g) => !g._cima)
     }
 
-    // Renove Mixto (si ALGUNA linea tiene Renove Mixto)
+    // Renove Mixto (SOLO las 4 variantes que nos interesan, NO Multidispositivo)
+    const VARIANTES_RENOVE_MIXTO = [
+      'Renove mixto al mejor precio con máximo descuento',
+      'Renove mixto al mejor precio con descuento',
+      'Renove mixto al mejor precio',
+      'Renove mixto',
+    ]
     if (renoveFilter === 'SI') {
-      result = result.filter((g) => g._renove_mixto)
+      result = result.filter((g) =>
+        g._variantes.size > 0 && [...g._variantes].some(v => VARIANTES_RENOVE_MIXTO.includes(v))
+      )
     } else if (renoveFilter === 'NO') {
-      result = result.filter((g) => !g._renove_mixto)
+      result = result.filter((g) =>
+        !([...g._variantes].some(v => VARIANTES_RENOVE_MIXTO.includes(v)))
+      )
     }
 
-    // Variantes de Renove (AND entre variantes seleccionadas)
-    for (const vk of variantesActivas) {
-      const vData = VARIANTES_VALIOSAS.find(x => x.key === vk)
-      if (vData) {
-        result = result.filter((g) => g._variantes.has(vData.bd))
-      }
+    // Variantes de Renove (OR acumulativo — se suman)
+    if (variantesActivas.length > 0) {
+      result = result.filter((g) =>
+        variantesActivas.some(vk => {
+          const vData = VARIANTES_VALIOSAS.find(x => x.key === vk)
+          return vData && g._variantes.has(vData.bd)
+        })
+      )
     }
 
-    // Tags (AND entre tags seleccionados)
-    for (const tk of tagsActivas) {
-      result = result.filter((g) => {
-        return g._lineas.some((c) => {
-          const ad = c.atributos_dinamicos || {}
-          const pestanas = ad.pestanas || {}
-          const todosDatos = JSON.stringify(ad).toLowerCase()
+    // Tags/Otros (OR acumulativo — se suman)
+    const VARIANTES_CONOCIDAS = [
+      'Renove Multidispositivo',
+      'Renove mixto al mejor precio con máximo descuento',
+      'Renove mixto al mejor precio con descuento',
+      'Renove mixto al mejor precio',
+      'Renove mixto',
+    ]
+    if (tagsActivas.length > 0) {
+      result = result.filter((g) =>
+        tagsActivas.some(tk => {
           switch (tk) {
             case 'multidispositivo':
-              return Object.values(pestanas).join(' ').toLowerCase().includes('multidispositivo') || todosDatos.includes('multidispositivo')
-            case 'pago_unico':
-              return Object.values(pestanas).join(' ').toLowerCase().includes('pago único') || todosDatos.includes('pago único')
+              return [...g._variantes].some(v => v.toLowerCase().includes('multidispositivo'))
+            case 'otros':
+              // Captura cualquier Renove que NO sea de los 5 principales
+              return [...g._variantes].some(v => !VARIANTES_CONOCIDAS.includes(v))
             default:
               return true
           }
         })
-      })
+      )
     }
 
     // ── Rango de fechas ──

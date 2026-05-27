@@ -20,11 +20,29 @@ import {
 import { supabase } from '../supabaseClient'
 import BotStatus from '../components/BotStatus'
 
-// Parse DNIs from text content (heuristic)
+// Parse DNIs/NIFs from text content (heuristic)
 function extractDNIs(text) {
   const dnis = new Set()
-  const matches = text.match(/\b\d{8}[A-Za-z]?\b/g)
+  
+  // 1. Normalizar: eliminar caracteres no imprimibles, comillas, BOM, guiones bajos, etc.
+  const clean = text.replace(/^\uFEFF/, '')  // quitar BOM
+    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\u200B-\u200F\uFEFF]/g, '')  // caracteres de control y zero-width
+    .replace(/["'\u2018\u2019\u201C\u201D_]/g, '')  // todo tipo de comillas y guion bajo
+  
+  // 2. Regex específicos para cada tipo de documento español:
+  //    - 12345678A (DNI) - 7-8 dígitos + 1 letra
+  //    - B12345678 (NIF) - 1 letra + 8 dígitos
+  //    - X1234567A (NIE) - 1 letra + 7 dígitos + 1 letra
+  //    - 08907904G (NIF que empieza con dígito, 8 dígitos + letra)
+  //    - X-1234567-A (NIE con guiones)
+  const matches = clean.match(/\b(?:[A-Za-z]\d{8}|\d{7,8}[A-Za-z]|[A-Za-z]\d{7}[A-Za-z])\b/g)
+  
+  // 3. También buscar NIE con guiones: X-1234567-A
+  const nieGuiones = clean.match(/\b[A-Za-z]-\d{7}-[A-Za-z]\b/g)
+  
   if (matches) matches.forEach((d) => dnis.add(d.toUpperCase()))
+  if (nieGuiones) nieGuiones.forEach((d) => dnis.add(d.toUpperCase().replace(/-/g, '')))
+  
   return Array.from(dnis)
 }
 
@@ -179,6 +197,7 @@ export default function Documentos() {
                 estado: 'pendiente',
                 datos_basicos: { nombre: 'N/A', direccion: 'N/A' },
                 pipeline: { estado: 'pendiente', asesor_id: null, notas: '' },
+                documento_id: doc.id,
               },
             })
 
@@ -198,6 +217,8 @@ export default function Documentos() {
       await fetchHistory()
       setFiles([])
       setPreview(null)
+      // Limpiar error si todo salio bien
+      setError('')
     } catch (err) {
       setError('Error al subir archivos: ' + err.message)
     } finally {
@@ -265,15 +286,16 @@ export default function Documentos() {
       console.error('Error enviando comandos:', err)
     }
 
-    // Monitorear progreso desde lineas (contar DNIs procesados)
+    // Monitorear progreso desde lineas (contar SOLO DNIs de este documento)
     const total = doc.total_dnis
     const interval = setInterval(async () => {
-      const { data, error } = await supabase
+      const { count, error } = await supabase
         .from('lineas')
         .select('id', { count: 'exact', head: true })
+        .contains('atributos_dinamicos', { documento_id: doc.id })
         .not('atributos_dinamicos->>estado', 'eq', 'pendiente')
-      if (!error && data !== null) {
-        const procesados = data.length
+      if (!error && count !== null) {
+        const procesados = parseInt(count) || 0
         setAnalyzingProgress({ current: procesados, total })
         if (procesados >= total) {
           clearInterval(interval)
@@ -285,14 +307,15 @@ export default function Documentos() {
       }
     }, 2000)
 
-    // Cleanup si falla (timeout)
+    // Timeout según tamaño del documento (30s x DNI, mínimo 5min)
+    const timeoutMs = Math.max(300000, total * 30000)
     setTimeout(() => {
       clearInterval(interval)
       setAnalyzingId(null)
       supabase.from('documentos').update({ estado: 'pendiente' }).eq('id', doc.id)
       fetchHistory()
       alert('El análisis tardó demasiado. Verifica que el agente esté funcionando correctamente.')
-    }, 300000) // 5 min timeout
+    }, timeoutMs)
   }
   // ── Eliminar documento ──────────────────────────────────────
   const handleDeleteDocument = async (doc) => {
@@ -322,6 +345,62 @@ export default function Documentos() {
       alert('Error al eliminar: ' + (err.message || err))
     } finally {
       setDeletingId(null)
+    }
+  }
+
+  // ── Re-analizar documento (resetear DNIs + iniciar) ────────────
+  const handleReanalyze = async (doc) => {
+    if (!window.confirm(`¿Re-analizar "${doc.nombre_archivo}"? Se resetearán todos sus ${doc.total_dnis} DNIs.`)) return
+
+    setAnalyzingId(doc.id)
+    setAnalyzingProgress({ current: 0, total: doc.total_dnis })
+
+    try {
+      // Resetear todos los DNIs de este documento a pendiente
+      // IMPORTANTE: preservar pipeline (asignaciones de asesores) y documento_id
+      const { data: lineas } = await supabase
+        .from('lineas')
+        .select('id,atributos_dinamicos')
+        .contains('atributos_dinamicos', { documento_id: doc.id })
+
+      if (lineas && lineas.length > 0) {
+        const batchSize = 50
+        for (let i = 0; i < lineas.length; i += batchSize) {
+          const batch = lineas.slice(i, i + batchSize)
+          for (const linea of batch) {
+            const ad = linea.atributos_dinamicos || {}
+            // Preservar pipeline existente (asignacion, notas, etc.)
+            const pipelineExistente = ad.pipeline || { estado: 'pendiente', asesor_id: null, notas: '' }
+            // Resetear: dejar solo estado pendiente + documento_id + pipeline
+            await supabase
+              .from('lineas')
+              .update({
+                atributos_dinamicos: {
+                  estado: 'pendiente',
+                  documento_id: doc.id,
+                  pipeline: pipelineExistente,
+                }
+              })
+              .eq('id', linea.id)
+          }
+        }
+      }
+
+      // Resetear el documento a estado pendiente
+      await supabase
+        .from('documentos')
+        .update({ estado: null, procesados: 0, pendientes: doc.total_dnis })
+        .eq('id', doc.id)
+
+      // Refrescar historial
+      await fetchHistory()
+
+      // Lanzar análisis igual que handleStartAnalysis
+      await handleStartAnalysis({ ...doc, estado: null })
+    } catch (err) {
+      console.error('Error re-analizando:', err)
+      alert('Error al re-analizar: ' + (err.message || err))
+      setAnalyzingId(null)
     }
   }
 
@@ -556,7 +635,16 @@ export default function Documentos() {
                             <Loader2 size={12} className="animate-spin" /> Procesando...
                           </span>
                         ) : h.estado === 'completado' ? (
-                          <span className="text-xs text-emerald-600">Completado</span>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-xs text-emerald-600 font-medium">Completado</span>
+                            <button
+                              onClick={() => handleReanalyze(h)}
+                              className="text-xs bg-amber-500 hover:bg-amber-600 text-white px-2.5 py-1 rounded-lg transition-all flex items-center gap-1"
+                              title="Re-analizar este documento"
+                            >
+                              <RefreshCw size={11} /> Re-analizar
+                            </button>
+                          </div>
                         ) : h.estado === 'analizando' || analyzingId !== null ? (
                           <span className="text-xs text-purple-600">En cola...</span>
                         ) : (

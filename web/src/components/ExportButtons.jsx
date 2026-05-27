@@ -3,6 +3,41 @@ import { Download, FileSpreadsheet, FileJson, Loader2 } from 'lucide-react'
 import ExcelJS from 'exceljs'
 import { saveAs } from 'file-saver'
 
+// ── Helpers ──────────────────────────────────────
+
+function detectarTipoDoc(doc) {
+  if (!doc) return 'DNI'
+  const docUp = doc.toUpperCase()
+  // NIE: X/Y/Z + 7 dígitos + letra
+  if (/^[XYZ]\d{7}[A-Z]$/.test(docUp)) return 'NIE'
+  // NIF: letra + 8 dígitos
+  if (/^[A-Z]\d{8}$/.test(docUp)) return 'NIF'
+  // DNI: 7-8 dígitos + letra
+  if (/^\d{7,8}[A-Z]$/.test(docUp)) return 'DNI'
+  return 'DNI'
+}
+
+function extraerCP(direccion) {
+  if (!direccion) return ''
+  const match = direccion.match(/\b(\d{5})\b/)
+  return match ? match[1] : ''
+}
+
+function limpiarNumero(num) {
+  if (!num) return ''
+  // Quitar todo excepto dígitos y tomar últimos 9
+  const digits = num.replace(/\D/g, '')
+  return digits.slice(-9)
+}
+
+function limpiarNombre(nombre) {
+  if (!nombre) return ''
+  // Quitar puntos, guiones, espacios al inicio
+  return nombre.replace(/^[.\-\s]+/, '').toUpperCase().trim()
+}
+
+// ── Componente ────────────────────────────────────
+
 export default function ExportButtons({ data = [] }) {
   const [exporting, setExporting] = useState(null)
 
@@ -13,55 +48,42 @@ export default function ExportButtons({ data = [] }) {
       const sheet = workbook.addWorksheet('Clientes')
 
       sheet.columns = [
-        { header: 'DNI', key: 'dni', width: 15 },
-        { header: 'Nombre', key: 'nombre', width: 30 },
-        { header: 'Dirección', key: 'direccion', width: 35 },
-        { header: 'Línea Principal', key: 'linea_principal', width: 18 },
-        { header: 'Paquete', key: 'paquete', width: 22 },
-        { header: 'CIMA', key: 'cima', width: 8 },
-        { header: 'Renove Mixto', key: 'renove', width: 13 },
-        { header: 'Variante Renove', key: 'variante', width: 35 },
-        { header: 'Tags', key: 'tags', width: 25 },
-        { header: 'Estado', key: 'estado', width: 14 },
-        { header: 'Fecha Extracción', key: 'fecha', width: 14 },
-        { header: 'Seg. Fijo', key: 'seg_fijo', width: 14 },
-        { header: 'Seg. Móvil', key: 'seg_movil', width: 14 },
-        { header: 'Destacadas', key: 'destacadas', width: 30 },
-        { header: 'Renove (tab)', key: 'renove_tab', width: 30 },
-        { header: 'Bonos y D.', key: 'bonos', width: 30 },
-        { header: 'Cambio Tarifa', key: 'cambio', width: 30 },
-        { header: 'SVA', key: 'sva', width: 30 },
+        { header: 'documento', key: 'documento', width: 16 },
+        { header: 'tipoDoc', key: 'tipoDoc', width: 10 },
+        { header: 'nombre', key: 'nombre', width: 40 },
+        { header: 'apellidos', key: 'apellidos', width: 5 },
+        { header: 'telefono', key: 'telefono', width: 5 },
+        { header: 'telefono2', key: 'telefono2', width: 18 },
+        { header: 'email', key: 'email', width: 5 },
+        { header: 'CP', key: 'cp', width: 8 },
       ]
 
       const rows = data.map((c) => {
         const attr = c.atributos_dinamicos || {}
         const bas = attr.datos_basicos || {}
-        const linea = attr.linea || {}
-        const pestanas = attr.pestanas || {}
+        const doc = c.dni || ''
+
+        // teléfono2: líneas adicionales (todas excepto la principal)
+        const lineas = c._lineas || []
+        const numeros = lineas.map(l => limpiarNumero(l.linea || '')).filter(Boolean)
+        const telefonoPrincipal = numeros[0] || ''
+        const adicionales = numeros.slice(1).join(', ')
+
         return {
-          dni: c.dni || '',
-          nombre: bas.nombre || '',
-          direccion: bas.direccion || '',
-          linea_principal: linea.linea_principal || c.linea || '',
-          paquete: linea.paquete || c.paquete || '',
-          cima: attr.cima || 'NO',
-          renove: attr.tiene_renove_mixto ? 'SÍ' : 'NO',
-          variante: attr.renove_mixto_variante || 'N/A',
-          tags: attr.cima_tags || 'N/A',
-          estado: attr.estado || 'N/A',
-          fecha: c.created_at ? new Date(c.created_at).toLocaleDateString('es') : '',
-          seg_fijo: bas.seg_fijo || c.seg_fijo || '',
-          seg_movil: bas.seg_movil || c.seg_movil || '',
-          destacadas: pestanas.Destacadas || 'N/A',
-          renove_tab: pestanas.Renove || 'N/A',
-          bonos: pestanas['Bonos y D.'] || 'N/A',
-          cambio: pestanas['Cambio Tarifa'] || 'N/A',
-          sva: pestanas.SVA || 'N/A',
+          documento: doc,
+          tipoDoc: detectarTipoDoc(doc),
+          nombre: limpiarNombre(bas.nombre || c.nombre || ''),
+          apellidos: '',
+          telefono: '',
+          telefono2: adicionales,
+          email: '',
+          cp: extraerCP(bas.direccion || c.direccion || ''),
         }
       })
 
       rows.forEach((r) => sheet.addRow(r))
 
+      // Estilo encabezados
       const headerRow = sheet.getRow(1)
       headerRow.font = { bold: true, color: { argb: 'FFFFFFFF' }, size: 11 }
       headerRow.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF4F46E5' } }
