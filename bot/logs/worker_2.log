@@ -1,0 +1,50 @@
+[W2|10:06:42] [INI]  Worker iniciado (PID: 20708)
+[W2|10:06:42] [SIN]  Proxy: http://82.27.216.201:5532
+  [Login] Iniciando sesión...
+  [Login] [OK] Login exitoso
+  [Login] Seleccionando marca Orange...
+  [Login] [OK] Marca Orange seleccionada
+  [Login] Preparando entorno (nuevo acto comercial)...
+  [Login] [OK] Entorno listo
+[W2|10:07:24] [LOCK] Login exitoso
+  [Extracción] Buscando: X1922838S (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: sylvia schweigler | DNI: X1922838S | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: CALLE BRASIL, Nº 53, 002 - 1, 35109, EL TABLERO, LAS PALMAS
+  [Extracción] Página 1 de líneas...
+    -> Línea: 828046768
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 687478926
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO AL MEJOR PRECIO | -> Renove mixto al mejor precio
+    -> Línea: 654617642
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 692113186
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO AL MEJOR PRECIO | -> Renove mixto al mejor precio
+    -> Línea: 695766309
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 695767124
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 635225693
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+[W2|10:07:42] [SAVE] X1922838S -> completado
+[W2|10:07:42] [SAVE] X1922838S -> completado
+[W2|10:07:43] [SAVE] X1922838S -> completado
+[W2|10:07:44] [SAVE] X1922838S -> completado
+[W2|10:07:45] [SAVE] X1922838S -> completado
+[W2|10:07:46] [SAVE] X1922838S -> completado
+[W2|10:07:46] [SAVE] X1922838S -> completado
+[W2|10:07:46] [OK]  X1922838S: 7 líneas
+  [Extracción] Buscando: 06025952K (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] [FAIL] 06025952K NO ES CLIENTE
+[W2|10:08:02] [SAVE] 06025952K -> no_cliente
+[W2|10:08:02] [OK]  06025952K: 1 líneas

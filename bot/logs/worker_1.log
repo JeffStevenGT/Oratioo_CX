@@ -3855,3 +3855,1221 @@ Call log:
 [W1|08:54:51] [OK]  25088556H: 3 líneas
 [W1|08:54:52] [DONE] No hay mas DNIs pendientes. Worker finalizado.
 [W1|08:54:52] Resumen -> Procesados: [OK] 41 | [ERR] 0
+[W1|10:06:42] [INI]  Worker iniciado (PID: 18684)
+[W1|10:06:42] [SIN]  Proxy: http://92.113.237.101:7185
+  [Login] Iniciando sesión...
+  [Login] [OK] Login exitoso
+  [Login] Seleccionando marca Orange...
+  [Login] [OK] Marca Orange seleccionada
+  [Login] Preparando entorno (nuevo acto comercial)...
+  [Login] [OK] Entorno listo
+[W1|10:07:30] [LOCK] Login exitoso
+  [Extracción] Buscando: 37367749V (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: jose luis escot casas | DNI: 37367749V | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE PERECUUART BAJOS, Nº 41, 001 - 4, 08980, VORA SITGES, BARCELONA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 936852273
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 675608427
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 653208153
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO | -> Renove mixto
+    -> Línea: 675608422
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO | -> Renove mixto
+    -> Línea: 622085525
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 658444251
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO | -> Renove mixto
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 665790869
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:07:47] [SAVE] 37367749V -> completado
+[W1|10:07:47] [SAVE] 37367749V -> completado
+[W1|10:07:48] [SAVE] 37367749V -> completado
+[W1|10:07:49] [SAVE] 37367749V -> completado
+[W1|10:07:50] [SAVE] 37367749V -> completado
+[W1|10:07:51] [SAVE] 37367749V -> completado
+[W1|10:07:51] [SAVE] 37367749V -> completado
+[W1|10:07:51] [OK]  37367749V: 7 líneas
+  [Extracción] Buscando: 48374345D (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: MARIA MARGARITA GONZALVEZ TORRES | DNI: 48374345D | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE MARIÀ BENLLIURE, Nº 13, 004 03201, ELCHE/ELX, ALICANTE
+  [Extracción] Página 1 de líneas...
+    -> Línea: 865711185
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 637416141
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO AL MEJOR PRECIO | -> Renove mixto al mejor precio
+    -> Línea: 678460685
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 695099523
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 656427424
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 697375659
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO AL MEJOR PRECIO | -> Renove mixto al mejor precio
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 675714119
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+    -> Línea: 965432341
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:08:09] [SAVE] 48374345D -> completado
+[W1|10:08:10] [SAVE] 48374345D -> completado
+[W1|10:08:11] [SAVE] 48374345D -> completado
+[W1|10:08:12] [SAVE] 48374345D -> completado
+[W1|10:08:12] [SAVE] 48374345D -> completado
+[W1|10:08:13] [SAVE] 48374345D -> completado
+[W1|10:08:14] [SAVE] 48374345D -> completado
+[W1|10:08:15] [SAVE] 48374345D -> completado
+[W1|10:08:15] [OK]  48374345D: 8 líneas
+  [Extracción] Buscando: 12370017L (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: MARIA ANOUSKA SANCHEZ VALLEJO | DNI: 12370017L | Paquete: Love Cine y Series Total 2
+  [Extracción] Dirección: CALLE MANTERIA, Nº 13, BA 47004, VALLADOLID, VALLADOLID
+  [Extracción] Página 1 de líneas...
+    -> Línea: 983251680
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 627236230
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 692606499
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 622157139
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 665843205
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 695477025
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:08:28] [SAVE] 12370017L -> completado
+[W1|10:08:29] [SAVE] 12370017L -> completado
+[W1|10:08:30] [SAVE] 12370017L -> completado
+[W1|10:08:30] [SAVE] 12370017L -> completado
+[W1|10:08:31] [SAVE] 12370017L -> completado
+[W1|10:08:33] [SAVE] 12370017L -> completado
+[W1|10:08:33] [OK]  12370017L: 6 líneas
+  [Extracción] Buscando: 46465485B (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: JENIFER VILLENA GOMEZ | DNI: 46465485B | Paquete: Love Futbol Total 4 2024
+  [Extracción] Dirección: AVENIDA CARRILET, Nº 232, 7 - 3, 08901, L'HOSPITALET DE LLOBREGAT, BARCELONA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 930041710
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 608090500
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 651088089
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 654834752
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 695623679
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 665767108
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:08:45] [SAVE] 46465485B -> completado
+[W1|10:08:46] [SAVE] 46465485B -> completado
+[W1|10:08:47] [SAVE] 46465485B -> completado
+[W1|10:08:48] [SAVE] 46465485B -> completado
+[W1|10:08:48] [SAVE] 46465485B -> completado
+[W1|10:08:49] [SAVE] 46465485B -> completado
+[W1|10:08:49] [OK]  46465485B: 6 líneas
+  [Extracción] Buscando: 44362925L (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: FRANCISCO JAVIER CRUZ ROMERO | DNI: 44362925L | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: AVENIDA CERVANTES, Nº 27, 001 - IZDA, 14850, BAENA, CORDOBA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 957099776
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 611562803
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 616705736
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO AL MEJOR PRECIO CON MAXIMO DESCUENTO | -> Renove mixto al mejor precio con máximo descuento
+    -> Línea: 645131089
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO AL MEJOR PRECIO CON MAXIMO DESCUENTO | -> Renove mixto al mejor precio con máximo descuento
+    -> Línea: 679922864
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 691918056
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO AL MEJOR PRECIO CON MAXIMO DESCUENTO | -> Renove mixto al mejor precio con máximo descuento
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 639758999
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO AL MEJOR PRECIO CON MAXIMO DESCUENTO | -> Renove mixto al mejor precio con máximo descuento
+    -> Línea: 644871671
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO AL MEJOR PRECIO CON MAXIMO DESCUENTO | -> Renove mixto al mejor precio con máximo descuento
+    -> Línea: 692926276
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+    -> Línea: 957963646
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:09:07] [SAVE] 44362925L -> completado
+[W1|10:09:08] [SAVE] 44362925L -> completado
+[W1|10:09:09] [SAVE] 44362925L -> completado
+[W1|10:09:10] [SAVE] 44362925L -> completado
+[W1|10:09:11] [SAVE] 44362925L -> completado
+[W1|10:09:11] [SAVE] 44362925L -> completado
+[W1|10:09:12] [SAVE] 44362925L -> completado
+[W1|10:09:13] [SAVE] 44362925L -> completado
+[W1|10:09:14] [SAVE] 44362925L -> completado
+[W1|10:09:14] [SAVE] 44362925L -> completado
+[W1|10:09:14] [OK]  44362925L: 10 líneas
+  [Extracción] Buscando: 33472394B (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: SARA PEREZ GARCIA | DNI: 33472394B | Paquete: Fútbol y Cine con 4 líneas
+  [Extracción] Dirección: CALLE ALMAZORA, Nº 42, 001 - 2, 46010, ALMAZORA, VALENCIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 960056291
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 645448572
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 615346044
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 654177544
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 656504867
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 600658722
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:09:28] [SAVE] 33472394B -> completado
+[W1|10:09:28] [SAVE] 33472394B -> completado
+[W1|10:09:29] [SAVE] 33472394B -> completado
+[W1|10:09:30] [SAVE] 33472394B -> completado
+[W1|10:09:31] [SAVE] 33472394B -> completado
+[W1|10:09:32] [SAVE] 33472394B -> completado
+[W1|10:09:32] [OK]  33472394B: 6 líneas
+  [Extracción] Buscando: 11967440B (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: MARIA PALOMA LEAL MATELLAN | DNI: 11967440B | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE LUIS CORTÉS VÁZQUEZ, Nº 6, 004 - B, 49028, ZAMORA, ZAMORA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 980532396
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 652849175
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 606222537
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 665662830
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 690679311
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 654362848
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+[W1|10:09:47] [SAVE] 11967440B -> completado
+[W1|10:09:48] [SAVE] 11967440B -> completado
+[W1|10:09:49] [SAVE] 11967440B -> completado
+[W1|10:09:50] [SAVE] 11967440B -> completado
+[W1|10:09:51] [SAVE] 11967440B -> completado
+[W1|10:09:51] [SAVE] 11967440B -> completado
+[W1|10:09:51] [OK]  11967440B: 6 líneas
+  [Extracción] Buscando: 45093191N (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: ALI CHAIB SAIDI | DNI: 45093191N | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE RODRIGUEZ BERLANGA, Nº 05, 003 - A, 51002, CEUTA, CEUTA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 956978016
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 656503489
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 653956528
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 654611447
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 680227690
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 747785006
+      [RENOVE] No hay barra de pestañas en esta línea
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 654103191
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 656477441
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:10:10] [SAVE] 45093191N -> completado
+[W1|10:10:11] [SAVE] 45093191N -> completado
+[W1|10:10:12] [SAVE] 45093191N -> completado
+[W1|10:10:12] [SAVE] 45093191N -> completado
+[W1|10:10:13] [SAVE] 45093191N -> completado
+[W1|10:10:14] [SAVE] 45093191N -> completado
+[W1|10:10:15] [SAVE] 45093191N -> completado
+[W1|10:10:16] [SAVE] 45093191N -> completado
+[W1|10:10:16] [OK]  45093191N: 8 líneas
+  [Extracción] Buscando: 71262969E (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: DAVID PORTILLA ESCRIBANO | DNI: 71262969E | Paquete: Love Empresa Smart
+  [Extracción] Dirección: CALLE ESTEBAN SAEZ ALVARADO, Nº 37, 006 - A, 09007, BURGOS, BURGOS
+  [Extracción] Página 1 de líneas...
+    -> Línea: 947073056
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 606363558
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO AL MEJOR PRECIO CON MAXIMO DESCUENTO | -> Renove mixto al mejor precio con máximo descuento
+    -> Línea: 655429048
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 619280569
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 620329090
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO AL MEJOR PRECIO CON MAXIMO DESCUENTO | -> Renove mixto al mejor precio con máximo descuento
+    -> Línea: 635410902
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO AL MEJOR PRECIO CON MAXIMO DESCUENTO | -> Renove mixto al mejor precio con máximo descuento
+[W1|10:10:29] [SAVE] 71262969E -> completado
+[W1|10:10:30] [SAVE] 71262969E -> completado
+[W1|10:10:31] [SAVE] 71262969E -> completado
+[W1|10:10:32] [SAVE] 71262969E -> completado
+[W1|10:10:32] [SAVE] 71262969E -> completado
+[W1|10:10:33] [SAVE] 71262969E -> completado
+[W1|10:10:33] [OK]  71262969E: 6 líneas
+  [Extracción] Buscando: 46980822X (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: JORGE BREA JIMENEZ | DNI: 46980822X | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE FRANCESC FERRER I GUÀRDIA, Nº 51, 08100, MOLLET DEL VALLÈS, BARCELONA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 930108435
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 665811537
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 609058434
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 634993156
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO | -> Renove mixto
+    -> Línea: 625970423
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 692587556
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 931199032
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 654792189
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+[W1|10:10:51] [SAVE] 46980822X -> completado
+[W1|10:10:52] [SAVE] 46980822X -> completado
+[W1|10:10:53] [SAVE] 46980822X -> completado
+[W1|10:10:53] [SAVE] 46980822X -> completado
+[W1|10:10:54] [SAVE] 46980822X -> completado
+[W1|10:10:55] [SAVE] 46980822X -> completado
+[W1|10:10:56] [SAVE] 46980822X -> completado
+[W1|10:10:57] [SAVE] 46980822X -> completado
+[W1|10:10:57] [OK]  46980822X: 8 líneas
+  [Extracción] Buscando: 48203005L (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: DIANA CAROLINA SOSA LIBERATO | DNI: 48203005L | Paquete: Love Empresa Impulsa 1
+  [Extracción] Dirección: CALLE SANCHO PANZA, Nº 98, 28918, LEGANÉS, MADRID
+  [Extracción] Página 1 de líneas...
+    -> Línea: 910268705
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 660027206
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 645192397
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 658604453
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 670865710
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 675312560
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 711210011
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 910274605
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:11:14] [SAVE] 48203005L -> completado
+[W1|10:11:15] [SAVE] 48203005L -> completado
+[W1|10:11:16] [SAVE] 48203005L -> completado
+[W1|10:11:17] [SAVE] 48203005L -> completado
+[W1|10:11:18] [SAVE] 48203005L -> completado
+[W1|10:11:18] [SAVE] 48203005L -> completado
+[W1|10:11:19] [SAVE] 48203005L -> completado
+[W1|10:11:20] [SAVE] 48203005L -> completado
+[W1|10:11:20] [OK]  48203005L: 8 líneas
+  [Extracción] Buscando: 40529151T (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: JOSE GABRIEL LIGERO RUIZ | DNI: 40529151T | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: PLAZA MERCAT 1 D'OCTUBRE DE 2017, Nº 8, 002 17220, SANT FELIU DE GUIXOLS, GIRONA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 872261416
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 652201825
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 645306055
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 654357358
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 615840564
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 640548586
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+[W1|10:11:35] [SAVE] 40529151T -> completado
+[W1|10:11:36] [SAVE] 40529151T -> completado
+[W1|10:11:37] [SAVE] 40529151T -> completado
+[W1|10:11:38] [SAVE] 40529151T -> completado
+[W1|10:11:38] [SAVE] 40529151T -> completado
+[W1|10:11:39] [SAVE] 40529151T -> completado
+[W1|10:11:39] [OK]  40529151T: 6 líneas
+  [Extracción] Buscando: 24278586Q (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: LUIS BAILON CEBALLOS | DNI: 24278586Q | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: AVENIDA CERRO ALFONSICO, Nº 24, 18210, PELIGROS, GRANADA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 958961032
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 603771688
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE PAGO UNICO | -> Renove (RENOVE PAGO UNICO)
+    -> Línea: 603771550
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE PAGO UNICO | -> Renove (RENOVE PAGO UNICO)
+    -> Línea: 634827085
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE PAGO UNICO | -> Renove (RENOVE PAGO UNICO)
+    -> Línea: 661974238
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE PAGO UNICO | -> Renove (RENOVE PAGO UNICO)
+    -> Línea: 658488129
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+[W1|10:11:54] [SAVE] 24278586Q -> completado
+[W1|10:11:55] [SAVE] 24278586Q -> completado
+[W1|10:11:56] [SAVE] 24278586Q -> completado
+[W1|10:11:57] [SAVE] 24278586Q -> completado
+[W1|10:11:58] [SAVE] 24278586Q -> completado
+[W1|10:11:59] [SAVE] 24278586Q -> completado
+[W1|10:11:59] [OK]  24278586Q: 6 líneas
+  [Extracción] Buscando: Y7749576Q (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: VICTOR ALFONSO ORIQUIN CACERES | DNI: Y7749576Q | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE CÁCERES, Nº 55, 002 - D, 28045, MADRID, MADRID
+  [Extracción] Página 1 de líneas...
+    -> Línea: 911130969
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 691307813
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE PAGO UNICO | -> Renove (RENOVE PAGO UNICO)
+    -> Línea: 615884029
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 675762361
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE PAGO UNICO | -> Renove (RENOVE PAGO UNICO)
+    -> Línea: 605950082
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE PAGO UNICO | -> Renove (RENOVE PAGO UNICO)
+    -> Línea: 655935045
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE PAGO UNICO | -> Renove (RENOVE PAGO UNICO)
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 625374530
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+[W1|10:12:16] [SAVE] Y7749576Q -> completado
+[W1|10:12:17] [SAVE] Y7749576Q -> completado
+[W1|10:12:18] [SAVE] Y7749576Q -> completado
+[W1|10:12:18] [SAVE] Y7749576Q -> completado
+[W1|10:12:19] [SAVE] Y7749576Q -> completado
+[W1|10:12:20] [SAVE] Y7749576Q -> completado
+[W1|10:12:21] [SAVE] Y7749576Q -> completado
+[W1|10:12:21] [OK]  Y7749576Q: 7 líneas
+  [Extracción] Buscando: 52856288B (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: ENRIQUE PERERA RODRIGUEZ | DNI: 52856288B | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE SANTA TERESA DE JESÚS, Nº 20, 001 35220, TELDE, LAS PALMAS
+  [Extracción] Página 1 de líneas...
+    -> Línea: 928710994
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 636052796
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 605670595
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 636054025
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 647996918
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 658900881
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 828781858
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:12:37] [SAVE] 52856288B -> completado
+[W1|10:12:38] [SAVE] 52856288B -> completado
+[W1|10:12:39] [SAVE] 52856288B -> completado
+[W1|10:12:40] [SAVE] 52856288B -> completado
+[W1|10:12:41] [SAVE] 52856288B -> completado
+[W1|10:12:41] [SAVE] 52856288B -> completado
+[W1|10:12:42] [SAVE] 52856288B -> completado
+[W1|10:12:42] [OK]  52856288B: 7 líneas
+  [Extracción] Buscando: 15369224A (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: JUAN ANDRES ALVAREZ CASAS | DNI: 15369224A | Paquete: Love TV Inicial 2
+  [Extracción] Dirección: CALLE C/ GABOLATZ  Nº, Nº 28, 002 20590, soraluze, GUIPUZCOA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 943752179
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 666402785
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 666385898
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 667042334
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 667743031
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:12:55] [SAVE] 15369224A -> completado
+[W1|10:12:55] [SAVE] 15369224A -> completado
+[W1|10:12:56] [SAVE] 15369224A -> completado
+[W1|10:12:57] [SAVE] 15369224A -> completado
+[W1|10:12:58] [SAVE] 15369224A -> completado
+[W1|10:12:58] [OK]  15369224A: 5 líneas
+  [Extracción] Buscando: 79064336L (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: YAZMINA CABRERA HERNANDEZ | DNI: 79064336L | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE TOSCA DE ANA MARIA, Nº 92, BA 38398, SANTA URSULA, SANTA CRUZ DE TENERIFE
+  [Extracción] Página 1 de líneas...
+    -> Línea: 922304625
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 677834807
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 654431114
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 657018905
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 610151550
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 625989957
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 651307789
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+[W1|10:13:16] [SAVE] 79064336L -> completado
+[W1|10:13:17] [SAVE] 79064336L -> completado
+[W1|10:13:17] [SAVE] 79064336L -> completado
+[W1|10:13:18] [SAVE] 79064336L -> completado
+[W1|10:13:19] [SAVE] 79064336L -> completado
+[W1|10:13:20] [SAVE] 79064336L -> completado
+[W1|10:13:21] [SAVE] 79064336L -> completado
+[W1|10:13:21] [OK]  79064336L: 7 líneas
+  [Extracción] Buscando: 06554445C (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: JOSE ANTONIO MUÑOZ SANCHEZ | DNI: 06554445C | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE IGLESIA, Nº 2, BA 05635, NAVARREDONDA DE GREDOS, AVILA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 920348316
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 605998093
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 635489904
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 652831941
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 666474767
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 695056382
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 656364997
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 665242207
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+[W1|10:13:38] [SAVE] 06554445C -> completado
+[W1|10:13:39] [SAVE] 06554445C -> completado
+[W1|10:13:40] [SAVE] 06554445C -> completado
+[W1|10:13:41] [SAVE] 06554445C -> completado
+[W1|10:13:42] [SAVE] 06554445C -> completado
+[W1|10:13:42] [SAVE] 06554445C -> completado
+[W1|10:13:43] [SAVE] 06554445C -> completado
+[W1|10:13:44] [SAVE] 06554445C -> completado
+[W1|10:13:44] [OK]  06554445C: 8 líneas
+  [Extracción] Buscando: 78480788G (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: ITALO GRAZIANI ALONSO | DNI: 78480788G | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE SUÁREZ NARANJO, Nº 83, 35004, LAS PALMAS DE GRAN CANARIA, LAS PALMAS
+  [Extracción] Página 1 de líneas...
+    -> Línea: 928131170
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 618497176
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 605284718
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 626463473
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 635093472
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 672068470
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 638791115
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 722897952
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 722898107
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 615217236
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+    -> Línea: 928581021
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 928040411
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:14:05] [SAVE] 78480788G -> completado
+[W1|10:14:06] [SAVE] 78480788G -> completado
+[W1|10:14:07] [SAVE] 78480788G -> completado
+[W1|10:14:07] [SAVE] 78480788G -> completado
+[W1|10:14:08] [SAVE] 78480788G -> completado
+[W1|10:14:09] [SAVE] 78480788G -> completado
+[W1|10:14:10] [SAVE] 78480788G -> completado
+[W1|10:14:11] [SAVE] 78480788G -> completado
+[W1|10:14:11] [SAVE] 78480788G -> completado
+[W1|10:14:12] [SAVE] 78480788G -> completado
+[W1|10:14:13] [SAVE] 78480788G -> completado
+[W1|10:14:14] [SAVE] 78480788G -> completado
+[W1|10:14:14] [OK]  78480788G: 12 líneas
+  [Extracción] Buscando: 30361831Z (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: VICTOR MAMANI FRANCO | DNI: 30361831Z | Paquete: Love TV Inicial
+  [Extracción] Dirección: CALLE NACIO, Nº 33, 003 - 1, 08026, BARCELONA, BARCELONA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 931783222
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 691518151
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 658431975
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 602002953
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 612234873
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 632415160
+      [RENOVE] No hay barra de pestañas en esta línea
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 695655666
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 635180163
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:14:29] [SAVE] 30361831Z -> completado
+[W1|10:14:30] [SAVE] 30361831Z -> completado
+[W1|10:14:31] [SAVE] 30361831Z -> completado
+[W1|10:14:32] [SAVE] 30361831Z -> completado
+[W1|10:14:33] [SAVE] 30361831Z -> completado
+[W1|10:14:33] [SAVE] 30361831Z -> completado
+[W1|10:14:34] [SAVE] 30361831Z -> completado
+[W1|10:14:35] [SAVE] 30361831Z -> completado
+[W1|10:14:35] [OK]  30361831Z: 8 líneas
+  [Extracción] Buscando: 77313471Y (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: MANUEL BERMEJO GARCIA | DNI: 77313471Y | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE VERGE DEL PILAR, Nº 106, BA 08105, SANT FOST DE CAMPSENTELLES, BARCELONA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 935706610
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 678563864
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 634275824
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 655089629
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 635458323
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 678563865
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 605120754
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+    -> Línea: 656997150
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+[W1|10:14:53] [SAVE] 77313471Y -> completado
+[W1|10:14:53] [SAVE] 77313471Y -> completado
+[W1|10:14:54] [SAVE] 77313471Y -> completado
+[W1|10:14:55] [SAVE] 77313471Y -> completado
+[W1|10:14:56] [SAVE] 77313471Y -> completado
+[W1|10:14:56] [SAVE] 77313471Y -> completado
+[W1|10:14:57] [SAVE] 77313471Y -> completado
+[W1|10:14:58] [SAVE] 77313471Y -> completado
+[W1|10:14:58] [OK]  77313471Y: 8 líneas
+  [Extracción] Buscando: 06672592Q (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: GEOVANNY LOPEZ MARIN | DNI: 06672592Q | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: AVENIDA GENERALITAT, Nº 57, 001 - 2, 08922, SANTA COLOMA DE GRAMENET, BARCELONA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 931378932
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 660799423
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 656338948
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 695798889
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 615576279
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 692966083
+      [RENOVE] No hay barra de pestañas en esta línea
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 645618026
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 931419606
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 930043065
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:15:13] [SAVE] 06672592Q -> completado
+[W1|10:15:14] [SAVE] 06672592Q -> completado
+[W1|10:15:15] [SAVE] 06672592Q -> completado
+[W1|10:15:16] [SAVE] 06672592Q -> completado
+[W1|10:15:16] [SAVE] 06672592Q -> completado
+[W1|10:15:17] [SAVE] 06672592Q -> completado
+[W1|10:15:18] [SAVE] 06672592Q -> completado
+[W1|10:15:19] [SAVE] 06672592Q -> completado
+[W1|10:15:19] [SAVE] 06672592Q -> completado
+[W1|10:15:19] [OK]  06672592Q: 9 líneas
+  [Extracción] Buscando: 20022744W (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: PAULA DONET GREGORI | DNI: 20022744W | Paquete: Love Empresa Activa
+  [Extracción] Dirección: CALLE SEQUIA ASSUT, Nº 8, BA 46702, GANDIA, VALENCIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 963015134
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 654997158
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 644434752
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 658043807
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 692648932
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 651964896
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 960052265
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:15:37] [SAVE] 20022744W -> completado
+[W1|10:15:38] [SAVE] 20022744W -> completado
+[W1|10:15:38] [SAVE] 20022744W -> completado
+[W1|10:15:39] [SAVE] 20022744W -> completado
+[W1|10:15:40] [SAVE] 20022744W -> completado
+[W1|10:15:41] [SAVE] 20022744W -> completado
+[W1|10:15:42] [SAVE] 20022744W -> completado
+[W1|10:15:42] [OK]  20022744W: 7 líneas
+  [Extracción] Buscando: 38149544L (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: AITOR FARRE BORNAY | DNI: 38149544L | Paquete: Love TV Inicial
+  [Extracción] Dirección: CALLE BURRIAC, Nº 18, CH 08339, VILASSAR DE DALT, BARCELONA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 930279494
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 640526657
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 681138360
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 609891424
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 658119474
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 653022045
+      [RENOVE] No hay barra de pestañas en esta línea
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 937561510
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:15:56] [SAVE] 38149544L -> completado
+[W1|10:15:57] [SAVE] 38149544L -> completado
+[W1|10:15:58] [SAVE] 38149544L -> completado
+[W1|10:15:58] [SAVE] 38149544L -> completado
+[W1|10:15:59] [SAVE] 38149544L -> completado
+[W1|10:16:00] [SAVE] 38149544L -> completado
+[W1|10:16:01] [SAVE] 38149544L -> completado
+[W1|10:16:01] [OK]  38149544L: 7 líneas
+  [Extracción] Buscando: 26244290W (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: CRISTINA MORENO MORENO | DNI: 26244290W | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CARRETERA CÓRDOBA-VALENCIA, Nº 23, PTL-3, BA - I, 23300, VILLACARRILLO, JAEN
+  [Extracción] Página 1 de líneas...
+    -> Línea: 953815190
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 647071843
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 635301298
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 640912885
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 653165618
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 665340853
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 642249940
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 655550193
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 685076265
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+[W1|10:16:20] [SAVE] 26244290W -> completado
+[W1|10:16:21] [SAVE] 26244290W -> completado
+[W1|10:16:21] [SAVE] 26244290W -> completado
+[W1|10:16:22] [SAVE] 26244290W -> completado
+[W1|10:16:23] [SAVE] 26244290W -> completado
+[W1|10:16:24] [SAVE] 26244290W -> completado
+[W1|10:16:25] [SAVE] 26244290W -> completado
+[W1|10:16:25] [SAVE] 26244290W -> completado
+[W1|10:16:26] [SAVE] 26244290W -> completado
+[W1|10:16:26] [OK]  26244290W: 9 líneas
+  [Extracción] Buscando: 52305773R (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: ANTONIO FERNANDEZ CINTAS | DNI: 52305773R | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: AVENIDA DEL CARMEN, Nº 29, BA 41807, ESPARTINAS, SEVILLA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 955606732
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 615237001
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 605232807
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 605657479
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 691336824
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 695742041
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 656279396
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 685039109
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 645501057
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+[W1|10:16:44] [SAVE] 52305773R -> completado
+[W1|10:16:45] [SAVE] 52305773R -> completado
+[W1|10:16:45] [SAVE] 52305773R -> completado
+[W1|10:16:46] [SAVE] 52305773R -> completado
+[W1|10:16:47] [SAVE] 52305773R -> completado
+[W1|10:16:48] [SAVE] 52305773R -> completado
+[W1|10:16:49] [SAVE] 52305773R -> completado
+[W1|10:16:49] [SAVE] 52305773R -> completado
+[W1|10:16:50] [SAVE] 52305773R -> completado
+[W1|10:16:50] [OK]  52305773R: 9 líneas
+  [Extracción] Buscando: 77048600A (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: DIOMAR YONEDI QUINTERO BETANCUR | DNI: 77048600A | Paquete: tarifa9,95
+  [Extracción] Dirección: CALLE NIF77048600A, Nº 1, BA 00000, Pozuelo de Alarcón, MADRID
+  [Extracción] Página 1 de líneas...
+    -> Línea: 691897171
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 665230327
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 635093300
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 692145019
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 695165653
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:17:02] [SAVE] 77048600A -> completado
+[W1|10:17:03] [SAVE] 77048600A -> completado
+[W1|10:17:04] [SAVE] 77048600A -> completado
+[W1|10:17:05] [SAVE] 77048600A -> completado
+[W1|10:17:05] [SAVE] 77048600A -> completado
+[W1|10:17:05] [OK]  77048600A: 5 líneas
+  [Extracción] Buscando: 30541254Z (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: JUAN YEPES LUQUE | DNI: 30541254Z | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE COLOMBIA, Nº 38, 002 - A, 14006, CORDOBA, CORDOBA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 957102825
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 670278223
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 664233382
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 670278224
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 676831453
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 678927933
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 673139466
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 692807077
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+[W1|10:17:25] [SAVE] 30541254Z -> completado
+[W1|10:17:26] [SAVE] 30541254Z -> completado
+[W1|10:17:27] [SAVE] 30541254Z -> completado
+[W1|10:17:28] [SAVE] 30541254Z -> completado
+[W1|10:17:29] [SAVE] 30541254Z -> completado
+[W1|10:17:29] [SAVE] 30541254Z -> completado
+[W1|10:17:30] [SAVE] 30541254Z -> completado
+[W1|10:17:31] [SAVE] 30541254Z -> completado
+[W1|10:17:31] [OK]  30541254Z: 8 líneas
+  [Extracción] Buscando: X6681769Q (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: VALENTINA KIRILOVA VASILEVA | DNI: X6681769Q | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE NAVALLUECO, Nº 1, 40422, OTERO DE HERREROS, SEGOVIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 921483210
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 672473918
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 628202944
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 658556342
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 667889929
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 689677546
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 921700125
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:17:50] [SAVE] X6681769Q -> completado
+[W1|10:17:51] [SAVE] X6681769Q -> completado
+[W1|10:17:52] [SAVE] X6681769Q -> completado
+[W1|10:17:52] [SAVE] X6681769Q -> completado
+[W1|10:17:53] [SAVE] X6681769Q -> completado
+[W1|10:17:54] [SAVE] X6681769Q -> completado
+[W1|10:17:55] [SAVE] X6681769Q -> completado
+[W1|10:17:55] [OK]  X6681769Q: 7 líneas
+  [Extracción] Buscando: 76263497M (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: TERESA ANEGAS GALAN | DNI: 76263497M | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE SIMÓN CARPINTERO, Nº 94, PTL-C, NA - 16, 14014, CORDOBA, CORDOBA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 957845067
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 621382869
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 611087055
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 614363008
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 614577629
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 625104028
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+[W1|10:18:10] [SAVE] 76263497M -> completado
+[W1|10:18:11] [SAVE] 76263497M -> completado
+[W1|10:18:12] [SAVE] 76263497M -> completado
+[W1|10:18:13] [SAVE] 76263497M -> completado
+[W1|10:18:13] [SAVE] 76263497M -> completado
+[W1|10:18:14] [SAVE] 76263497M -> completado
+[W1|10:18:14] [OK]  76263497M: 6 líneas
+  [Extracción] Buscando: 52382722S (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: JUAN JOSE ARANDA MANZANARES | DNI: 52382722S | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE JUAN DOMINGO, Nº 56, 007 13730, SANTA CRUZ DE MUDELA, CIUDAD REAL
+  [Extracción] Página 1 de líneas...
+    -> Línea: 926331247
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 626632757
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 652797930
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO | -> Renove mixto
+    -> Línea: 655230049
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 658899496
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO | -> Renove mixto
+    -> Línea: 679571159
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO | -> Renove mixto
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 692913221
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+[W1|10:18:32] [SAVE] 52382722S -> completado
+[W1|10:18:33] [SAVE] 52382722S -> completado
+[W1|10:18:34] [SAVE] 52382722S -> completado
+[W1|10:18:35] [SAVE] 52382722S -> completado
+[W1|10:18:36] [SAVE] 52382722S -> completado
+[W1|10:18:36] [SAVE] 52382722S -> completado
+[W1|10:18:37] [SAVE] 52382722S -> completado
+[W1|10:18:37] [OK]  52382722S: 7 líneas
+  [Extracción] Buscando: X4335656H (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: FERNANDO MARTIN DEZOTTI | DNI: X4335656H | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE GLORIA MAS, Nº 2, 003 - A, 18004, GRANADA, GRANADA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 958033811
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 662062021
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 623472918
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 623475768
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 655928384
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 692820507
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+[W1|10:18:52] [SAVE] X4335656H -> completado
+[W1|10:18:53] [SAVE] X4335656H -> completado
+[W1|10:18:54] [SAVE] X4335656H -> completado
+[W1|10:18:54] [SAVE] X4335656H -> completado
+[W1|10:18:55] [SAVE] X4335656H -> completado
+[W1|10:18:56] [SAVE] X4335656H -> completado
+[W1|10:18:56] [OK]  X4335656H: 6 líneas
+  [Extracción] Buscando: 52510465Q (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: ANTONIO BELMONTE GARCIA | DNI: 52510465Q | Paquete: Love Empresa Crece 5
+  [Extracción] Dirección: CALLE CAPEL, Nº 45, BA 18810, CANILES, GRANADA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 958868124
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 605790984
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO AL MEJOR PRECIO CON MAXIMO DESCUENTO | -> Renove mixto al mejor precio con máximo descuento
+    -> Línea: 635870010
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO AL MEJOR PRECIO CON MAXIMO DESCUENTO | -> Renove mixto al mejor precio con máximo descuento
+    -> Línea: 636898428
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 637077931
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 678716138
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+  [Extracción] -> Siguiente página de líneas...
+  [Extracción] Página 2 de líneas...
+    -> Línea: 610784348
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO AL MEJOR PRECIO CON MAXIMO DESCUENTO | -> Renove mixto al mejor precio con máximo descuento
+    -> Línea: 653148161
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO AL MEJOR PRECIO CON MAXIMO DESCUENTO | -> Renove mixto al mejor precio con máximo descuento
+    -> Línea: 950049627
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:19:17] [SAVE] 52510465Q -> completado
+[W1|10:19:18] [SAVE] 52510465Q -> completado
+[W1|10:19:18] [SAVE] 52510465Q -> completado
+[W1|10:19:19] [SAVE] 52510465Q -> completado
+[W1|10:19:20] [SAVE] 52510465Q -> completado
+[W1|10:19:21] [SAVE] 52510465Q -> completado
+[W1|10:19:22] [SAVE] 52510465Q -> completado
+[W1|10:19:22] [SAVE] 52510465Q -> completado
+[W1|10:19:23] [SAVE] 52510465Q -> completado
+[W1|10:19:23] [OK]  52510465Q: 9 líneas
+  [Extracción] Buscando: 26041738B (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: IGNACIO OCHOA ORTEGA | DNI: 26041738B | Paquete: Love Empresa Impulsa 3
+  [Extracción] Dirección: CALLE BARRANCO ALMONA, Nº 8, 002 23660, ALCAUDETE, JAEN
+  [Extracción] Página 1 de líneas...
+    -> Línea: 953042229
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 605987611
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MULTIDISPOSITIVO | -> Renove Multidispositivo
+    -> Línea: 654687757
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO | -> Renove mixto
+    -> Línea: 657984404
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: RENOVE MIXTO | -> Renove mixto
+    -> Línea: 651621940
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 654725513
+      [RENOVE] Click en pestaña de navegación 'Renove'...
+      [RENOVE] Texto: (vacio) | -> N/A
+[W1|10:19:39] [SAVE] 26041738B -> completado
+[W1|10:19:40] [SAVE] 26041738B -> completado
+[W1|10:19:41] [SAVE] 26041738B -> completado
+[W1|10:19:41] [SAVE] 26041738B -> completado
+[W1|10:19:42] [SAVE] 26041738B -> completado
+[W1|10:19:43] [SAVE] 26041738B -> completado
+[W1|10:19:43] [OK]  26041738B: 6 líneas
+  [Extracción] Buscando: 80045965P (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: NATALIA HORTIGON FUENTES | DNI: 80045965P | Paquete: Love Total Plus 4
+  [Extracción] Dirección: CALLE SAN JUAN DE DIOS, Nº 14, 003 - A, 06003, BADAJOZ, BADAJOZ
+  [Extracción] Página 1 de líneas...
+    -> Línea: 924200758
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 659822642
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 627635852
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 633825431
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 691731749
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 655778958
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:19:56] [SAVE] 80045965P -> completado
+[W1|10:19:56] [SAVE] 80045965P -> completado
+[W1|10:19:57] [SAVE] 80045965P -> completado
+[W1|10:19:58] [SAVE] 80045965P -> completado
+[W1|10:19:59] [SAVE] 80045965P -> completado
+[W1|10:20:00] [SAVE] 80045965P -> completado
+[W1|10:20:00] [OK]  80045965P: 6 líneas
+  [Extracción] Buscando: 24294284M (Intento 1)
+  [Extracción] Verificando procesamiento...
+  [Extracción] Cargando ficha de cliente...
+  [Extracción] Cliente: Francisco de Asis Augustin Campos | DNI: 24294284M | Paquete: Fútbol y Cine con 4 líneas
+  [Extracción] Dirección: CALLE JUAN JOSE MIER, Nº 40, BA 39012, SANTANDER, CANTABRIA
+  [Extracción] Página 1 de líneas...
+    -> Línea: 942132503
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 643933943
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 605827351
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 627332889
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 647972048
+      [RENOVE] No hay barra de pestañas en esta línea
+    -> Línea: 691378835
+      [RENOVE] No hay barra de pestañas en esta línea
+[W1|10:20:13] [SAVE] 24294284M -> completado
+[W1|10:20:14] [SAVE] 24294284M -> completado
