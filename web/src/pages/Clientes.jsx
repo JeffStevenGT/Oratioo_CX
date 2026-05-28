@@ -38,7 +38,8 @@ export default function Clientes() {
   const [renoveFilter, setRenoveFilter] = useState(null) // null | 'SI' | 'NO'
   const [variantesActivas, setVariantesActivas] = useState([])
   const [tagsActivas, setTagsActivas] = useState([])
-  const [dateFrom, setDateFrom] = useState('')
+  const todayStr = (() => { const d = new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0') })()
+  const [dateFrom, setDateFrom] = useState(todayStr)
   const [dateTo, setDateTo] = useState('')
   const [expandido, setExpandido] = useState(null)
   const showAssignBtn = true
@@ -333,7 +334,7 @@ export default function Clientes() {
     setRenoveFilter(null)
     setVariantesActivas([])
     setTagsActivas([])
-    setDateFrom('')
+    setDateFrom(todayStr)
     setDateTo('')
   }
 
