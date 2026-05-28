@@ -38,8 +38,10 @@ export default function Clientes() {
   const [renoveFilter, setRenoveFilter] = useState(null) // null | 'SI' | 'NO'
   const [variantesActivas, setVariantesActivas] = useState([])
   const [tagsActivas, setTagsActivas] = useState([])
-  const todayStr = (() => { const d = new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0') })()
-  const [dateFrom, setDateFrom] = useState(todayStr)
+  const [dateFrom, setDateFrom] = useState(() => {
+    const d = new Date()
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')
+  })
   const [dateTo, setDateTo] = useState('')
   const [expandido, setExpandido] = useState(null)
   const showAssignBtn = true
@@ -89,6 +91,10 @@ export default function Clientes() {
   }
 
   useEffect(() => { fetchClientes() }, [])
+  useEffect(() => {
+    const interval = setInterval(fetchClientes, 15000)
+    return () => clearInterval(interval)
+  }, [])
 
   // ── Reset paginación cuando cambian filtros ────────────────────
   useEffect(() => { setClientesPage(1) }, [cimaFilter, renoveFilter, variantesActivas, tagsActivas, dateFrom, dateTo, search])
@@ -340,7 +346,8 @@ export default function Clientes() {
     setRenoveFilter(null)
     setVariantesActivas([])
     setTagsActivas([])
-    setDateFrom(todayStr)
+    const d = new Date()
+    setDateFrom(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'))
     setDateTo('')
   }
 
