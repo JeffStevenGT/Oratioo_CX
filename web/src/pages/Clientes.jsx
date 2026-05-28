@@ -140,6 +140,7 @@ export default function Clientes() {
           pipeline: ad.pipeline,
           estado: 'completado',
           fecha_procesado: ad.fecha_procesado || '',
+          fecha_hora: ad.fecha_hora || '',
         }
       }
     }

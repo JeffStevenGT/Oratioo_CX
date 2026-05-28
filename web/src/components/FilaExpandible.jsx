@@ -104,9 +104,15 @@ export default function FilaExpandible({ cliente, abierto, onToggle }) {
         </td>
         <td className="table-cell text-[#7c757c] text-xs">
           {(() => {
+            const fh = cliente.atributos_dinamicos?.fecha_hora
+            if (fh) {
+              // fecha_hora es ISO: 2026-05-28T13:43:03Z
+              const d = new Date(fh)
+              return d.toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' }) + ' ' +
+                d.toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' })
+            }
             const fp = cliente.atributos_dinamicos?.fecha_procesado || cliente.created_at
             if (!fp) return '-'
-            // fecha_procesado es YYYY-MM-DD, created_at es ISO
             if (fp.length === 10 && fp[4] === '-' && fp[7] === '-') {
               const d = new Date(fp + 'T12:00:00')
               return d.toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' })
