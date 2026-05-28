@@ -148,6 +148,24 @@ def abrir_nuevo_acto_comercial(page: Page):
 
 # ── Extracción de datos del cliente ────────────────
 
+def _detectar_y_cerrar_toast(page) -> bool:
+    """Detecta y cierra el toast 'No se han podido recuperar campañas' de Pangea.
+    Retorna True si lo encontró y cerró."""
+    try:
+        toast = page.locator(".message-relevant.error")
+        if toast.count() == 0:
+            return False
+        if not toast.first.is_visible(timeout=2000):
+            return False
+        print("  [Extracción] [WARN] Detectado toast 'No se han podido recuperar campañas'")
+        cerrar = page.locator(".message-relevant.error .btn-close").first
+        cerrar.click(force=True, timeout=3000)
+        page.wait_for_timeout(1000)
+        return True
+    except Exception:
+        return False
+
+
 def extraer_datos_cliente(page: Page, numero: str, buscar_por_dni: bool = True,
                            modal_ya_abierto: bool = False):
     """
@@ -251,17 +269,9 @@ def extraer_datos_cliente(page: Page, numero: str, buscar_por_dni: bool = True,
                 }]
 
             # ═══ DETECTAR ERROR "No se han podido recuperar campañas" ═══
-            try:
-                error_campanas = page.locator(".message-relevant.error .title:has-text('recuperar campañas')")
-                if error_campanas.count() > 0 and error_campanas.first.is_visible(timeout=3000):
-                    print("  [Extracción] [WARN] Error 'No se han podido recuperar campañas' — cerrando aviso...")
-                    cerrar_btn = page.locator(".message-relevant.error .btn-close").first
-                    cerrar_btn.click(force=True, timeout=3000)
-                    page.wait_for_timeout(1000)
-                    # Si el error aparece, el cliente existe pero hay problema con campañas
-                    # Intentamos continuar igual para ver si al menos obtenemos datos básicos
-            except Exception:
-                pass
+            if _detectar_y_cerrar_toast(page):
+                print("  [Extracción] [RETRY] Toast cerrado, reintentando búsqueda...")
+                raise Exception("Toast campañas — reintentar")
 
             print("  [Extracción] Cargando ficha de cliente...")
             page.wait_for_timeout(1500)
