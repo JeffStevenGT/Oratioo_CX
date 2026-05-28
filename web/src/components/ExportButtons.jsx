@@ -63,9 +63,12 @@ export default function ExportButtons({ data = [] }) {
         const bas = attr.datos_basicos || {}
         const doc = c.dni || ''
 
-        // teléfono2: líneas adicionales (todas excepto la principal)
+        // teléfono: principal + adicionales
         const lineas = c._lineas || []
-        const numeros = lineas.map(l => limpiarNumero(l.linea || '')).filter(Boolean)
+        const numeros = lineas.map(l => {
+          const num = l.linea || l.atributos_dinamicos?.linea_principal || l.atributos_dinamicos?.linea?.numero || ''
+          return limpiarNumero(num)
+        }).filter(Boolean)
         const telefonoPrincipal = numeros[0] || ''
         const adicionales = numeros.slice(1).join(', ')
 
@@ -74,7 +77,7 @@ export default function ExportButtons({ data = [] }) {
           tipoDoc: detectarTipoDoc(doc),
           nombre: limpiarNombre(bas.nombre || c.nombre || ''),
           apellidos: '',
-          telefono: '',
+          telefono: telefonoPrincipal,
           telefono2: adicionales,
           email: '',
           cp: extraerCP(bas.direccion || c.direccion || ''),
