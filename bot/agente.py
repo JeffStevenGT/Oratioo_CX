@@ -304,6 +304,36 @@ def _resetear_dnis_colgados():
         pass
 
 
+def _watchdog_en_progreso():
+    """Resetea DNIS colgados en 'en_progreso' por mas de 5 minutos."""
+    try:
+        ahora = time.time()
+        rows = _api("GET", "/lineas?select=id,created_at,atributos_dinamicos&atributos_dinamicos->>estado=eq.en_progreso&limit=100")
+        resets = 0
+        for row in (rows or []):
+            ad = row.get("atributos_dinamicos", {})
+            if isinstance(ad, str):
+                import json as _j
+                try: ad = _j.loads(ad)
+                except: ad = {}
+            # Verificar antigüedad por created_at
+            creado = row.get("created_at", "")
+            if creado:
+                try:
+                    ts = time.mktime(time.strptime(creado[:19], "%Y-%m-%dT%H:%M:%S"))
+                    if ahora - ts > 300:  # más de 5 minutos
+                        ad["estado"] = "pendiente"
+                        ad["worker_id"] = None
+                        _api("PATCH", f"/lineas?id=eq.{row['id']}", {"atributos_dinamicos": ad})
+                        resets += 1
+                except:
+                    pass
+        if resets > 0:
+            print(f"[Agente] ⏰ {resets} DNIs colgados (>5min) reseteados a pendiente")
+    except Exception:
+        pass
+
+
 def main():
     global proceso_coordinador
 
@@ -335,6 +365,9 @@ def main():
         try:
             # Heartbeat
             reportar_heartbeat()
+
+            # Watchdog: liberar DNIs colgados cada 30s
+            _watchdog_en_progreso()
 
             # Buscar comandos
             comandos = buscar_comandos()

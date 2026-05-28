@@ -178,6 +178,18 @@ def tomar_siguiente_dni() -> dict | None:
     
     _api("PATCH", f"/lineas?id=eq.{fila['id']}&atributos_dinamicos->>estado=eq.pendiente",
          {"atributos_dinamicos": ad_existentes})
+    
+    # Verificar que realmente tomamos el DNI (concurrencia)
+    verificacion = _api("GET", f"/lineas?select=atributos_dinamicos,id&id=eq.{fila['id']}&limit=1")
+    if verificacion:
+        ad_v = verificacion[0].get("atributos_dinamicos", {})
+        if isinstance(ad_v, str):
+            import json as _jv
+            try: ad_v = _jv.loads(ad_v)
+            except: ad_v = {}
+        if ad_v.get("worker_id") != WORKER_ID:
+            # Otro worker ganó la carrera
+            return None
     return fila
 
 

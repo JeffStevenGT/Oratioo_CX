@@ -51,7 +51,10 @@ export default function Documentos() {
   const [agenteActivo, setAgenteActivo] = useState(false)
   const [soloHoy, setSoloHoy] = useState(true)
   const [expandedDay, setExpandedDay] = useState(null)
-  const [dayDetails, setDayDetails] = useState({})  // { '2026-05-28': { docId: { total, procesados, pendientes } } }
+  const [dayDetails, setDayDetails] = useState({})
+  const [maquinasDisponibles, setMaquinasDisponibles] = useState([])
+  const [selectedMaquinas, setSelectedMaquinas] = useState({})
+  const [workersConfig, setWorkersConfig] = useState({})
 
   function hoyLocal() {
     const d = new Date()
@@ -81,6 +84,28 @@ export default function Documentos() {
       setDayDetails({})
     }
   }, [uploaded.length])
+
+  // Cargar máquinas activas
+  const fetchMaquinas = async () => {
+    const ahora = Date.now()
+    const { data } = await supabase.from('maquinas').select('nombre,estado,ultimo_heartbeat,workers_config').limit(20)
+    const activas = (data || []).filter(m => {
+      if (m.estado !== 'conectado' && m.estado !== 'activo') return false
+      if (!m.ultimo_heartbeat) return false
+      return (ahora - new Date(m.ultimo_heartbeat).getTime()) < 25000
+    })
+    setMaquinasDisponibles(activas)
+    // Seleccionar todas por defecto
+    const sel = {}
+    const wc = {}
+    for (const m of activas) {
+      sel[m.nombre] = true
+      wc[m.nombre] = parseInt(m.workers_config) || 1
+    }
+    setSelectedMaquinas(sel)
+    setWorkersConfig(wc)
+  }
+  useEffect(() => { fetchMaquinas() }, [])
 
   // Verificar agente activo cada 10s
   const checkAgente = async () => {
@@ -204,25 +229,14 @@ export default function Documentos() {
 
     await fetchHistory()
 
-    // Leer máquinas
-    const { data: maquinas } = await supabase.from('maquinas').select('*')
-    if (!maquinas || maquinas.length === 0) {
-      alert('No hay máquinas configuradas.')
+    // Usar máquinas seleccionadas
+    const seleccionadas = maquinasDisponibles.filter(m => selectedMaquinas[m.nombre])
+    if (seleccionadas.length === 0) {
+      alert('Selecciona al menos una máquina.')
       setAnalyzing(false); return
     }
 
-    const ahora = Date.now()
-    const online = maquinas.filter(m => m.estado === 'conectado' || m.estado === 'activo')
-      .filter(m => m.ultimo_heartbeat && (ahora - new Date(m.ultimo_heartbeat).getTime()) < 20000)
-    if (online.length === 0) {
-      alert('No hay agentes activos.')
-      setAnalyzing(false); return
-    }
-
-    const workersConfig = {}
-    for (const m of maquinas) { if (m.nombre) workersConfig[m.nombre] = parseInt(m.workers_config) || 1 }
-
-    const comandos = maquinas.map(m => ({
+    const comandos = seleccionadas.map(m => ({
       maquina_destino: m.nombre, comando: 'iniciar',
       parametros: { workers_config: workersConfig, documento_id: null, documento_nombre: 'todos' },
       estado: 'pendiente',
@@ -444,6 +458,29 @@ export default function Documentos() {
             )}
           </div>
         </div>
+
+        {/* Selector de máquinas */}
+        {maquinasDisponibles.length > 0 && (
+          <div className="mb-4 p-3 bg-oratioo-light/30 rounded-lg border border-oratioo-border">
+            <p className="text-xs font-semibold text-oratioo-dark mb-2">🖥️ Máquinas disponibles</p>
+            <div className="flex flex-wrap gap-3">
+              {maquinasDisponibles.map(m => (
+                <label key={m.nombre} className="flex items-center gap-2 text-xs cursor-pointer">
+                  <input type="checkbox"
+                    checked={selectedMaquinas[m.nombre] || false}
+                    onChange={(e) => setSelectedMaquinas(prev => ({ ...prev, [m.nombre]: e.target.checked }))}
+                    className="rounded border-oratioo-border" />
+                  <span className="font-medium">{m.nombre}</span>
+                  <span className="text-[#7c757c]">Workers:</span>
+                  <input type="number" min="1" max="10"
+                    value={workersConfig[m.nombre] || 1}
+                    onChange={(e) => setWorkersConfig(prev => ({ ...prev, [m.nombre]: parseInt(e.target.value) || 1 }))}
+                    className="w-14 border border-oratioo-border rounded px-2 py-0.5 text-xs text-center" />
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="overflow-x-auto">
           <table className="w-full">
