@@ -112,6 +112,7 @@ export default function Clientes() {
           dni: dni,
           nombre: c.nombre || ad.datos_basicos?.nombre || '',
           created_at: c.created_at,
+          fecha_analisis: ad.fecha_procesado || c.created_at,
           _lineas: [],
           _cima: false,
           _renove_mixto: false,
@@ -242,14 +243,16 @@ export default function Clientes() {
     // ── Rango de fechas ──
     if (dateFrom) {
       result = result.filter((g) => {
-        if (!g.created_at) return false
-        return g.created_at >= `${dateFrom}T00:00:00Z`
+        const fa = g.fecha_analisis
+        if (!fa) return false
+        return fa >= dateFrom
       })
     }
     if (dateTo) {
       result = result.filter((g) => {
-        if (!g.created_at) return false
-        return g.created_at <= `${dateTo}T23:59:59Z`
+        const fa = g.fecha_analisis
+        if (!fa) return false
+        return fa <= dateTo
       })
     }
 
@@ -276,7 +279,7 @@ export default function Clientes() {
           case 'paquete': aVal = a._lineas[0]?.paquete || ''; bVal = b._lineas[0]?.paquete || ''; break
           case 'renove': aVal = a._renove_mixto ? 'SI' : 'NO'; bVal = b._renove_mixto ? 'SI' : 'NO'; break
           case 'estado': aVal = 'completado'; bVal = 'completado'; break
-          case 'fecha': aVal = a.created_at || ''; bVal = b.created_at || ''; break
+          case 'fecha': aVal = a.fecha_analisis || ''; bVal = b.fecha_analisis || ''; break
           default: return 0
         }
         if (aVal < bVal) return sortConfig.dir === 'asc' ? -1 : 1

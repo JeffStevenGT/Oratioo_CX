@@ -43,7 +43,7 @@ export default function FilaExpandible({ cliente, abierto, onToggle }) {
     const dni = cliente.dni
     const estadoFinal = nuevoEstado !== undefined ? nuevoEstado : estado
     const ad = { ...attr, pipeline: { estado: estadoFinal, asesor_id: asesorId, notas, ultimo_cambio: new Date().toISOString() } }
-    
+
     // Guardar en lineas (atributos_dinamicos.pipeline)
     const { error: errLineas } = await supabase.from('lineas').update({ atributos_dinamicos: ad }).eq('dni', dni)
     if (errLineas) {
@@ -51,15 +51,15 @@ export default function FilaExpandible({ cliente, abierto, onToggle }) {
       setSaving(false)
       return
     }
-    
+
     // Guardar en lead_pipeline
     const { data: existing, error: errSelect } = await supabase.from('lead_pipeline').select('id').eq('linea_id', cliente.id).maybeSingle()
     if (errSelect && !errSelect.message?.includes('does not exist')) {
       console.error('Error al consultar lead_pipeline:', errSelect)
     }
-    
+
     const pipeData = { linea_id: cliente.id, asesor_id: asesorId || null, estado: estadoFinal, notas, updated_at: new Date().toISOString() }
-    
+
     if (existing) {
       const { error: errUpd } = await supabase.from('lead_pipeline').update(pipeData).eq('id', existing.id)
       if (errUpd) console.error('Error al actualizar lead_pipeline:', errUpd)
@@ -69,7 +69,7 @@ export default function FilaExpandible({ cliente, abierto, onToggle }) {
         console.error('Error al insertar lead_pipeline:', errIns)
       }
     }
-    
+
     setSaving(false)
   }
 
@@ -87,7 +87,7 @@ export default function FilaExpandible({ cliente, abierto, onToggle }) {
           </button>
         </td>
         <td className="table-cell font-mono text-xs">{cliente.dni}</td>
-        <td className="table-cell font-medium">{bas.nombre || '—'}</td>
+        <td className="table-cell font-medium">{bas.nombre || '-'}</td>
         <td className="table-cell">
           <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs border ${
             attr.cima === 'SI' ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : 'bg-white text-[#1a1030] border-[#e8dce6]'
@@ -95,15 +95,24 @@ export default function FilaExpandible({ cliente, abierto, onToggle }) {
             {attr.cima === 'SI' ? 'CIMA' : 'NO'}
           </span>
         </td>
-        <td className="table-cell text-xs font-mono">{linea.numero || linea.linea_principal || '—'}</td>
-        <td className="table-cell">{linea.paquete || '—'}</td>
+        <td className="table-cell text-xs font-mono">{linea.numero || linea.linea_principal || '-'}</td>
+        <td className="table-cell">{linea.paquete || '-'}</td>
         <td className="table-cell text-xs">
           {attr.renove_mixto_variante && attr.renove_mixto_variante !== 'N/A' ? (
             <span className="text-[#0a6ea9] font-medium text-xs">{attr.renove_mixto_variante}</span>
-          ) : <span className="text-[#7c757c]">—</span>}
+          ) : <span className="text-[#7c757c]">-</span>}
         </td>
         <td className="table-cell text-[#7c757c] text-xs">
-          {cliente.created_at ? new Date(cliente.created_at).toLocaleDateString('es') : '—'}
+          {(() => {
+            const fp = cliente.atributos_dinamicos?.fecha_procesado || cliente.created_at
+            if (!fp) return '-'
+            // fecha_procesado es YYYY-MM-DD, created_at es ISO
+            if (fp.length === 10 && fp[4] === '-' && fp[7] === '-') {
+              const d = new Date(fp + 'T12:00:00')
+              return d.toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' })
+            }
+            return new Date(fp).toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' })
+          })()}
         </td>
       </tr>
 
@@ -118,9 +127,9 @@ export default function FilaExpandible({ cliente, abierto, onToggle }) {
                       <FileText size={14} className="text-[#0a6ea9]" /> Datos del cliente
                     </h4>
                     <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
-                      <div><span className="text-[#7c757c]">Nombre:</span><p className="text-[#1a1030]">{bas.nombre || '—'}</p></div>
+                      <div><span className="text-[#7c757c]">Nombre:</span><p className="text-[#1a1030]">{bas.nombre || '-'}</p></div>
                       <div><span className="text-[#7c757c]">DNI:</span><p className="text-[#1a1030] font-mono">{cliente.dni}</p></div>
-                      <div className="col-span-2"><span className="text-[#7c757c]">Dirección:</span><p className="text-[#1a1030]">{bas.direccion || '—'}</p></div>
+                      <div className="col-span-2"><span className="text-[#7c757c]">Dirección:</span><p className="text-[#1a1030]">{bas.direccion || '-'}</p></div>
                       <div><span className="text-[#7c757c]">CIMA:</span>
                         <span className={attr.cima === 'SI' ? 'text-emerald-700 font-medium ml-1' : 'text-[#7c757c] ml-1'}>{attr.cima === 'SI' ? 'SÍ' : 'NO'}</span>
                       </div>
