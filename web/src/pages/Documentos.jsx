@@ -1,8 +1,8 @@
-import { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import {
   Upload, FileSpreadsheet, FileText, File, X, CheckCircle2, AlertCircle,
-  Loader2, Clock, Eye, Database, Trash2, Play, RefreshCw,
+  Loader2, Clock, Eye, Database, Trash2, Play, RefreshCw, ChevronDown, ChevronRight,
 } from 'lucide-react'
 import { supabase } from '../supabaseClient'
 import BotStatus from '../components/BotStatus'
@@ -50,6 +50,8 @@ export default function Documentos() {
   const [deletingId, setDeletingId] = useState(null)
   const [agenteActivo, setAgenteActivo] = useState(false)
   const [soloHoy, setSoloHoy] = useState(true)
+  const [expandedDay, setExpandedDay] = useState(null)
+  const [dayDetails, setDayDetails] = useState({})  // { '2026-05-28': { docId: { total, procesados, pendientes } } }
 
   function hoyLocal() {
     const d = new Date()
@@ -248,6 +250,34 @@ export default function Documentos() {
     }, 3000)
   }
 
+  const toggleDay = async (dia, docs) => {
+    if (expandedDay === dia) {
+      setExpandedDay(null)
+      return
+    }
+    setExpandedDay(dia)
+    // Cargar conteo de DNIs por documento para este día
+    const docIds = docs.map(d => d.id)
+    const detalles = {}
+    for (const id of docIds) {
+      try {
+        const { count: total } = await supabase.from('lineas').select('id', { count: 'exact', head: true })
+          .filter('atributos_dinamicos->>documento_id', 'eq', String(id))
+        const { count: procesados } = await supabase.from('lineas').select('id', { count: 'exact', head: true })
+          .filter('atributos_dinamicos->>documento_id', 'eq', String(id))
+          .not('atributos_dinamicos->>estado', 'eq', 'pendiente')
+        const { count: noClientes } = await supabase.from('lineas').select('id', { count: 'exact', head: true })
+          .filter('atributos_dinamicos->>documento_id', 'eq', String(id))
+          .filter('atributos_dinamicos->>estado', 'eq', 'no_cliente')
+        const { count: errores } = await supabase.from('lineas').select('id', { count: 'exact', head: true })
+          .filter('atributos_dinamicos->>documento_id', 'eq', String(id))
+          .filter('atributos_dinamicos->>estado', 'eq', 'error')
+        detalles[id] = { total: total || 0, procesados: procesados || 0, noClientes: noClientes || 0, errores: errores || 0 }
+      } catch {}
+    }
+    setDayDetails(prev => ({ ...prev, [dia]: detalles }))
+  }
+
   const handleDeleteDocument = async (doc) => {
     if (!window.confirm(`Eliminar "${doc.nombre_archivo}"?`)) return
     setDeletingId(doc.id)
@@ -424,7 +454,6 @@ export default function Documentos() {
               ) : (
                 (() => {
                   const hoy = hoyLocal()
-                  // Agrupar por día
                   const grupos = {}
                   for (const h of uploaded) {
                     const dia = utcToLocalDate(h.created_at)
@@ -437,41 +466,106 @@ export default function Documentos() {
                     else grupos[dia].pendientes++
                   }
                   return Object.values(grupos).sort((a, b) => b.dia.localeCompare(a.dia)).map(grupo => {
+                    const expandido = expandedDay === grupo.dia
+                    const detalles = dayDetails[grupo.dia] || {}
                     const todoCompletado = grupo.completados === grupo.docs.length
                     const algunAnalizando = grupo.analizando > 0
                     return (
-                      <tr key={grupo.dia} className="border-b border-oratioo-border hover:bg-oratioo-light/30">
-                        <td className="table-cell !py-2 text-xs font-medium">
-                          {new Date(grupo.dia + 'T12:00:00').toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
-                        </td>
-                        <td className="table-cell !py-2 text-xs">{grupo.docs.length}</td>
-                        <td className="table-cell !py-2 text-xs">{grupo.totalDnis.toLocaleString()}</td>
-                        <td className="table-cell !py-2">
-                          {algunAnalizando ? (
-                            <span className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs bg-purple-50 text-purple-700 border border-purple-200">
-                              <Loader2 size={10} className="animate-spin" /> {grupo.analizando} analizando
-                            </span>
-                          ) : todoCompletado ? (
-                            <span className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200">
-                              <CheckCircle2 size={10} /> Completo
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs bg-blue-50 text-blue-600 border border-blue-200">
-                              <Database size={10} /> {grupo.pendientes} pendientes
-                            </span>
-                          )}
-                        </td>
-                        <td className="table-cell !py-2">
-                          <button onClick={() => {
-                            const docsDelDia = grupo.docs.map(d => `${d.nombre_archivo} (${d.total_dnis} DNIs - ${d.estado || 'cargado'})`).join('\n')
-                            alert(`Documentos del ${new Date(grupo.dia + 'T12:00:00').toLocaleDateString('es')}:\n\n` + docsDelDia)
-                          }}
-                            className="text-xs text-oratioo-purple hover:text-purple-800 hover:bg-purple-50 p-1.5 rounded-lg transition-all"
-                            title="Ver documentos del día">
-                            <Eye size={14} />
-                          </button>
-                        </td>
-                      </tr>
+                      <React.Fragment key={grupo.dia}>
+                        <tr
+                          onClick={() => toggleDay(grupo.dia, grupo.docs)}
+                          className="border-b border-oratioo-border hover:bg-oratioo-light/30 cursor-pointer">
+                          <td className="table-cell !py-2 text-xs font-medium flex items-center gap-2">
+                            {expandido ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+                            {new Date(grupo.dia + 'T12:00:00').toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+                          </td>
+                          <td className="table-cell !py-2 text-xs">{grupo.docs.length}</td>
+                          <td className="table-cell !py-2 text-xs">{grupo.totalDnis.toLocaleString()}</td>
+                          <td className="table-cell !py-2">
+                            {algunAnalizando ? (
+                              <span className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs bg-purple-50 text-purple-700 border border-purple-200">
+                                <Loader2 size={10} className="animate-spin" /> {grupo.analizando} analizando
+                              </span>
+                            ) : todoCompletado ? (
+                              <span className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                <CheckCircle2 size={10} /> Completo
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs bg-blue-50 text-blue-600 border border-blue-200">
+                                <Database size={10} /> {grupo.pendientes} pendientes
+                              </span>
+                            )}
+                          </td>
+                          <td className="table-cell !py-2">
+                            <span className="text-xs text-oratioo-gray">Click para ver</span>
+                          </td>
+                        </tr>
+                        {expandido && (
+                          <tr>
+                            <td colSpan={5} className="!p-0 !border-0">
+                              <div className="bg-oratioo-light/30 px-6 py-3">
+                                <table className="w-full">
+                                  <thead>
+                                    <tr className="border-b border-oratioo-border">
+                                      <th className="table-header px-2 py-1 text-[10px]">Archivo</th>
+                                      <th className="table-header px-2 py-1 text-[10px]">Total DNIs</th>
+                                      <th className="table-header px-2 py-1 text-[10px]">Analizados</th>
+                                      <th className="table-header px-2 py-1 text-[10px]">No cliente</th>
+                                      <th className="table-header px-2 py-1 text-[10px]">Errores</th>
+                                      <th className="table-header px-2 py-1 text-[10px]">Estado</th>
+                                      <th className="table-header px-2 py-1 text-[10px]">Eliminar</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {grupo.docs.map(d => {
+                                      const det = detalles[d.id]
+                                      const proc = det ? det.procesados : (d.procesados || 0)
+                                      const noCli = det ? det.noClientes : 0
+                                      const err = det ? det.errores : 0
+                                      const tot = det ? det.total : (d.total_dnis || 0)
+                                      return (
+                                        <tr key={d.id} className="border-b border-oratioo-border/50 hover:bg-white/50">
+                                          <td className="px-2 py-1.5 text-xs text-oratioo-dark">{d.nombre_archivo}</td>
+                                          <td className="px-2 py-1.5 text-xs text-oratioo-gray">{tot}</td>
+                                          <td className="px-2 py-1.5 text-xs text-emerald-600">{proc}</td>
+                                          <td className="px-2 py-1.5 text-xs text-amber-600">{noCli}</td>
+                                          <td className="px-2 py-1.5 text-xs text-red-500">{err}</td>
+                                          <td className="px-2 py-1.5">
+                                            {d.estado === 'analizando' ? (
+                                              <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] bg-purple-50 text-purple-700 border border-purple-200">
+                                                <Loader2 size={8} className="animate-spin" /> Analizando
+                                              </span>
+                                            ) : d.estado === 'completado' ? (
+                                              <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                                <CheckCircle2 size={8} /> Completo
+                                              </span>
+                                            ) : (
+                                              <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] bg-blue-50 text-blue-600 border border-blue-200">
+                                                <Database size={8} /> Cargado
+                                              </span>
+                                            )}
+                                          </td>
+                                          <td className="px-2 py-1.5">
+                                            {deletingId === d.id ? (
+                                              <Loader2 size={10} className="animate-spin text-red-400" />
+                                            ) : (
+                                              <button onClick={(e) => { e.stopPropagation(); handleDeleteDocument(d) }}
+                                                className="text-xs text-red-500 hover:text-red-700 p-1 rounded-lg transition-all"
+                                                title="Eliminar lote">
+                                                <Trash2 size={12} />
+                                              </button>
+                                            )}
+                                          </td>
+                                        </tr>
+                                      )
+                                    })}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </React.Fragment>
                     )
                   })
                 })()
