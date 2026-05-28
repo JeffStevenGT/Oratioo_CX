@@ -84,17 +84,61 @@ export default function Dashboard() {
 
       setStats({ total, cima, renoveMixto, cimaRenove, tasaExtraccion, maxDescuento, conDescuento, mejorPrecio, renoveBasico, multidispositivo, otros, noCliente })
 
-      // Chart: últimos 7 días (todos los procesados)
-      const last7 = []
-      for (let i = 6; i >= 0; i--) {
-        const d = new Date()
-        d.setDate(d.getDate() - i)
-        const dateStr = d.toISOString().split('T')[0]
-        const dayLabel = d.toLocaleDateString('es', { weekday: 'short', day: 'numeric' })
-        const count = todosProcesados.filter(c => c.created_at && c.created_at.split('T')[0] === dateStr).length
-        last7.push({ day: dayLabel, Procesados: count })
+            // Chart: según período seleccionado
+      let dataPoints
+      let label
+      if (p === 'hoy') {
+        // Horas del día
+        dataPoints = []
+        const ahora = new Date()
+        const hoyStr = ahora.toISOString().split('T')[0]
+        for (let i = 0; i < 24; i++) {
+          const hh = String(i).padStart(2, '0')
+          const inicio = new Date(hoyStr + 'T' + hh + ':00:00')
+          const fin = new Date(hoyStr + 'T' + hh + ':59:59')
+          const count = todosProcesados.filter(c => {
+            const f = new Date(c.created_at)
+            return f >= inicio && f <= fin
+          }).length
+          dataPoints.push({ day: hh + ':00', Procesados: count })
+        }
+        label = 'Hoy (por hora)'
+      } else if (p === 'semana' || p === 'mes') {
+        // Días del período
+        const fechaCorte = getDateFilter(p)
+        const diffDays = p === 'semana' ? 7 : Math.ceil((Date.now() - fechaCorte.getTime()) / 86400000)
+        dataPoints = []
+        for (let i = diffDays - 1; i >= 0; i--) {
+          const d = new Date()
+          d.setDate(d.getDate() - i)
+          const dateStr = d.toISOString().split('T')[0]
+          const dayLabel = d.toLocaleDateString('es', { weekday: 'short', day: 'numeric' })
+          const count = todosProcesados.filter(c => c.created_at && c.created_at.split('T')[0] === dateStr).length
+          dataPoints.push({ day: dayLabel, Procesados: count })
+        }
+        label = p === 'semana' ? 'Últimos 7 días' : 'Este mes (por día)'
+      } else {
+        // Trimestre/6m/todo → por semana
+        dataPoints = []
+        const semanas = {}
+        for (const c of todosProcesados) {
+          if (!c.created_at) continue
+          const d = new Date(c.created_at)
+          const weekStart = new Date(d)
+          weekStart.setDate(d.getDate() - d.getDay())
+          const key = weekStart.toISOString().split('T')[0]
+          semanas[key] = (semanas[key] || 0) + 1
+        }
+        dataPoints = Object.entries(semanas)
+          .sort((a, b) => a[0].localeCompare(b[0]))
+          .slice(-24)
+          .map(([key, count]) => {
+            const d = new Date(key + 'T12:00:00')
+            return { day: d.toLocaleDateString('es', { day: 'numeric', month: 'short' }), Procesados: count }
+          })
+        label = 'Por semana'
       }
-      setChartData(last7)
+      setChartData(dataPoints)
     } catch (err) {
       console.error('Error fetching dashboard data:', err)
     } finally {
@@ -192,8 +236,8 @@ export default function Dashboard() {
       </div>
       <div className="card !p-4">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-xs font-semibold text-[#7c757c] uppercase tracking-wider">Procesados por día</h3>
-          <span className="text-[10px] text-[#7c757c]">Últimos 7 días</span>
+          <h3 className="text-xs font-semibold text-[#7c757c] uppercase tracking-wider">Procesados</h3>
+          <span className="text-[10px] text-[#7c757c]">{periodo === 'all' ? 'Todo' : periodo.charAt(0).toUpperCase() + periodo.slice(1)}</span>
         </div>
         <div className="h-32">
           <ResponsiveContainer width="100%" height="100%">

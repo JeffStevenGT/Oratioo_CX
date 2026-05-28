@@ -385,9 +385,9 @@ export default function Documentos() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-oratioo-border">
-                <th className="table-header px-3 py-2">Archivo</th>
-                <th className="table-header px-3 py-2">DNIs</th>
-                <th className="table-header px-3 py-2">Fecha</th>
+                <th className="table-header px-3 py-2">Día</th>
+                <th className="table-header px-3 py-2">Documentos</th>
+                <th className="table-header px-3 py-2">Total DNIs</th>
                 <th className="table-header px-3 py-2">Estado</th>
                 <th className="table-header px-3 py-2">Acción</th>
               </tr>
@@ -398,44 +398,57 @@ export default function Documentos() {
               ) : uploaded.length === 0 ? (
                 <tr><td colSpan={5} className="text-center py-8 text-oratioo-gray text-sm">Aún no hay cargas registradas</td></tr>
               ) : (
-                uploaded.map(h => {
-                  const enProgreso = analyzing && h.estado !== 'completado'
-                  return (
-                    <tr key={h.id} className="border-b border-oratioo-border hover:bg-oratioo-light/30">
-                      <td className="table-cell !py-2 text-xs">{h.nombre_archivo}</td>
-                      <td className="table-cell !py-2 text-xs">{h.total_dnis}</td>
-                      <td className="table-cell !py-2 text-xs text-oratioo-gray">
-                        {h.created_at ? new Date(h.created_at).toLocaleString('es') : '—'}
-                      </td>
-                      <td className="table-cell !py-2">
-                        {h.estado === 'analizando' || enProgreso ? (
-                          <span className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs bg-purple-50 text-purple-700 border border-purple-200">
-                            <Loader2 size={10} className="animate-spin" /> Analizando...
-                          </span>
-                        ) : h.estado === 'completado' ? (
-                          <span className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200">
-                            <CheckCircle2 size={10} /> Completado
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs bg-blue-50 text-blue-600 border border-blue-200">
-                            <Database size={10} /> Cargado
-                          </span>
-                        )}
-                      </td>
-                      <td className="table-cell !py-2">
-                        {deletingId === h.id ? (
-                          <Loader2 size={12} className="animate-spin text-red-400" />
-                        ) : (
-                          <button onClick={() => handleDeleteDocument(h)}
-                            className="text-xs text-red-500 hover:text-red-700 hover:bg-red-50 p-1.5 rounded-lg transition-all"
-                            title="Eliminar documento">
-                            <Trash2 size={14} />
+                (() => {
+                  // Agrupar por día
+                  const grupos = {}
+                  for (const h of uploaded) {
+                    const dia = h.created_at ? h.created_at.split('T')[0] : 'sin_fecha'
+                    if (!grupos[dia]) grupos[dia] = { dia, docs: [], totalDnis: 0, completados: 0, analizando: 0, pendientes: 0 }
+                    grupos[dia].docs.push(h)
+                    grupos[dia].totalDnis += (h.total_dnis || 0)
+                    if (h.estado === 'completado') grupos[dia].completados++
+                    else if (h.estado === 'analizando') grupos[dia].analizando++
+                    else grupos[dia].pendientes++
+                  }
+                  return Object.values(grupos).sort((a, b) => b.dia.localeCompare(a.dia)).map(grupo => {
+                    const todoCompletado = grupo.completados === grupo.docs.length
+                    const algunAnalizando = grupo.analizando > 0
+                    return (
+                      <tr key={grupo.dia} className="border-b border-oratioo-border hover:bg-oratioo-light/30">
+                        <td className="table-cell !py-2 text-xs font-medium">
+                          {new Date(grupo.dia + 'T12:00:00').toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+                        </td>
+                        <td className="table-cell !py-2 text-xs">{grupo.docs.length}</td>
+                        <td className="table-cell !py-2 text-xs">{grupo.totalDnis.toLocaleString()}</td>
+                        <td className="table-cell !py-2">
+                          {algunAnalizando ? (
+                            <span className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs bg-purple-50 text-purple-700 border border-purple-200">
+                              <Loader2 size={10} className="animate-spin" /> {grupo.analizando} analizando
+                            </span>
+                          ) : todoCompletado ? (
+                            <span className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200">
+                              <CheckCircle2 size={10} /> Completo
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs bg-blue-50 text-blue-600 border border-blue-200">
+                              <Database size={10} /> {grupo.pendientes} pendientes
+                            </span>
+                          )}
+                        </td>
+                        <td className="table-cell !py-2">
+                          <button onClick={() => {
+                            const docsDelDia = grupo.docs.map(d => `${d.nombre_archivo} (${d.total_dnis} DNIs - ${d.estado || 'cargado'})`).join('\n')
+                            alert(`Documentos del ${new Date(grupo.dia + 'T12:00:00').toLocaleDateString('es')}:\n\n` + docsDelDia)
+                          }}
+                            className="text-xs text-oratioo-purple hover:text-purple-800 hover:bg-purple-50 p-1.5 rounded-lg transition-all"
+                            title="Ver documentos del día">
+                            <Eye size={14} />
                           </button>
-                        )}
-                      </td>
-                    </tr>
-                  )
-                })
+                        </td>
+                      </tr>
+                    )
+                  })
+                })()
               )}
             </tbody>
           </table>
