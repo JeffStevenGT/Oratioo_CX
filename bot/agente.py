@@ -27,7 +27,16 @@ from urllib.error import HTTPError
 
 load_dotenv()
 
-# ── Config ────────────────────────────────────────
+# -- Auto-fix BOM en .env (Windows Notepad lo anade al guardar) --
+_env_path = Path(__file__).parent / '.env'
+if _env_path.exists():
+    _raw = _env_path.read_bytes()
+    if _raw.startswith(b'\xef\xbb\xbf'):
+        _env_path.write_bytes(_raw[3:])
+        print("[Agente] BOM eliminado del .env automaticamente")
+        load_dotenv(override=True)
+
+# -- Config
 SUPABASE_URL = os.getenv("SUPABASE_URL", "").rstrip("/")
 SERVICE_KEY = os.getenv("SUPABASE_SERVICE_KEY", "")
 MAQUINA_NOMBRE = os.getenv("MAQUINA_NOMBRE", "desconocida")
