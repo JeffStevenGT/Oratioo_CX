@@ -55,6 +55,8 @@ export default function Documentos() {
   const [maquinasDisponibles, setMaquinasDisponibles] = useState([])
   const [selectedMaquinas, setSelectedMaquinas] = useState({})
   const [workersConfig, setWorkersConfig] = useState({})
+  const [workersActivos, setWorkersActivos] = useState(0)
+  const [maquinasActivas, setMaquinasActivas] = useState(0)
 
   function hoyLocal() {
     const d = new Date()
@@ -88,12 +90,22 @@ export default function Documentos() {
   // Cargar máquinas activas
   const fetchMaquinas = async () => {
     const ahora = Date.now()
-    const { data } = await supabase.from('maquinas').select('nombre,estado,ultimo_heartbeat,workers_config').limit(20)
+    const { data } = await supabase.from('maquinas').select('nombre,estado,ultimo_heartbeat,workers_config,workers_info').limit(20)
     const activas = (data || []).filter(m => {
       if (m.estado !== 'conectado' && m.estado !== 'activo') return false
       if (!m.ultimo_heartbeat) return false
       return (ahora - new Date(m.ultimo_heartbeat).getTime()) < 25000
     })
+    // Contar workers activos
+    let totalWorkers = 0
+    for (const m of activas) {
+      const info = m.workers_info
+      if (Array.isArray(info)) {
+        totalWorkers += info.filter(w => w.estado === 'activo' || w.dni_actual).length
+      }
+    }
+    setWorkersActivos(totalWorkers)
+    setMaquinasActivas(activas.length)
     setMaquinasDisponibles(activas)
     // Seleccionar todas por defecto
     const sel = {}
@@ -122,7 +134,8 @@ export default function Documentos() {
   }
   useEffect(() => {
     checkAgente()
-    const interval = setInterval(checkAgente, 10000)
+    fetchMaquinas()
+    const interval = setInterval(() => { checkAgente(); fetchMaquinas() }, 10000)
     return () => clearInterval(interval)
   }, [])
 
@@ -331,6 +344,20 @@ export default function Documentos() {
       </div>
 
       <BotStatus />
+
+      {/* Indicador de workers activos */}
+      <div className="flex items-center gap-4 text-xs">
+        <div className="flex items-center gap-1.5">
+          <div className={`h-2 w-2 rounded-full ${maquinasActivas > 0 ? 'bg-emerald-500' : 'bg-gray-300'}`}></div>
+          <span className="text-oratioo-dark font-medium">{maquinasActivas}</span>
+          <span className="text-oratioo-gray">máquina(s) activa(s)</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <Loader2 size={12} className={`text-oratioo-purple ${workersActivos > 0 ? 'animate-spin' : ''}`} />
+          <span className="text-oratioo-dark font-medium">{workersActivos}</span>
+          <span className="text-oratioo-gray">worker(s) activos</span>
+        </div>
+      </div>
 
       <div {...getRootProps()} className={`border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition-all ${
         isDragActive ? 'border-oratioo-purple bg-purple-50' : 'border-oratioo-border hover:border-oratioo-purple bg-white'
