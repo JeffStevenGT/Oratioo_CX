@@ -72,7 +72,7 @@ export default function Documentos() {
 
   useEffect(() => { fetchHistory() }, [])
   useEffect(() => {
-    const interval = setInterval(fetchHistory, 30000)
+    const interval = setInterval(fetchHistory, 300000)
     return () => clearInterval(interval)
   }, [])
   // Cuando uploaded cambia, limpiar detalles expandidos (se recargan al hacer click)
