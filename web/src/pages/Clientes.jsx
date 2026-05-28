@@ -91,10 +91,6 @@ export default function Clientes() {
   }
 
   useEffect(() => { fetchClientes() }, [])
-  useEffect(() => {
-    const interval = setInterval(fetchClientes, 15000)
-    return () => clearInterval(interval)
-  }, [])
 
   // ── Reset paginación cuando cambian filtros ────────────────────
   useEffect(() => { setClientesPage(1) }, [cimaFilter, renoveFilter, variantesActivas, tagsActivas, dateFrom, dateTo, search])
