@@ -215,35 +215,13 @@ export default function Documentos() {
   // ── Iniciar análisis de TODOS los documentos pendientes ──
   const handleStartAnalysis = async () => {
     const pendientes = uploaded.filter(d => d.estado !== 'completado' || !d.estado)
-    const completados = uploaded.filter(d => d.estado === 'completado')
 
-    if (pendientes.length === 0 && completados.length === 0) {
-      alert('No hay documentos para analizar.')
+    if (pendientes.length === 0) {
+      alert('No hay documentos pendientes. Si quieres re-analizar, elimina el documento y súbelo de nuevo.')
       return
     }
 
-    if (completados.length > 0) {
-      const ok = window.confirm(`Hay ${completados.length} documento(s) ya analizados. ¿Re-analizarlos también?`)
-      if (!ok) return
-    }
-
     setAnalyzing(true)
-
-    // Resetear completados si los hay (preservando pipeline)
-    for (const doc of completados) {
-      const { data: lineas } = await supabase.from('lineas').select('id,atributos_dinamicos')
-        .filter('atributos_dinamicos->>documento_id', 'eq', String(doc.id))
-      if (lineas) {
-        for (const l of lineas) {
-          const ad = l.atributos_dinamicos || {}
-          const pipe = ad.pipeline || { estado: 'pendiente', asesor_id: null, notas: '' }
-          await supabase.from('lineas').update({
-            atributos_dinamicos: { estado: 'pendiente', documento_id: doc.id, pipeline: pipe }
-          }).eq('id', l.id)
-        }
-      }
-      await supabase.from('documentos').update({ estado: null, procesados: 0 }).eq('id', doc.id)
-    }
 
     await fetchHistory()
 
@@ -261,8 +239,8 @@ export default function Documentos() {
     }))
     await supabase.from('comandos_bot').insert(comandos)
 
-    // Marcar todos como analizando
-    for (const doc of [...pendientes, ...completados]) {
+    // Marcar pendientes como analizando
+    for (const doc of pendientes) {
       await supabase.from('documentos').update({ estado: 'analizando' }).eq('id', doc.id)
     }
     await fetchHistory()
