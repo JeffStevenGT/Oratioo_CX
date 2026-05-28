@@ -215,6 +215,7 @@ def guardar_resultado(dni: str, datos: dict, estado: str = "completado"):
             ad_prev[k] = v
     ad_prev["estado"] = estado
     ad_prev["fecha_procesado"] = time.strftime("%Y-%m-%d")
+    ad_prev["fecha_hora"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     ad_prev["worker_id"] = WORKER_ID
     ad_prev["maquina"] = MAQUINA
 
