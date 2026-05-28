@@ -71,6 +71,16 @@ export default function Documentos() {
   }
 
   useEffect(() => { fetchHistory() }, [])
+  useEffect(() => {
+    const interval = setInterval(fetchHistory, 15000)
+    return () => clearInterval(interval)
+  }, [])
+  // Cuando uploaded cambia, limpiar detalles expandidos (se recargan al hacer click)
+  useEffect(() => {
+    if (expandedDay) {
+      setDayDetails({})
+    }
+  }, [uploaded.length])
 
   // Verificar agente activo cada 10s
   const checkAgente = async () => {
