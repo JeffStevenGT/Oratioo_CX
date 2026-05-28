@@ -58,15 +58,18 @@ export default function Dashboard() {
       const noClientes = todosLosDatos.filter(c => c.atributos_dinamicos?.estado === 'no_cliente')
       const todosProcesados = todosLosDatos
 
-      // Aplicar filtro de fecha a stats (bot) — afecta completados + noClientes
+      // Aplicar filtro de fecha a stats (bot) — usando fecha_procesado
       if (fechaCorte) {
-        const fCorte = fechaCorte
-        // NoClientes también se filtran por fecha
-        const noClientesFiltrados = noClientes.filter(c => c.created_at && new Date(c.created_at) >= fCorte)
-        // Completados filtrados
+        const fStr = fechaCorte.getFullYear() + '-' + String(fechaCorte.getMonth()+1).padStart(2,'0') + '-' + String(fechaCorte.getDate()).padStart(2,'0')
+        // NoClientes filtrados por fecha_procesado
+        const noClientesFiltrados = noClientes.filter(c => {
+          const fp = c.atributos_dinamicos?.fecha_procesado
+          return fp && fp >= fStr
+        })
+        // Completados filtrados por fecha_procesado
         const completadosFiltrados = completados.filter(c => {
-          const f = c.atributos_dinamicos?.pipeline?.ultimo_cambio || c.created_at
-          return f && new Date(f) >= fCorte
+          const fp = c.atributos_dinamicos?.fecha_procesado
+          return fp && fp >= fStr
         })
         
         const total = completadosFiltrados.length + noClientesFiltrados.length
