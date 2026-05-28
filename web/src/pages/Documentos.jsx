@@ -55,6 +55,7 @@ export default function Documentos() {
   const [maquinasDisponibles, setMaquinasDisponibles] = useState([])
   const [selectedMaquinas, setSelectedMaquinas] = useState({})
   const [workersConfig, setWorkersConfig] = useState({})
+  const [analisisEnCurso, setAnalisisEnCurso] = useState(false)
 
   function hoyLocal() {
     const d = new Date()
@@ -104,6 +105,12 @@ export default function Documentos() {
     }
     setSelectedMaquinas(sel)
     setWorkersConfig(wc)
+    // Verificar si hay workers procesando
+    try {
+      const { count } = await supabase.from('lineas').select('id', { count: 'exact', head: true })
+        .filter('atributos_dinamicos->>estado', 'eq', 'en_progreso')
+      setAnalisisEnCurso((count || 0) > 0)
+    } catch {}
   }
   useEffect(() => { fetchMaquinas() }, [])
 
@@ -464,21 +471,24 @@ export default function Documentos() {
               title="Actualizar historial">
               <RefreshCw size={14} className={loadingHistory ? 'animate-spin' : ''} />
             </button>
-            {!analyzing && uploaded.length > 0 && (
-              <button onClick={handleStartAnalysis} disabled={!agenteActivo}
-                className={`px-4 py-2 rounded-lg text-sm flex items-center gap-2 transition-all ${
-                  agenteActivo
-                    ? 'bg-[#0a6ea9] hover:bg-[#085d8f] text-white'
-                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                }`}
-                title={agenteActivo ? 'Iniciar análisis' : 'No hay agentes activos. Inicia agente.py primero.'}>
-                <Play size={16} /> {agenteActivo ? 'Iniciar análisis' : 'Agente inactivo'}
-              </button>
-            )}
-            {analyzing && (
-              <span className="text-purple-600 text-sm flex items-center gap-2">
-                <Loader2 size={14} className="animate-spin" /> Analizando...
+            {analisisEnCurso || analyzing ? (
+              <span className="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm bg-amber-50 text-amber-700 border border-amber-200">
+                <Loader2 size={14} className="animate-spin" />
+                <span className="font-medium">Análisis en curso</span>
+                {analisisEnCurso && !analyzing && <span className="text-[10px] text-amber-500">(iniciado externamente)</span>}
               </span>
+            ) : (
+              uploaded.length > 0 && (
+                <button onClick={handleStartAnalysis} disabled={!agenteActivo}
+                  className={`px-4 py-2 rounded-lg text-sm flex items-center gap-2 transition-all ${
+                    agenteActivo
+                      ? 'bg-[#0a6ea9] hover:bg-[#085d8f] text-white'
+                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  }`}
+                  title={agenteActivo ? 'Iniciar análisis' : 'No hay agentes activos. Inicia agente.py primero.'}>
+                  <Play size={16} /> {agenteActivo ? 'Iniciar análisis' : 'Agente inactivo'}
+                </button>
+              )
             )}
           </div>
         </div>
