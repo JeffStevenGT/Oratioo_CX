@@ -313,15 +313,25 @@ def extraer_datos_cliente(page: Page, numero: str, buscar_por_dni: bool = True,
             print(f"  [Extracción] Cliente: {nombre} | DNI: {dni} | Paquete: {paquete}")
             print(f"  [Extracción] Dirección: {direccion}")
 
-            # ═══ CERRAR TOAST DE ERROR SI APARECIÓ (ej: "No se han podido recuperar campañas") ═══
-            try:
-                toast_error = page.locator(".message-relevant.error")
-                if toast_error.count() > 0 and toast_error.first.is_visible(timeout=2000):
-                    print("  [Extracción] [WARN] Cerrando toast de error antes de líneas...")
-                    toast_error.locator(".btn-close").first.click(force=True, timeout=3000)
-                    page.wait_for_timeout(1500)
-            except Exception:
-                pass
+            # ═══ CERRAR TOAST DE ERROR ("No se han podido recuperar campañas") Y SALTAR DNI ═══
+            if _detectar_y_cerrar_toast(page):
+                print(f"  [Extracción] [FAIL] {numero}: error campañas — saltando al siguiente")
+                return [{
+                    "DNI": numero,
+                    "Nombre": "ERROR CAMPANAS",
+                    "Direccion": direccion if direccion != "N/A" else "N/A",
+                    "Seg Fijo": "N/A",
+                    "Seg Movil": "N/A",
+                    "Paquete": "N/A",
+                    "Linea": numero,
+                    "es_cima": False,
+                    "tiene_renove_mixto": False,
+                    "variante_renove": "N/A",
+                    "tiene_tv": False,
+                    "es_principal": False,
+                    "etiquetas": [],
+                    "activo_desde": "N/A",
+                }]
 
             # ── 3. BUCLE DE LÍNEAS CON PAGINACIÓN ─────
             lineas_finales = []
