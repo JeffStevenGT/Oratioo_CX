@@ -449,7 +449,8 @@ def main():
             log("⏹  Detenido por señal")
             detener = True
         finally:
-            browser.close()
+            # NO cerrar browser — lo cierra el usuario manualmente para liberar sesión Pangea
+            log("[CLEANUP] Worker finalizado. Browser queda abierto para que cierres Pangea manualmente.")
 
     log(f"Resumen -> Procesados: [OK] {procesados} | [ERR] {errores}")
 
