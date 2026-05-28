@@ -181,12 +181,6 @@ export default function Clientes() {
       }
     }
 
-    // DEBUG: ver fecha_analisis de los primeros 5
-    if (result.length > 0 && dateFrom) {
-      console.log('[DEBUG] dateFrom:', dateFrom)
-      result.slice(0,5).forEach(g => console.log('[DEBUG]  DNI:', g.dni, 'fa:', JSON.stringify(g.fecha_analisis)))
-    }
-
     // ── Aplicar TODOS los filtros activos (AND) ──
     // CIMA (si ALGUNA linea tiene CIMA)
     if (cimaFilter === 'SI') {
@@ -247,14 +241,13 @@ export default function Clientes() {
     }
 
     // ── Rango de fechas ──
-    console.log('[DEBUG] ANTES de filtro fecha:', result.length, 'registros, fecha_analisis:', result.slice(0,3).map(g => g.dni + '=' + g.fecha_analisis))
     if (dateFrom) {
       result = result.filter((g) => {
         const fa = g.fecha_analisis
         if (!fa) return false
-        return fa >= dateFrom
+        // Igualdad exacta de día: solo mostrar los del día seleccionado
+        return fa === dateFrom || (dateTo && fa >= dateFrom && fa <= dateTo)
       })
-      console.log('[DEBUG] DESPUES de filtro fecha:', result.length, 'registros')
     }
     if (dateTo) {
       result = result.filter((g) => {
