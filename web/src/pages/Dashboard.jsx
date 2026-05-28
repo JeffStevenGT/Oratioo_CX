@@ -4,6 +4,21 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { supabase, TABLA_CLIENTES } from '../supabaseClient'
 import StatCard from '../components/StatCard'
 
+// Convertir created_at (UTC) a fecha local YYYY-MM-DD
+function utcToLocalDate(isoStr) {
+  if (!isoStr) return 'sin_fecha'
+  const d = new Date(isoStr)
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return y + '-' + m + '-' + day
+}
+// Fecha local YYYY-MM-DD desde un Date object
+function localDateStr(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0')
+}
+
+
 export default function Dashboard() {
   const [loading, setLoading] = useState(true)
   const [stats, setStats] = useState({ total: 0, cima: 0, renoveMixto: 0, cimaRenove: 0, tasaExtraccion: 0, maxDescuento: 0, conDescuento: 0, mejorPrecio: 0, renoveBasico: 0, multidispositivo: 0, otros: 0, noCliente: 0 })
@@ -111,9 +126,9 @@ export default function Dashboard() {
         for (let i = diffDays - 1; i >= 0; i--) {
           const d = new Date()
           d.setDate(d.getDate() - i)
-          const dateStr = d.toISOString().split('T')[0]
+          const dateStr = localDateStr(d)
           const dayLabel = d.toLocaleDateString('es', { weekday: 'short', day: 'numeric' })
-          const count = todosProcesados.filter(c => c.created_at && c.created_at.split('T')[0] === dateStr).length
+          const count = todosProcesados.filter(c => c.created_at && utcToLocalDate(c.created_at) === dateStr).length
           dataPoints.push({ day: dayLabel, Procesados: count })
         }
         label = p === 'semana' ? 'Últimos 7 días' : 'Este mes (por día)'
@@ -126,7 +141,7 @@ export default function Dashboard() {
           const d = new Date(c.created_at)
           const weekStart = new Date(d)
           weekStart.setDate(d.getDate() - d.getDay())
-          const key = weekStart.toISOString().split('T')[0]
+          const key = localDateStr(weekStart)
           semanas[key] = (semanas[key] || 0) + 1
         }
         dataPoints = Object.entries(semanas)

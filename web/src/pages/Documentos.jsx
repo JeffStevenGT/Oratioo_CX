@@ -7,6 +7,17 @@ import {
 import { supabase } from '../supabaseClient'
 import BotStatus from '../components/BotStatus'
 
+// Convertir created_at (UTC) a fecha local YYYY-MM-DD
+function utcToLocalDate(isoStr) {
+  if (!isoStr) return 'sin_fecha'
+  const d = new Date(isoStr)
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return y + '-' + m + '-' + day
+}
+
+
 function extractDNIs(text) {
   const dnis = new Set()
   const clean = text.replace(/^\uFEFF/, '')
@@ -402,7 +413,7 @@ export default function Documentos() {
                   // Agrupar por día
                   const grupos = {}
                   for (const h of uploaded) {
-                    const dia = h.created_at ? h.created_at.split('T')[0] : 'sin_fecha'
+                    const dia = utcToLocalDate(h.created_at)
                     if (!grupos[dia]) grupos[dia] = { dia, docs: [], totalDnis: 0, completados: 0, analizando: 0, pendientes: 0 }
                     grupos[dia].docs.push(h)
                     grupos[dia].totalDnis += (h.total_dnis || 0)
