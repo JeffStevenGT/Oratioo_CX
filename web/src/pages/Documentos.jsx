@@ -508,7 +508,9 @@ export default function Documentos() {
                     if (!grupos[dia]) grupos[dia] = { dia, docs: [], totalDnis: 0, completados: 0, analizando: 0, pendientes: 0 }
                     grupos[dia].docs.push(h)
                     grupos[dia].totalDnis += (h.total_dnis || 0)
-                    if (h.estado === 'completado') grupos[dia].completados++
+                    const proc = (h.procesados || 0)
+                    const tot = (h.total_dnis || 0)
+                    if (proc >= tot && tot > 0) grupos[dia].completados++
                     else if (h.estado === 'analizando') grupos[dia].analizando++
                     else grupos[dia].pendientes++
                   }
@@ -557,7 +559,6 @@ export default function Documentos() {
                                       <th className="table-header px-2 py-1 text-[10px]">Archivo</th>
                                       <th className="table-header px-2 py-1 text-[10px]">Total DNIs</th>
                                       <th className="table-header px-2 py-1 text-[10px]">Analizados</th>
-                                      <th className="table-header px-2 py-1 text-[10px]">No cliente</th>
                                       <th className="table-header px-2 py-1 text-[10px]">Errores</th>
                                       <th className="table-header px-2 py-1 text-[10px]">Estado</th>
                                       <th className="table-header px-2 py-1 text-[10px]">Eliminar</th>
@@ -567,28 +568,27 @@ export default function Documentos() {
                                     {grupo.docs.map(d => {
                                       const det = detalles[d.id]
                                       const proc = det ? det.procesados : (d.procesados || 0)
-                                      const noCli = det ? det.noClientes : 0
                                       const err = det ? det.errores : 0
                                       const tot = det ? det.total : (d.total_dnis || 0)
+                                      const completo = proc >= tot && tot > 0
                                       return (
                                         <tr key={d.id} className="border-b border-oratioo-border/50 hover:bg-white/50">
                                           <td className="px-2 py-1.5 text-xs text-oratioo-dark">{d.nombre_archivo}</td>
                                           <td className="px-2 py-1.5 text-xs text-oratioo-gray">{tot}</td>
                                           <td className="px-2 py-1.5 text-xs text-emerald-600">{proc}</td>
-                                          <td className="px-2 py-1.5 text-xs text-amber-600">{noCli}</td>
                                           <td className="px-2 py-1.5 text-xs text-red-500">{err}</td>
                                           <td className="px-2 py-1.5">
                                             {d.estado === 'analizando' ? (
                                               <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] bg-purple-50 text-purple-700 border border-purple-200">
                                                 <Loader2 size={8} className="animate-spin" /> Analizando
                                               </span>
-                                            ) : d.estado === 'completado' ? (
+                                            ) : completo ? (
                                               <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200">
                                                 <CheckCircle2 size={8} /> Completo
                                               </span>
                                             ) : (
                                               <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] bg-blue-50 text-blue-600 border border-blue-200">
-                                                <Database size={8} /> Cargado
+                                                <Database size={8} /> Pendiente
                                               </span>
                                             )}
                                           </td>
