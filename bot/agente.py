@@ -305,23 +305,42 @@ def _resetear_dnis_colgados():
 
 
 def _watchdog_en_progreso():
-    """Resetea DNIS colgados en 'en_progreso' por mas de 5 minutos."""
+    """Resetea DNIS colgados en 'en_progreso' pero SOLO si el worker
+    que los tomó ya no está reportando actividad (crash).
+    Usa una ventana de 30 minutos desde created_at para evitar falsos positivos."""
     try:
         ahora = time.time()
-        rows = _api("GET", "/lineas?select=id,created_at,atributos_dinamicos&atributos_dinamicos->>estado=eq.en_progreso&limit=100")
+        rows = _api("GET", "/lineas?select=id,created_at,atributos_dinamicos&atributos_dinamicos->>estado=eq.en_progreso&limit=200")
+        if not rows:
+            return
         resets = 0
+        # Obtener workers activos reportados
+        maquinas = _api("GET", "/maquinas?select=workers_info&limit=10")
+        workers_activos = set()
+        for m in (maquinas or []):
+            info = m.get("workers_info", []) or []
+            if isinstance(info, str):
+                try: info = json.loads(info)
+                except: info = []
+            for w in info:
+                if isinstance(w, dict) and w.get("dni_actual"):
+                    workers_activos.add(w.get("id"))
+
         for row in (rows or []):
             ad = row.get("atributos_dinamicos", {})
             if isinstance(ad, str):
                 import json as _j
                 try: ad = _j.loads(ad)
                 except: ad = {}
-            # Verificar antigüedad por created_at
+            wid = ad.get("worker_id")
+            # Si el worker está reportando actividad, NO resetear
+            if wid is not None and wid in workers_activos:
+                continue
             creado = row.get("created_at", "")
             if creado:
                 try:
                     ts = time.mktime(time.strptime(creado[:19], "%Y-%m-%dT%H:%M:%S"))
-                    if ahora - ts > 300:  # más de 5 minutos
+                    if ahora - ts > 1800:  # más de 30 minutos
                         ad["estado"] = "pendiente"
                         ad["worker_id"] = None
                         _api("PATCH", f"/lineas?id=eq.{row['id']}", {"atributos_dinamicos": ad})
@@ -329,7 +348,7 @@ def _watchdog_en_progreso():
                 except:
                     pass
         if resets > 0:
-            print(f"[Agente] ⏰ {resets} DNIs colgados (>5min) reseteados a pendiente")
+            print(f"[Agente] ♻️ {resets} DNIs colgados (sin worker activo >30min) reseteados")
     except Exception:
         pass
 
