@@ -183,7 +183,8 @@ export default function Clientes() {
 
     // DEBUG: ver fecha_analisis de los primeros 5
     if (result.length > 0 && dateFrom) {
-      console.log('[DEBUG] dateFrom:', dateFrom, 'primeros fecha_analisis:', result.slice(0,5).map(g => ({dni: g.dni, fa: g.fecha_analisis})))
+      console.log('[DEBUG] dateFrom:', dateFrom)
+      result.slice(0,5).forEach(g => console.log('[DEBUG]  DNI:', g.dni, 'fa:', JSON.stringify(g.fecha_analisis)))
     }
 
     // ── Aplicar TODOS los filtros activos (AND) ──
@@ -246,16 +247,14 @@ export default function Clientes() {
     }
 
     // ── Rango de fechas ──
+    console.log('[DEBUG] ANTES de filtro fecha:', result.length, 'registros')
     if (dateFrom) {
       result = result.filter((g) => {
         const fa = g.fecha_analisis
         if (!fa) return false
-        const match = fa >= dateFrom
-        if (!match && result.length < 10) {
-          console.log('[DEBUG] EXCLUIDO por fecha:', g.dni, 'fa:', fa, 'dateFrom:', dateFrom, 'fa>=dateFrom:', match)
-        }
-        return match
+        return fa >= dateFrom
       })
+      console.log('[DEBUG] DESPUES de filtro fecha:', result.length, 'registros')
     }
     if (dateTo) {
       result = result.filter((g) => {
