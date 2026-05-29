@@ -280,6 +280,21 @@ def procesar_dni(page, dni: str, linea_id: int = None, modal_ya_abierto: bool = 
         # Verificar si el modal sigue abierto ("no es cliente")
         modal_abierto = filas[0].get("_modal_abierto", False) if filas else False
 
+        # Si todas las filas tienen N/A (no cargó la info), marcar como error
+        todas_na = all(
+            f.get("Nombre", "N/A") in ("N/A", "") or f.get("Nombre", "") == f.get("Linea", "")
+            for f in filas
+        )
+        if todas_na and len(filas) > 0:
+            log(f"[WARN] {dni}: solo datos N/A, marcando como error para reintentar")
+            guardar_resultado(dni, {
+                "nombre": "N/A",
+                "linea_principal": dni,
+                "paquete": "N/A",
+                "atributos_dinamicos": {"error": "Sin datos", "reintentos": 0},
+            }, estado="error", linea_id=linea_id)
+            return False, False
+
         # Guardar cada fila (línea del cliente)
         for fila in filas:
             es_no_cliente = fila.get("Nombre") == "NO ES CLIENTE"

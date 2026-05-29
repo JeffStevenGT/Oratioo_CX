@@ -373,6 +373,30 @@ def _watchdog_en_progreso():
         pass
 
 
+def _resetear_errores():
+    """Resetea DNIs en estado 'error' a 'pendiente' para reintentarlos.
+    Corre cada 10s en el loop principal."""
+    try:
+        rows = _api("GET", "/lineas?select=id,atributos_dinamicos&atributos_dinamicos->>estado=eq.error&limit=200")
+        if not rows:
+            return
+        resets = 0
+        for row in rows:
+            ad = row.get("atributos_dinamicos", {})
+            if isinstance(ad, str):
+                import json as _j
+                try: ad = _j.loads(ad)
+                except: ad = {}
+            ad["estado"] = "pendiente"
+            ad["worker_id"] = None
+            _api("PATCH", f"/lineas?id=eq.{row['id']}", {"atributos_dinamicos": ad})
+            resets += 1
+        if resets > 0:
+            print(f"[Agente] ♻️ {resets} DNIs en 'error' reseteados a pendiente")
+    except Exception:
+        pass
+
+
 def main():
     global proceso_coordinador
 
@@ -405,8 +429,9 @@ def main():
             # Heartbeat
             reportar_heartbeat()
 
-            # Watchdog: liberar DNIs colgados cada 30s
+            # Watchdog: liberar DNIs colgados + errores
             _watchdog_en_progreso()
+            _resetear_errores()
 
             # Buscar comandos
             comandos = buscar_comandos()
